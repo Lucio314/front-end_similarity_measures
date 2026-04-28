@@ -3,9 +3,9 @@ import React from 'react';
 /**
  * @returns 
  */
-function RedCross({}){
+function RedCross(){
     return (
-        <svg className="red-cross">
+        <svg className="red-cross lucide lucide-x w-5 h-5 text-red-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M18 6 6 18"></path>
             <path d="m6 6 12 12"></path>
         </svg>
@@ -13,3 +13,4 @@ function RedCross({}){
 }
 
 export default RedCross
+

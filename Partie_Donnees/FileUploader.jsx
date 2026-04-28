@@ -1,7 +1,14 @@
 import React from 'react';
+import IconUpload from '../component/Icons/IconUpload';
+import IconPoubelle from '../component/Icons/IconPoubelle';
+import { useEffect } from 'react';
 import { useState } from 'react'
 
-/*
+
+function FileUploader() {
+  const [files, setFiles] = useState([])
+
+  /*
   const uploadFiles = async () => {
   const formData = new FormData();
   files.forEach(file => formData.append("files", file));
@@ -17,9 +24,6 @@ import { useState } from 'react'
     alert("Upload failed.");
   }
 */
-
-function FileUploader() {
-  const [files, setFiles] = useState([])
   
   const handleDrop = (e) => {
     e.preventDefault()
@@ -32,8 +36,19 @@ function FileUploader() {
     e.preventDefault()
   };
 
+  useEffect(() => {
+      const divAffichageFichiers = document.getElementById('div-affichage-fichiers')
+      if(files.length === 0){
+        divAffichageFichiers.hidden = true
+      }else{
+        divAffichageFichiers.hidden = false
+      }
+    }, [files]
+)
+//Problème avec le useEffect à régler plus tard
+
   return (
-    <div
+    <div className="file-uploader"
       onDrop={handleDrop}
       onDragOver={handleDragOver}
       style={{
@@ -43,6 +58,9 @@ function FileUploader() {
         borderRadius: "10px",
       }}
     >
+      <IconUpload/>
+      <h3 className="h3-title">Charger des fichiers</h3>
+      <p className="h3-title-p">Importez un ou plusieurs fichiers JSON/CSV</p>
       <label 
         id="input-file-label" 
         style={{
@@ -60,7 +78,7 @@ function FileUploader() {
         />
         Déposer des fichiers ici 
       </label>
-      <div>
+      <div id="div-affichage-fichiers" className="affichage-fichiers" hidden>
         <p>{files.length} fichier(s) déposé(s)</p>
         {files.map((file, index) => (
           <div key={index}>
@@ -68,17 +86,22 @@ function FileUploader() {
               {file.name}  
             </span>
             <button 
+              className="delete-button"
               onClick={() => setFiles(files.filter(f => f !== file))}
             >
-              Delete
+              <IconPoubelle/>
             </button>
           </div>
         ))}
-        <button /*onClick={uploadFiles}*/>Upload Files</button>
+        <button className="upload-button" /*onClick={uploadFiles}*/>Charger des fichiers</button>
       </div>
       
     </div>
-  );
-};
+  )
+  //Modif le button plus tard, pour qu'il renvoie à la page suivante, et cache celle-ci
+  //Terminer également l'envoie du/des fichier(s) à l'api
+  //Le bouton doit également afficher une div en attendant le chargement des données
+
+}
 
 export default FileUploader

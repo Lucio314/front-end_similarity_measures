@@ -6,7 +6,7 @@ import { RechartsDevtools } from '@recharts/devtools' //Pas besoin je pense
 function PieChartDiv({dataset, isAnimationActive = true }/*: { isAnimationActive?: boolean }*/){ //Truc Typescript
   return (
     <div className="pie-chart-div">
-      <p>Distribution des activités</p>
+      <h3 className="h3-title">Distribution des activités</h3>
       <ResponsiveContainer width="100%" height="100%">
         <PieChart style={{ width: '100%', maxWidth: '500px', maxHeight: '80vh', aspectRatio: 1 }} responsive>
           <Pie

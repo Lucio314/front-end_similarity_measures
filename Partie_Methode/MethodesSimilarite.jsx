@@ -131,7 +131,7 @@ const SIMILARITIES = [
                     "Nécessite discrétisation du temps",
                     "Complexité O(n)"
                     ],
-        parametres: ["warping_window"]
+        parametres: []
     },
     {
         nomMethode: "DHD",
