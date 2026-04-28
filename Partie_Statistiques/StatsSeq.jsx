@@ -1,5 +1,6 @@
 import React from 'react';
 import IconFleches from '../component/Icons/IconFleches';  
+import StatsActivites from './StatsActivites';
 
 const ACTIVITES = [
     {
@@ -63,12 +64,25 @@ const ACTIVITES = [
 function StatsSeq({idSequence, nomSequence, nombreActivites, dureeSequence, trousSequence}){
     const listeSpansEmojiActivites = []
     //Représente les emojis des activités à mettre dans des spans (issu des données du dataset)
-
     const listeActivites = []
-    //Représente les différentes activités 
-
+    //Représente les différentes activités
     const listeActivitesVisualisation = []
     //Représente la visualisation temporelle des activités
+    for(let activite of ACTIVITES){
+        if(activite.idSequence == idSequence){
+            listeSpansEmojiActivites.push(
+                <span>{activite.emojiActivite}</span>
+            )
+            listeActivites.push(
+                <StatsActivites 
+                    emoji={activite.emojiActivite}
+                    nomActivite={activite.nomActvite}
+                    temps={activite.tempsActivite}
+                />
+            )
+        }
+    } 
+    
 
     /*const handleAffichageFlecheClick = (e) => {
     e.preventDefault
@@ -103,7 +117,7 @@ function StatsSeq({idSequence, nomSequence, nombreActivites, dureeSequence, trou
                         className="show-more-details-activities-button"
                         onClick=/*{handleAffichageFlecheClick}*/{() => null}
                     >
-                        <IconFleches id={idSequence}/>
+                        <IconFleches/>
                     </button>
                 </div>
             </div>
