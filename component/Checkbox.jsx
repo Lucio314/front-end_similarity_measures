@@ -9,7 +9,7 @@ import React from 'react';
  */
 function Checkbox({id, checked, onChange, label}){
   return (
-    <div>
+    <label className="form-checkbox-label">
         <input
           id={id}
           type="checkbox"
@@ -17,8 +17,8 @@ function Checkbox({id, checked, onChange, label}){
           checked={checked}
           onChange={(e) => onChange((e.target.checked))}
           />
-        <label htmlFor={id} className="form-checkbox-label">{label}</label>
-    </div>
+        <span className="form-checkbox-span">{label}</span>
+    </label>
   )
 }
 

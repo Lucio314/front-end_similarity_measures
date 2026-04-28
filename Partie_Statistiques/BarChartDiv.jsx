@@ -6,7 +6,7 @@ import { RechartsDevtools } from '@recharts/devtools' //Pas besoin je pense
 function BarChartDiv({dataset}){
   return (
     <div className="bar-chart-div">
-      <p>Répartition des activités</p>
+      <h3 className="h3-title">Répartition des activités</h3>
       <ResponsiveContainer width="100%" height="100%">
         <BarChart 
           width={500}
