@@ -47,7 +47,7 @@ function ExampleData({ onLoad }: ExampleDataProps) {
       </p>
 
       <button
-        className="btn px-4 text-white"
+        className="btn-charger px-4 text-white"
         style={{
           backgroundColor: loaded ? '#15803d' : '#16a34a',
           borderColor: loaded ? '#15803d' : '#16a34a',

@@ -1,11 +1,11 @@
 import React from "react";
-import StatsGlobales from "./StatsGlobales";
-import StatsDurees from "./StatsDurees";
-import IconInfo from "../component/Icons/IconInfo";
-import StatsTrous from "./StatsTrous";
-import BarChartDiv from "./BarChartDiv";
-import PieChartDiv from "./PieChartDiv";
-import StatsDetails from "./StatsDetails";
+import OverallStats from "./OverallStats";
+import DurationStats from "./DurationStats";
+import InformationIcon from "../../components/icons/InformationIcon";
+import MissingStats from "./MissingStats";
+import BarChart from "./BarChart";
+import PieChart from "./PieChart";
+import DetailsStats from "./DetailsStats";
 import { useEffect } from "react";
 
 const STATSGLOBALES = [
@@ -51,32 +51,32 @@ const STATSDETAILS = [
 /**
  * @returns 
  */
-function StatistiquesDataset(){
+function DatasetStatistics(){
     const listeStatsGlobales = []
     for(let stats of STATSGLOBALES){
         listeStatsGlobales.push(
-            <StatsGlobales id={stats.icon} nombre={stats.nombre} text={stats.text}/>
+            <OverallStats id={stats.icon} nombre={stats.nombre} text={stats.text}/>
         )
     }
 
     const listeStatsDurees = []
     for(let stats of STATSDUREES){
         listeStatsDurees.push(
-            <StatsDurees duree={stats.duree} temps={stats.temps}/>
+            <DurationStats duree={stats.duree} temps={stats.temps}/>
         )
     }
 
     const listeStatsTrous = []
     for(let stats of STATSTROUS){
         listeStatsTrous.push(
-            <StatsTrous stats={stats.stats} valeur={stats.valeur}/>
+            <MissingStats stats={stats.stats} valeur={stats.valeur}/>
         )
     }
 
     const listeStatsDetails = []
     for(let stats of STATSDETAILS){
         listeStatsDetails.push(
-            <StatsDetails activite={stats.activite} nombre={stats.nombre}/>
+            <DetailsStats activite={stats.activite} nombre={stats.nombre}/>
         )
     }
 
@@ -86,14 +86,14 @@ function StatistiquesDataset(){
                 {listeStatsGlobales}
             </div>
             <div className="stats-dataset-durees">
-                <h3 className="h3-title">Durées des séquences</h3>
+                <h3 className="fw-bold mb-1">Durées des séquences</h3>
                 <div className="stats-durees">
                     {listeStatsDurees}
                 </div>
             </div>
             <div id="div-stats-dataset-trous" className="stats-dataset-trous" hidden>
-                <h3 className="h3-title">
-                    <IconInfo/>
+                <h3 className="fw-bold mb-1">
+                    <InformationIcon/>
                     Données Manquantes (Trous)
                 </h3>
                 <div className="stats-trous">
@@ -108,18 +108,18 @@ function StatistiquesDataset(){
                 </div>
             </div>
             <div className="stats-dataset-graphes">
-                <BarChartDiv/>
-                <PieChartDiv/>
+                <BarChart/>
+                <PieChart/>
             </div>
             <div className="stats-dataset-details">
-                <h3 className="h3-title">Détails des activités présentes</h3>
+                <h3 className="fw-bold mb-1">Détails des activités présentes</h3>
                 <div className="stats-details">
                     {listeStatsDetails}
                 </div>
             </div>
         </div>
     )
-    //BarChartDiv et PieChartDiv recoivent normalement le dataset en paramètre
+    //BarChatDiv et PieChartDiv reçoivent normalement le dataset en paramètre
 }
 
-export default StatistiquesDataset
+export default DatasetStatistics

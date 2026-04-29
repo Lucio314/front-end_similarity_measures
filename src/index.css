@@ -12,3 +12,32 @@ body {
   min-height: 100vh;
   background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%);
 }
+
+.btn-next:hover{
+  background-color: #3029b8;
+  border-color: #3029b8;
+}
+
+.btn-return:hover{
+  background-color: #5b5b61;
+  border-color: #5b5b61;
+}
+
+.btn-show-seq:hover{
+  background-color: #4a18a8;
+  border-color: #4a18a8;
+}
+
+.btn-charger:hover{
+  background-color: #0d612c;
+  border-color: #0d612c;
+}
+
+.btn-select-file{
+  background-color: #3029b8;
+  border-color: #3029b8;
+}
+
+.icon-poubelle:hover{
+  stroke: #7c0404;
+}

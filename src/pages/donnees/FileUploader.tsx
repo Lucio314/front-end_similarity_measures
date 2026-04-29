@@ -89,7 +89,7 @@ function FileUploader({ files, onFilesChange }: FileUploaderProps) {
         />
       </label>
       <button
-        className="btn text-white px-4"
+        className="btn-select-file text-white px-4"
         style={{ backgroundColor: "#4f46e5", borderColor: "#4f46e5" }}
         onClick={() => inputRef.current?.click()}
       >
@@ -106,8 +106,12 @@ function FileUploader({ files, onFilesChange }: FileUploaderProps) {
             >
               <span className="text-truncate me-2">📄 {file.name}</span>
               <button
-                className="btn btn-sm btn-link text-danger p-0"
+                className="btn-charger btn-sm btn-link text-danger p-0"
                 onClick={() => removeFile(file.name)}
+                style={{
+                  backgroundColor: '#15803d',
+                  borderColor: '#15803d',
+                }}
               >
                 ✕
               </button>
