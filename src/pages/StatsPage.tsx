@@ -57,7 +57,7 @@ function StatsPage({ onNext, onBack }: DataPageProps){
                                     label="Activer la recherche multidimensionnelle (Activités Humaines + Données Météo)"
                                 />
                             </div>
-                            <p className="h2-title-p">
+                            <p className="text-muted mb-0">
                                 Sélectionner le dataset :
                                 <MenuSelect 
                                     options={DATASETS}
@@ -69,28 +69,30 @@ function StatsPage({ onNext, onBack }: DataPageProps){
                 </div>
                 <StatistiquesSequences/>
             </div>
-            <button 
-                className="btn-next px-5 py-2 text-white"
-                onClick={onNext}
-                style={{
-                    backgroundColor: "#4f46e5",
-                    borderColor: "#4f46e5",
-                    cursor: "pointer",
-                }}
-            >
-                Construire l'ontologie →
-            </button>
-            <button 
-                className="btn-return px-5 py-2 text-black"
-                onClick={onBack}
-                style={{
-                    backgroundColor: "#858494",
-                    borderColor: "#858494",
-                    cursor: "pointer",
-                }}
-            >
-                ← Retour
-            </button>
+            <div className="d-flex justify-content-end mt-4">
+                <button 
+                    className="btn-next px-5 py-2 text-white"
+                    onClick={onNext}
+                    style={{
+                        backgroundColor: "#4f46e5",
+                        borderColor: "#4f46e5",
+                        cursor: "pointer",
+                    }}
+                >
+                    Construire l'ontologie →
+                </button>
+                <button 
+                    className="btn-return px-5 py-2 text-black"
+                    onClick={onBack}
+                    style={{
+                        backgroundColor: "#858494",
+                        borderColor: "#858494",
+                        cursor: "pointer",
+                    }}
+                >
+                    ← Retour
+                </button>
+            </div>
         </div>
     )
     //Faire les event des buttons

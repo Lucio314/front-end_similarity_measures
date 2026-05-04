@@ -1,6 +1,8 @@
 import React from 'react';
 import GreenCheck from '../component/Icons/GreenCheck'
 import ParametreRFTH from './ParametreRFTH';
+import ParametreSliders from './ParametreSliders'
+import ParametreConfig from './ParametreConfig'
 import { useState } from 'react';
 
 function Parametres({}){

@@ -106,11 +106,11 @@ function FileUploader({ files, onFilesChange }: FileUploaderProps) {
             >
               <span className="text-truncate me-2">📄 {file.name}</span>
               <button
-                className="btn-charger btn-sm btn-link text-danger p-0"
+                className="btn-sm btn-link text-danger p-0"
                 onClick={() => removeFile(file.name)}
                 style={{
-                  backgroundColor: '#15803d',
-                  borderColor: '#15803d',
+                  backgroundColor: '#ffffff',
+                  borderColor: '#ffffff',
                 }}
               >
                 ✕
