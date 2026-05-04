@@ -20,3 +20,10 @@ export interface AppContextType {
   uploadedFiles: File[];
   setUploadedFiles: React.Dispatch<React.SetStateAction<File[]>>;
 }
+
+export interface ActivitiesProps{
+    actiId: string;
+    icon: string;
+    nomActi: string;
+    temps: string;
+} //Type pour les json des séquence de méthodes

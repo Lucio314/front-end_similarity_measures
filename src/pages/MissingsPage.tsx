@@ -1,7 +1,12 @@
 import React from 'react';
 import MissingsStratManagement from './trous/MissingsStratManagement';
 
-function Trous({}){
+interface MissingsPageProps {
+  onNext: () => void;
+  onBack: () => void;
+}
+
+function Trous({onNext, onBack} : MissingsPageProps){
     return (
         <div id="missings-card" className="card border-0 shadow-sm" style={{ borderRadius: 12 }}>
             <div className="card-body p-5">
@@ -25,28 +30,30 @@ function Trous({}){
                         </p>
                     </div>
                 </div>
-                <button 
-                    className="btn-next px-5 py-2 text-white"
-                    onClick={onNext}
-                    style={{
-                        backgroundColor: "#4f46e5",
-                        borderColor: "#4f46e5",
-                        cursor: "pointer",
-                    }}
-                >
-                    Confirmer la stratégie →
-                </button>
-                <button 
-                    className="btn-return px-5 py-2 text-black"
-                    onClick={onBack}
-                    style={{
-                        backgroundColor: "#858494",
-                        borderColor: "#858494",
-                        cursor: "pointer",
-                    }}
-                >
-                    ← Retour
-                </button>
+                <div className="d-flex justify-content-end mt-4">
+                    <button 
+                        className="btn-next px-5 py-2 text-white"
+                        onClick={onNext}
+                        style={{
+                            backgroundColor: "#4f46e5",
+                            borderColor: "#4f46e5",
+                            cursor: "pointer",
+                        }}
+                    >
+                        Confirmer la stratégie →
+                    </button>
+                    <button 
+                        className="btn-return px-5 py-2 text-black"
+                        onClick={onBack}
+                        style={{
+                            backgroundColor: "#858494",
+                            borderColor: "#858494",
+                            cursor: "pointer",
+                        }}
+                    >
+                        ← Retour
+                    </button>
+                </div>
             </div>
         </div>
     )

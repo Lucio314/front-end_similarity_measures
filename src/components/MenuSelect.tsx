@@ -1,7 +1,7 @@
 import React from "react";
 
 interface MenuSelectProps {
-    options: String
+    options: string[]
 }
 
 function MenuSelect({options} : MenuSelectProps){
