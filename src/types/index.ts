@@ -27,3 +27,9 @@ export interface ActivitiesProps{
     nomActi: string;
     temps: string;
 } //Type pour les json des séquence de méthodes
+
+export interface ListParametersProps{
+    nomParam: string;
+    getter: string | number;
+    setter: React.Dispatch<React.SetStateAction<string>> | React.Dispatch<React.SetStateAction<number>>;
+} //Type pour ListeParametres dans ParameterPage

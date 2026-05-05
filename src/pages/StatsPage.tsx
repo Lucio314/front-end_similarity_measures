@@ -3,7 +3,7 @@ import { useState } from "react";
 import MenuSelect from "../components/MenuSelect";
 import Checkbox from "../components/Checkbox";
 import DatasetStatistics from "./statistiques/DatasetStatistics";
-import StatistiquesSequences from "./StatistiquesSequences";
+import SequencesStatistics from "./statistiques/SequencesStatistics";
 
 const DATASETS = []
 //Représente les différents datasets téléchargés/par défaut
@@ -31,8 +31,24 @@ function StatsPage({ onNext, onBack }: DataPageProps){
         }
     }
 
+    const handleNextPage = () => {
+        const divStatsPage = document.getElementById("stats-card")
+        const divOntologyPage = document.getElementById("ontology-card")
+        divStatsPage.hidden = true
+        divOntologyPage.hidden = false
+        onNext
+    }
+
+    const handlePreviousPage = () => {
+        const divDataPage = document.getElementById("data-card")
+        const divStatsPage = document.getElementById("stats-card")
+        divStatsPage.hidden = true
+        divDataPage.hidden = false
+        onBack
+    }
+
     return(
-        <div id="stats-card" className="card border-0 shadow-sm" style={{ borderRadius: 12 }}>
+        <div id="stats-card" className="card border-0 shadow-sm" style={{ borderRadius: 12 }} hidden>
             <div className="card-body p-5">
                 <div id="div-part-body-stats" className="part-main-body">
                     <div className="part-body">
@@ -67,12 +83,12 @@ function StatsPage({ onNext, onBack }: DataPageProps){
                         <DatasetStatistics/>
                     </div>
                 </div>
-                <StatistiquesSequences/>
+                <SequencesStatistics/>
             </div>
             <div className="d-flex justify-content-end mt-4">
                 <button 
                     className="btn-next px-5 py-2 text-white"
-                    onClick={onNext}
+                    onClick={handleNextPage}
                     style={{
                         backgroundColor: "#4f46e5",
                         borderColor: "#4f46e5",
@@ -83,7 +99,7 @@ function StatsPage({ onNext, onBack }: DataPageProps){
                 </button>
                 <button 
                     className="btn-return px-5 py-2 text-black"
-                    onClick={onBack}
+                    onClick={handlePreviousPage}
                     style={{
                         backgroundColor: "#858494",
                         borderColor: "#858494",

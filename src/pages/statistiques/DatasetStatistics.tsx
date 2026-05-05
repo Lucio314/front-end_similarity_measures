@@ -3,8 +3,8 @@ import OverallStats from "./OverallStats";
 import DurationStats from "./DurationStats";
 import InformationIcon from "../../components/icons/InformationIcon";
 import MissingStats from "./MissingStats";
-import BarChart from "./BarChart";
-import PieChart from "./PieChart";
+import BarsChart from "./BarsChart";
+import PiesChart from "./PiesChart";
 import DetailsStats from "./DetailsStats";
 import { useEffect } from "react";
 
@@ -108,8 +108,8 @@ function DatasetStatistics(){
                 </div>
             </div>
             <div className="stats-dataset-graphes">
-                <BarChart/>
-                <PieChart/>
+                <BarsChart/>
+                <PiesChart/>
             </div>
             <div className="stats-dataset-details">
                 <h3 className="fw-bold mb-1">Détails des activités présentes</h3>

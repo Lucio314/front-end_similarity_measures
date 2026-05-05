@@ -5,7 +5,11 @@ interface OntologyTreeProps{
 }
 
 function OntologyTree({}){
-  return
+  return (
+    <div>
+      
+    </div>
+  )
 }
 
 //A complèter avec du coup le retour de l'api pour faire l'arbre

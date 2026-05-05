@@ -1,12 +1,13 @@
 //npm i recharts
 import React from 'react';
-import {BarChart, Bar, ResponsiveContainer, XAxis, YAxis, CartesianGrid, Tooltip, TooltipContentProps} from 'recharts'
+import {BarChart, Bar, ResponsiveContainer, XAxis, YAxis, CartesianGrid, Tooltip} from 'recharts'
+import type { TooltipContentProps } from 'recharts'
 
-interface BarChartProps {
+interface BarsChartProps {
     dataset : JSON; //Pour l'instant JSON, à voir si modif
 }
 
-function BarChart({dataset} : BarChartProps){
+function BarsChart({dataset} : BarsChartProps){
   return (
     <div className="bar-chart-div">
       <h3 className="h3-title">Répartition des activités</h3>
@@ -45,4 +46,4 @@ function CustomToolTip({active, payload, label} : TooltipContentProps){
   }
 }
 
-export default BarChart
+export default BarsChart
