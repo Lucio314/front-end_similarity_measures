@@ -1,9 +1,9 @@
 import React from 'react';
 
 interface ActivitiesStatsProps{
-    emoji: String;
-    nomActivite: String;
-    temps: String;
+    emoji: string;
+    nomActivite: string;
+    temps: string;
 }
 
 function ActivitiesStats({emoji, nomActivite, temps} : ActivitiesStatsProps){

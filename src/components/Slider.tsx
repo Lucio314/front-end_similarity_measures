@@ -1,11 +1,11 @@
 import React from 'react';
 
 interface SliderProps{
-    valueSlider: string;
-    onValueSliderChange: (value : string) => void;
-    minValue: string;
-    maxValue: string;
-    pas: string;
+    valueSlider: number;
+    onValueSliderChange: (value : number) => void;
+    minValue: number;
+    maxValue: number;
+    pas: number;
 }
 
 function Slider({valueSlider, onValueSliderChange, minValue, maxValue, pas} : SliderProps){
@@ -18,7 +18,7 @@ function Slider({valueSlider, onValueSliderChange, minValue, maxValue, pas} : Sl
         max={maxValue}
         value={valueSlider}
         step={pas}
-        onChange={(e) => onValueSliderChange((e.target.value))}
+        onChange={(e) => onValueSliderChange((e.target.valueAsNumber))}
       />
     </div>
   )

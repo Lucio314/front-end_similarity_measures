@@ -2,10 +2,10 @@ import React from 'react';
 import Slider from '../../components/Slider';
 
 interface MultidimParameterProps{
-    valueSliderMobilite: string;
-    valueSliderMeteo: string;
-    onValueSliderMobilitieChange: (value: string) => void;
-    onValueSliderMeteoChange: (value: string) => void;
+    valueSliderMobilite: number;
+    valueSliderMeteo: number;
+    onValueSliderMobilitieChange: (value: number) => void;
+    onValueSliderMeteoChange: (value: number) => void;
 }
 
 function MultidimParameter({valueSliderMobilite, valueSliderMeteo, onValueSliderMobilitieChange, onValueSliderMeteoChange} : MultidimParameterProps){
@@ -19,9 +19,9 @@ function MultidimParameter({valueSliderMobilite, valueSliderMeteo, onValueSlider
                 <Slider
                     valueSlider={valueSliderMobilite}
                     onValueSliderChange={onValueSliderMobilitieChange}
-                    minValue={"0.0"}
-                    maxValue={"100.0"}
-                    pas={"10.0"}
+                    minValue={0.0}
+                    maxValue={100.0}
+                    pas={10.0}
                 />
             </div>
             <div className="param-multidim-slider-meteo">
@@ -32,9 +32,9 @@ function MultidimParameter({valueSliderMobilite, valueSliderMeteo, onValueSlider
                 <Slider
                     valueSlider={valueSliderMeteo}
                     onValueSliderChange={onValueSliderMeteoChange}
-                    minValue={"0.0"}
-                    maxValue={"100.0"}
-                    pas={"10.0"}
+                    minValue={0.0}
+                    maxValue={100.0}
+                    pas={10.0}
                 />
             </div>
             <div className="param-multidim-conseil">

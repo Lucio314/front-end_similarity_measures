@@ -48,11 +48,26 @@ function MethodPage({onNext, onBack} : MethodPageProps){
             setTextDemoRFTHButton("Voir")
             divDemoRFTH.hidden=true
         }
+    }
 
+    const handleNextPage = () => {
+        const divMethodPage = document.getElementById("method-card")
+        const divParameterPage = document.getElementById("parameter-card")
+        divMethodPage.hidden = true
+        divParameterPage.hidden = false
+        onNext
+    }
+
+    const handlePreviousPage = () => {
+        const divMethodPage = document.getElementById("method-card")
+        const divPatternPage = document.getElementById("pattern-card")
+        divMethodPage.hidden = true
+        divPatternPage.hidden = false
+        onBack
     }
 
     return (
-        <div id="method-card" className="card border-0 shadow-sm" style={{ borderRadius: 12 }}>
+        <div id="method-card" className="card border-0 shadow-sm" style={{ borderRadius: 12 }} hidden>
             <div className="card-body p-5">
                 <div className="text-center mb-4">
                     <h2 className="text-center mb-4">🎯 Méthode de Similarité</h2>
@@ -78,7 +93,7 @@ function MethodPage({onNext, onBack} : MethodPageProps){
             <div className="d-flex justify-content-end mt-4">
                 <button 
                     className="btn-next px-5 py-2 text-white"
-                    onClick={onNext}
+                    onClick={handleNextPage}
                     style={{
                         backgroundColor: "#4f46e5",
                         borderColor: "#4f46e5",
@@ -90,7 +105,7 @@ function MethodPage({onNext, onBack} : MethodPageProps){
                 </button>
                 <button 
                     className="btn-return px-5 py-2 text-black"
-                    onClick={onBack}
+                    onClick={handlePreviousPage}
                     style={{
                         backgroundColor: "#858494",
                         borderColor: "#858494",

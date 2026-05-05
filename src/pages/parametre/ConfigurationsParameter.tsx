@@ -1,7 +1,7 @@
 import React from 'react';
-import SliderParameter from './SliderParameter';
-import { useState } from 'react';
 import type { ListParametersProps } from '../../types';
+import GreenCheckIcon from '../../components/icons/GreenCheckIcon';
+import ConfigurationParameter from './ConfigurationParameter';
 
 const PARAMETRES = [
     {
@@ -34,31 +34,35 @@ const PARAMETRES = [
     }
 ]
 
-interface ParametreSlidersProps{
+interface ConfigurationParameterProps{
     listeParametres: ListParametersProps[];
-    nomMethode: string;
+    nomMethode: string; 
 }
 
-function ParametreSliders({listeParametres, nomMethode} : ParametreSlidersProps){
-
-
-    let parametre = []
+function ConfigurationsParameter({listeParametres, nomMethode} : ConfigurationParameterProps){
+    const listConfigParam = []
     for(let param of PARAMETRES){
         if(param.nomMethode === nomMethode && param.parametres.length !== 0){
             for(let i = 0; i < param.parametres.length; i++){
-                parametre.push(<SliderParameter nomSlider={param.parametres[i]}/>)
+                listConfigParam.push(<ConfigurationParameter nomParam={param.parametres[i]} param={listeParametres}/>)
             }
             break
         }
     }
 
     return (
-        <div className="param-sliders">
-            <SliderParameter nomSlider="K"/>
-            <SliderParameter nomSlider="Similarite"/>
-            {parametre}
+        <div className="">
+            <h4 className="fw-bold mb-1">
+                <GreenCheckIcon/>
+                Configuration actuelle
+            </h4>
+            <div className="">
+                <ConfigurationParameter nomParam="K" param={listeParametres}/>
+                <ConfigurationParameter nomParam="Similarite" param={listeParametres}/>
+                {listConfigParam}
+            </div>
         </div>
     )
 }
 
-export default ParametreSliders
+export default ConfigurationsParameter

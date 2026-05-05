@@ -1,10 +1,10 @@
 import React from 'react';
 
 interface CheckboxProps {
-    id: String,
+    id: string,
     checked: boolean, 
-    onChange: () => void
-    label: String
+    onChange: (value: boolean) => void
+    label: string
 }
 
 function Checkbox({id, checked, onChange, label} : CheckboxProps){

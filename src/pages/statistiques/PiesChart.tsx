@@ -1,6 +1,7 @@
 //npm i recharts
 import React from 'react';
-import {PieChart, Pie, ResponsiveContainer, Tooltip, TooltipContentProps, Sector, PieSectorShapeProps} from 'recharts'
+import {PieChart, Pie, ResponsiveContainer, Tooltip, Sector} from 'recharts'
+import type { TooltipContentProps, PieSectorShapeProps } from 'recharts'
 
 const COLORS =[
     '#ff2828',
@@ -20,12 +21,12 @@ const MyCustomPie = (props: PieSectorShapeProps) => {
   return <Sector {...props} fill={COLORS[props.index % COLORS.length]} />;
 }; 
 
-interface PieChartProps {
+interface PiesChartProps {
     dataset: JSON; //Pour l'instant JSON, à voir si modif
     isAnimationActive: boolean;
 }
 
-function PieChart({dataset, isAnimationActive = true } : PieChartProps){ 
+function PiesChart({dataset, isAnimationActive = true } : PiesChartProps){ 
   return (
     <div className="pie-chart-div">
       <h3 className="h3-title">Distribution des activités</h3>
@@ -48,7 +49,7 @@ function PieChart({dataset, isAnimationActive = true } : PieChartProps){
 }
 
 function CustomToolTip({active, payload} : TooltipContentProps){
-  if(active && payload && payload.lenght){
+  if(active && payload && payload.length){
     return (
       <div className="p-4 bg-slate-900 flex flex-col gap-4 rounded-md">
         <p className="text-sm text-blue-400">
@@ -60,4 +61,4 @@ function CustomToolTip({active, payload} : TooltipContentProps){
   }
 }
 
-export default PieChart
+export default PiesChart

@@ -13,6 +13,14 @@ function DataPage({ onNext }: DataPageProps) {
 
   const canProceed = files.length > 0 || exampleLoaded;
 
+  const handleNextPage = () => {
+    const divDataPage = document.getElementById("data-card")
+    const divStatsPage = document.getElementById("stats-card")
+    divDataPage.hidden = true
+    divStatsPage.hidden = false
+    onNext
+  }
+
   return (
     <div id="data-card" className="card border-0 shadow-sm" style={{ borderRadius: 12 }}>
       <div className="card-body p-5">
@@ -43,7 +51,7 @@ function DataPage({ onNext }: DataPageProps) {
               cursor: canProceed ? "pointer" : "not-allowed",
             }}
             disabled={!canProceed}
-            onClick={onNext}
+            onClick={handleNextPage}
           >
             Suivant : Statistiques →
           </button>

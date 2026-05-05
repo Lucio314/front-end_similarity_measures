@@ -10,6 +10,9 @@ const PARAMS = [
         nomClasse: "param-slider-k", 
         paramTitre: "K - Nombre de résultats",
         paramValue: ["résultats"],
+        paramValueMax: 50,
+        paramValueMin: 1,
+        paramValuePas: 1,
         paramLegend: ["1 résultats", "Combien de séquences similaires voulez-vous voir ? C'est le \"TOP-K\" de votre recherche.", "50 résultats"],
         paramInfo: "Par exemple, K=5 affichera les 5 séquences les plus similaires à votre motif. Plus K est élevé, plus vous verrez de résultats, mais ils seront potentiellement moins similaires."
     },
@@ -18,6 +21,9 @@ const PARAMS = [
         nomClasse: "param-slider-similarite",
         paramTitre: "Seuil de similarité",
         paramValue: [""],
+        paramValueMax: 0,
+        paramValueMin: 1,
+        paramValuePas: 0.05,
         paramLegend: ["0", "À partir de quelle similarité minimale accepter un résultat ?", "1"],
         paramInfo: "Une valeur de 0.5 signifie que seules les séquences avec au moins 50% de similarité seront retournées. Plus le seuil est élevé, plus les résultats seront stricts."
     },
@@ -26,6 +32,9 @@ const PARAMS = [
         nomClasse: "param-slider-position-weight",
         paramTitre: "Poids de la position (CED)",
         paramValue: [""],
+        paramValueMax: 0,
+        paramValueMin: 1,
+        paramValuePas: 0.05,
         paramLegend: ["0", "Importance de l'écart de position entre les activités", "1"],
         paramInfo: "Pour CED. Contrôle l'impact de la différence de position. 0 = ignore la position, 1 = position très importante."
     },
@@ -34,6 +43,9 @@ const PARAMS = [
         nomClasse: "param-slider-semantic-weight",
         paramTitre: "Poids sémantique (CED)",
         paramValue: [""],
+        paramValueMax: 0,
+        paramValueMin: 1,
+        paramValuePas: 0.05,
         paramLegend: ["0", "Importance de la similarité sémantique", "1"],
         paramInfo: "Pour CED. Contrôle l'importance de la similarité sémantique via l'ontologie. 0 = ignore la sémantique, 1 = sémantique très importante."
     },
@@ -42,6 +54,9 @@ const PARAMS = [
         nomClasse: "param-slider-fuzzy-window",
         paramTitre: "Fenêtre floue (FTH, FTH-T, RFTH)",
         paramValue: ["%"],
+        paramValueMax: 10,
+        paramValueMin: 100,
+        paramValuePas: 5,
         paramLegend: ["10 %", "Pourcentage de la longueur de séquence pour la fenêtre floue", "100 %"],
         paramInfo: "Pour FTH et RFTH. Définit la fenêtre dans laquelle on considère les activités pour la similarité temporelle. 50% = on considère les activités dans la moitié de la séquence normalisée."
     },
@@ -50,6 +65,9 @@ const PARAMS = [
         nomClasse: "param-slider-alignment-strategy",
         paramTitre: "Stratégie d'alignement (FTH-T)",
         paramValue: ["exhaustive", "centered", "greedy"],
+        paramValueMax: -1,
+        paramValueMin: -1,
+        paramValuePas: -1,
         paramLegend: ["Comment aligner les séquences lors de la troncature"],
         paramInfo: "Pour FTH-T. \"exhaustive\" teste tous les alignements possibles, \"centered\" aligne au centre, \"greedy\" utilise une heuristique rapide."
     },
@@ -58,6 +76,9 @@ const PARAMS = [
         nomClasse: "param-slider-lambda",
         paramTitre: "λ (Lambda) - Seuil de comparabilité (RFTH)",
         paramValue: [""],
+        paramValueMax: 10,
+        paramValueMin: 240,
+        paramValuePas: 10,
         paramLegend: ["10 min", "Différence maximale de durée totale pour comparer deux séquences", "240 min"],
         paramInfo: "Pour RFTH uniquement. Si la différence de durée totale entre deux séquences dépasse λ minutes, elles sont considérées non comparables. Recommandé: 60 minutes."
     },
@@ -66,6 +87,9 @@ const PARAMS = [
         nomClasse: "param-slider-warping-window",
         paramTitre: "Fenêtre de warping (DTW)",
         paramValue: ["positions"],
+        paramValueMax: 1,
+        paramValueMin: 50,
+        paramValuePas: 1,
         paramLegend: ["1 positions", "Quelle flexibilité permettre dans l'alignement temporel ?", "50 positions"],
         paramInfo: "Pour DTW uniquement. Une valeur plus élevée permet plus de flexibilité dans l'alignement des séquences, mais augmente le temps de calcul. Recommandé: 10-20% de la longueur moyenne."
     },
@@ -74,6 +98,9 @@ const PARAMS = [
         nomClasse: "param-slider-transition-threshold",
         paramTitre: "Seuil de transition (DHD)",
         paramValue: [""],
+        paramValueMax: 0,
+        paramValueMin: 1,
+        paramValuePas: 0.05,
         paramLegend: ["0", "Probabilité minimale pour considérer une transition normale", "1"],
         paramInfo: "Pour DHD. Seuil en dessous duquel une transition est considérée comme anormale. Plus bas = plus de détection d'anomalies."
     }
@@ -81,8 +108,8 @@ const PARAMS = [
 
 interface SliderParameterProps{
     nomSlider: string; 
-    valueSlider: string;
-    onValueSliderChange: (value: string) => void;
+    valueSlider: number;
+    onValueSliderChange: (value: number) => void;
 
 } 
 
@@ -93,7 +120,7 @@ function SliderParameter({nomSlider, valueSlider, onValueSliderChange} : SliderP
             dicParam = param;
         }
     }
-// Truc différent pour FTH-T (menu déroulant)
+// Menu déroulant pout FTH-T
     if(dicParam.param === "alignment_strategy"){
         return (
             <div className={dicParam.nomClasse}>
@@ -107,7 +134,7 @@ function SliderParameter({nomSlider, valueSlider, onValueSliderChange} : SliderP
                 <div className="param-slider-legend">
                     <span>{dicParam.paramLegend[0]}</span>
                 </div>
-                <div className="param-slider-info" hidden>
+                <div id="param-slider-info" className="param-slider-info" hidden>
                     <InformationIcon/>
                     {dicParam.paramInfo}
                 </div>
@@ -122,20 +149,20 @@ function SliderParameter({nomSlider, valueSlider, onValueSliderChange} : SliderP
                         <InterrogationIcon/>
                     </button>
                 </div>
-                <span className="param-slider-value">{dicParam.paramValue}</span>
+                <span className="param-slider-value">{valueSlider}{dicParam.paramValue[0]}</span>
                 <Slider
                     valueSlider={valueSlider}
                     onValueSliderChange={onValueSliderChange}
-                    minValue={}
-                    maxValue={}
-                    pas={}
+                    minValue={dicParam.paramValueMin}
+                    maxValue={dicParam.paramValueMin}
+                    pas={dicParam.paramValuePas}
                 />
                 <div className="param-slider-legend">
                     <span>{dicParam.paramLegend[0]}</span>
                     <span>{dicParam.paramLegend[1]}</span>
                     <span>{dicParam.paramLegend[2]}</span>
                 </div>
-                <div className="param-slider-info" hidden>
+                <div id="param-slider-info" className="param-slider-info" hidden>
                     <InformationIcon/>
                     {dicParam.paramInfo}
                 </div>

@@ -12,8 +12,24 @@ interface PatternPageProps{
 function PatternPage({onNext, onBack} : PatternPageProps){
     const [dureeMotif, setDureeMotif] = useState<number>(0)
 
+    const handleNextPage = () => {
+        const divPatternPage = document.getElementById("pattern-card")
+        const divMethodPage = document.getElementById("method-card")
+        divPatternPage.hidden = true
+        divMethodPage.hidden = false
+        onNext
+    }
+
+    const handlePreviousPage = () => {
+        const divPatternPage = document.getElementById("pattern-card")
+        const divMissingsPage = document.getElementById("missings-card")
+        divPatternPage.hidden = true
+        divMissingsPage.hidden = false
+        onBack
+    }
+
     return (
-        <div id="pattern-card" className="card border-0 shadow-sm" style={{ borderRadius: 12 }}>
+        <div id="pattern-card" className="card border-0 shadow-sm" style={{ borderRadius: 12 }} hidden>
             <div className="card-body p-5">
                 <div className="text-center mb-4">
                     <h2 className="fw-bold mb-1">🎨 Construire votre motif de recherche</h2>
@@ -39,7 +55,7 @@ function PatternPage({onNext, onBack} : PatternPageProps){
                 <div className="d-flex justify-content-end mt-4">
                     <button 
                         className="btn-next px-5 py-2 text-white"
-                        onClick={onNext}
+                        onClick={handleNextPage}
                         style={{
                             backgroundColor: "#4f46e5",
                             borderColor: "#4f46e5",
@@ -51,7 +67,7 @@ function PatternPage({onNext, onBack} : PatternPageProps){
                     </button>
                     <button 
                         className="btn-return px-5 py-2 text-black"
-                        onClick={onBack}
+                        onClick={handlePreviousPage}
                         style={{
                             backgroundColor: "#858494",
                             borderColor: "#858494",

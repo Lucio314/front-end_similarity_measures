@@ -7,8 +7,24 @@ interface MissingsPageProps {
 }
 
 function Trous({onNext, onBack} : MissingsPageProps){
+    const handleNextPage = () => {
+        const divMissingsPage = document.getElementById("missings-card")
+        const divPatternPage = document.getElementById("pattern-card")
+        divMissingsPage.hidden = true
+        divPatternPage.hidden = false
+        onNext
+    }
+
+    const handlePreviousPage = () => {
+        const divMissingsPage = document.getElementById("missings-card")
+        const divOntologyPage = document.getElementById("ontology-card")
+        divMissingsPage.hidden = true
+        divOntologyPage.hidden = false
+        onBack
+    }
+
     return (
-        <div id="missings-card" className="card border-0 shadow-sm" style={{ borderRadius: 12 }}>
+        <div id="missings-card" className="card border-0 shadow-sm" style={{ borderRadius: 12 }} hidden>
             <div className="card-body p-5">
                 <div className="text-center mb-4">
                     <div className="div-missing-warning">
@@ -33,7 +49,7 @@ function Trous({onNext, onBack} : MissingsPageProps){
                 <div className="d-flex justify-content-end mt-4">
                     <button 
                         className="btn-next px-5 py-2 text-white"
-                        onClick={onNext}
+                        onClick={handleNextPage}
                         style={{
                             backgroundColor: "#4f46e5",
                             borderColor: "#4f46e5",
@@ -44,7 +60,7 @@ function Trous({onNext, onBack} : MissingsPageProps){
                     </button>
                     <button 
                         className="btn-return px-5 py-2 text-black"
-                        onClick={onBack}
+                        onClick={handlePreviousPage}
                         style={{
                             backgroundColor: "#858494",
                             borderColor: "#858494",
