@@ -2,11 +2,11 @@ import React from 'react';
 import ProsNCons from '../../components/ProsNCons';
 
 interface MissingsStratProps{
-    emoji: String;
-    strategie: String;
-    descriptionStrategie: String;
-    avantages: Array<String>;
-    inconvenients: Array<String>;
+    emoji: string;
+    strategie: string;
+    descriptionStrategie: string;
+    avantages: Array<string>;
+    inconvenients: Array<string>;
 }
 
 function MissingsStrat({emoji, strategie, descriptionStrategie, avantages, inconvenients} : MissingsStratProps){

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { type JSX } from 'react';
 import MissingsStrat from './MissingsStrat';
 
 const STRATEGIES = [
@@ -47,9 +47,9 @@ const STRATEGIES = [
 ]
 
 function MissingsStratManagement({}){
-  const strategiesMissings = []
+  const strategiesMissings : Array<JSX.Element> = []
   for(let strategy of STRATEGIES){
-    strategiesMissing.push(
+    strategiesMissings.push(
     <MissingsStrat
       emoji={strategy.emoji}
       strategie={strategy.strategie}

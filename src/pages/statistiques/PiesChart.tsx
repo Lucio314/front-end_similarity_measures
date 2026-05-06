@@ -1,7 +1,8 @@
 //npm i recharts
 import React from 'react';
-import {PieChart, Pie, ResponsiveContainer, Tooltip, Sector} from 'recharts'
-import type { TooltipContentProps, PieSectorShapeProps } from 'recharts'
+import {PieChart, Pie, Tooltip, Sector} from 'recharts'
+import type { PieSectorShapeProps, TooltipIndex } from 'recharts'
+import type { DataStatsProps } from '../../types';
 
 const COLORS =[
     '#ff2828',
@@ -14,7 +15,6 @@ const COLORS =[
     '#00C49F',
     '#0d7494',
     '#2f1cdf'
-
 ]
 
 const MyCustomPie = (props: PieSectorShapeProps) => {
@@ -22,33 +22,32 @@ const MyCustomPie = (props: PieSectorShapeProps) => {
 }; 
 
 interface PiesChartProps {
-    dataset: JSON; //Pour l'instant JSON, à voir si modif
-    isAnimationActive: boolean;
+    dataset: DataStatsProps[];
+    isAnimationActive?: boolean;
+    defaultIndex? : TooltipIndex;
 }
 
-function PiesChart({dataset, isAnimationActive = true } : PiesChartProps){ 
+function PiesChart({dataset, isAnimationActive = true, defaultIndex = undefined} : PiesChartProps){ 
   return (
     <div className="pie-chart-div">
       <h3 className="h3-title">Distribution des activités</h3>
-      <ResponsiveContainer width="100%" height="100%">
         <PieChart style={{ width: '100%', maxWidth: '500px', maxHeight: '80vh', aspectRatio: 1 }} responsive>
           <Pie
-            datakey=""
+            dataKey="value"
             data={dataset}
             cx="50%"
             cy="50%"
-            fill=""
+            fill="#8884d8"
             isAnimationActive={isAnimationActive}
             shape={MyCustomPie}
           />
-          <Tooltip content={CustomToolTip}/>
+          <Tooltip defaultIndex={defaultIndex} />
         </PieChart>
-      </ResponsiveContainer>
     </div>
     )
 }
 
-function CustomToolTip({active, payload} : TooltipContentProps){
+/*function CustomToolTip({active, payload} : TooltipContentProps){
   if(active && payload && payload.length){
     return (
       <div className="p-4 bg-slate-900 flex flex-col gap-4 rounded-md">
@@ -59,6 +58,6 @@ function CustomToolTip({active, payload} : TooltipContentProps){
       </div>
       )
   }
-}
+}*/
 
 export default PiesChart

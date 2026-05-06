@@ -33,3 +33,39 @@ export interface ListParametersProps{
     getter: string | number;
     setter: React.Dispatch<React.SetStateAction<string>> | React.Dispatch<React.SetStateAction<number>>;
 } //Type pour ListeParametres dans ParameterPage
+
+export interface DataStatsProps{
+    name : string;
+    value : number;
+} //Type pour data dans l'ensemble de la page StatsPage
+
+interface DatasetInfoGlobalProps{
+    num_sequences: number;
+    num_activities: number;
+    avg_length: number;
+}
+
+interface DatasetInfoDurationProps{
+    min: number;
+    avg: number;
+    max: number;
+}
+
+interface DatasetInfoActivitiesProps{
+    distribution: Array<DataStatsProps>;
+}
+
+interface DatasetInfoMissingProps{
+    total_gaps: number;
+    sequences_with_gaps: number;
+    percentage_sequences_with_gaps: number;
+    avg_gaps_per_sequence: number;
+    percentage_missing_activities: number;
+}
+
+export interface DatasetInfoProps{
+    global: DatasetInfoGlobalProps;
+    duration: DatasetInfoDurationProps;
+    activities: DatasetInfoActivitiesProps;
+    missing: DatasetInfoMissingProps;
+}
