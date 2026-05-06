@@ -1,4 +1,4 @@
-import React from "react";
+import React, { type JSX } from "react";
 import OverallStats from "./OverallStats";
 import DurationStats from "./DurationStats";
 import InformationIcon from "../../components/icons/InformationIcon";
@@ -6,89 +6,58 @@ import MissingStats from "./MissingStats";
 import BarsChart from "./BarsChart";
 import PiesChart from "./PiesChart";
 import DetailsStats from "./DetailsStats";
-import { useEffect } from "react";
+import type { DatasetInfoProps, DataStatsProps } from "../../types";
+interface DatasetStatisticsProps{
+    datasetInfo : DatasetInfoProps
+}
 
-const STATSGLOBALES = [
-    {icon: "hash", nombre:"50", text:"Séquences totales"},
-    {icon: "type", nombre:"10", text:"Types d'activités"},
-    {icon: "longueur", nombre:"5.4", text:"Longueur moyenne"},
-    {icon: "horloge", nombre:"365", text:"Durée moyenne (min)"}
-]
-//nombre provient du dataset normalement, ici, il sert de placeholder en attendant les vraies données
-
-const STATSDUREES = [
-    {duree: "minimale", temps: "160 min"},
-    {duree: "maximale", temps: "583 min"},
-    {duree: "moyenne", temps: "365 min"}
-]
-//temps provient du dataset également, donc il sert de placeholder en attendant
-
-const STATSTROUS = [
-    {stats: "Total de trous", valeur: "53"},
-    {stats: "Séquences affectées", valeur: "28"},
-    {stats: "% de séquences avec trous", valeur: "56.0%"},
-    {stats: "Moy. trous/séquence affectée", valeur: "1.9"}
-]
-//valeur provient du dataset également, donc il sert de placeholder en attendant
-//un useEffect sera utilisé pour faire apparaître la div s'il y a des trous, sinon, la fera disparaître
-
-const STATSDETAILS = [
-    {activite: "Vélo", nombre: "18"},
-    {activite: "Maison", nombre: "23"},
-    {activite: "Restaurant", nombre: "23"},
-    {activite: "Sport", nombre: "28"},
-    {activite: "Étude", nombre: "25"},
-    {activite: "Bus", nombre: "13"},
-    {activite: "Missing", nombre: "53"},
-    {activite: "Marcher", nombre: "23"},
-    {activite: "Shopping", nombre: "20"},
-    {activite: "Travail", nombre: "28"},
-]
-//Liste du nombre des activités, provient normalement du dateset, donc ici placeholder
-//activite est le nom de l'activité, nombre est le nombre de fois que cette activité apparaît dans le dataset
-
-
-/**
- * @returns 
- */
-function DatasetStatistics(){
-    const listeStatsGlobales = []
-    for(let stats of STATSGLOBALES){
-        listeStatsGlobales.push(
-            <OverallStats id={stats.icon} nombre={stats.nombre} text={stats.text}/>
+function DatasetStatistics({ datasetInfo } : DatasetStatisticsProps){
+    const listeStatsGlobales : Array<number> = [datasetInfo.global.num_sequences, datasetInfo.global.num_activities,datasetInfo.global.avg_length, datasetInfo.duration.avg]
+    const listeStatsGlobalesLabel : Array<string> = ["Séquences totales", "Types d'activités", "Longueur moyenne", "Durée moy. (min)"]
+    const listeStatsGlobalesId : Array<string> = ["hash", "type", "longueur", "horloge"]
+    const listeOverallStats : Array<JSX.Element> = []
+    for(let i = 0; i<listeStatsGlobales.length; i++){
+        listeOverallStats.push(
+            <OverallStats id={listeStatsGlobalesId[i]} nombre={listeStatsGlobales[i]} text={listeStatsGlobalesLabel[i]}/>
         )
-    }
+    }//Pas de problème vu qu'elles sont de même taille (fait exprès)
 
-    const listeStatsDurees = []
-    for(let stats of STATSDUREES){
-        listeStatsDurees.push(
-            <DurationStats duree={stats.duree} temps={stats.temps}/>
+    const listeStatsDurees : Array<number> = [datasetInfo.duration.min, datasetInfo.duration.avg, datasetInfo.duration.max]
+    const listeStatsDureesLabel : Array<string> = ["minimum", "moyenne", "maximum"]
+    const listeDurationStats : Array<JSX.Element> = []
+    for(let i = 0; i<listeStatsDurees.length; i++){
+        listeDurationStats.push(
+            <DurationStats duree={listeStatsDureesLabel[i]} tempsDuree={listeStatsDurees[i]}/>
         )
-    }
+    }//Pas de problème vu qu'elles sont de même taille (fait exprès)
 
-    const listeStatsTrous = []
-    for(let stats of STATSTROUS){
-        listeStatsTrous.push(
-            <MissingStats stats={stats.stats} valeur={stats.valeur}/>
+    const listeStatsTrous : Array<number> = [datasetInfo.missing.total_gaps, datasetInfo.missing.sequences_with_gaps, datasetInfo.missing.sequences_with_gaps, datasetInfo.missing.avg_gaps_per_sequence]
+    const listeStatsTrousLabel : Array<string> = ["Total de trous", "Séquences affectées", "% de séquences avec trous", "Moy. trous/séquence affectée"]
+    const listeMissingStats : Array<JSX.Element> = []
+    for(let i = 0; i<listeStatsTrous.length; i++){
+        listeMissingStats.push(
+            <MissingStats stats={listeStatsTrousLabel[i]} valeur={listeStatsTrous[i]}/>
         )
-    }
+    }//Pas de problème vu qu'elles sont de même taille (fait exprès)
+    //Ne pas oublier de ne pas faire apparaître la div s'il n'y a pas de trous (useEffect probablement)
 
-    const listeStatsDetails = []
-    for(let stats of STATSDETAILS){
-        listeStatsDetails.push(
-            <DetailsStats activite={stats.activite} nombre={stats.nombre}/>
+    const listeStatsDetails : DataStatsProps[] = datasetInfo.activities.distribution
+    const listeDetailsStats : Array<JSX.Element> = []
+    for(let i = 0; i<listeStatsDetails.length; i++){
+        listeDetailsStats.push(
+            <DetailsStats activite={listeStatsDetails[i].name} nombre={listeStatsDetails[i].value}/>
         )
-    }
+    }//Pas de problème vu qu'elles sont de même taille (fait exprès)
 
     return(
         <div className="part-body-stats">
             <div className="stats-dataset-globales">
-                {listeStatsGlobales}
+                {listeOverallStats}
             </div>
             <div className="stats-dataset-durees">
                 <h3 className="fw-bold mb-1">Durées des séquences</h3>
                 <div className="stats-durees">
-                    {listeStatsDurees}
+                    {listeDurationStats}
                 </div>
             </div>
             <div id="div-stats-dataset-trous" className="stats-dataset-trous" hidden>
@@ -97,24 +66,24 @@ function DatasetStatistics(){
                     Données Manquantes (Trous)
                 </h3>
                 <div className="stats-trous">
-                    {listeStatsTrous}
+                    {listeMissingStats}
                 </div>
                 <div className="stats-dataset-trous-impact">
                     <p>
                         <strong>Impact :</strong>
-                        Les données manquantes représentent {17.04}% de toutes les activités.
+                        Les données manquantes représentent {datasetInfo.missing.percentage_missing_activities}% de toutes les activités.
                         Il est recommandé de définir une stratégie de gestion des trous.
                     </p>
                 </div>
             </div>
             <div className="stats-dataset-graphes">
-                <BarsChart/>
-                <PiesChart/>
+                <BarsChart dataset={datasetInfo.activities.distribution}/>
+                <PiesChart dataset={datasetInfo.activities.distribution}/>
             </div>
             <div className="stats-dataset-details">
                 <h3 className="fw-bold mb-1">Détails des activités présentes</h3>
                 <div className="stats-details">
-                    {listeStatsDetails}
+                    {listeDetailsStats}
                 </div>
             </div>
         </div>

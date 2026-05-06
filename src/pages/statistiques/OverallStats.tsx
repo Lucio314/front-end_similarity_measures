@@ -1,28 +1,28 @@
-import React from 'react'; 
+import React, { type JSX } from 'react'; 
 import HashtagIcon from '../../components/icons/HashtagIcon';
 import TypeIcon from '../../components/icons/TypeIcon';
 import LengthIcon from '../../components/icons/LengthIcon';
 import ClockIcon from '../../components/icons/ClockIcon';
 
 interface OverallStatsProps{
-    id: String;
-    nombre: String;
-    text: String;
+    id: string;
+    nombre: number;
+    text: string;
 }
 
 function OverallStats({id, nombre, text} : OverallStatsProps){
-    let icon = null
+    const icon : Array<JSX.Element> = []
     if(id === "hash"){
-        icon = <HashtagIcon/>
+        icon.push(<HashtagIcon/>)
     }
     if(id === "type"){
-        icon = <TypeIcon/>
+        icon.push(<TypeIcon/>)
     }
     if(id === "longueur"){
-        icon = <LengthIcon/>
+        icon.push(<LengthIcon/>)
     }
     if(id === "horloge"){
-        icon = <ClockIcon/>
+        icon.push(<ClockIcon/>)
     }
         
 
@@ -36,8 +36,6 @@ function OverallStats({id, nombre, text} : OverallStatsProps){
         </div>
     )
 
-    //A faire autrement plus tard, car ne va pas fonctionner avec le dataset
-    //On va devoir identifier qu'est ce qui est quoi dans le json de l'api
 }
 
 export default OverallStats

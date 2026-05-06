@@ -1,26 +1,26 @@
-import React from 'react';
+import React, { type JSX } from 'react';
 import MenuSelect from '../../components/MenuSelect';
 import SearchBar from '../../components/SearchBar';
 import OverallSequencesStats from './OverallSequencesStats';
 import DisplaySequencesStats from './DisplaySequencesStats';
 
-const DATASETS = []
-//Représente les différents datasets téléchargés/par défaut
+interface SequenceStatisticsProps{
+    listeDatasets: Array<string>;
+    nombreSequences: number;
+    moyActivitesSequence: number;
+    dureeMoy: number;
+    nombreTrous: number;
+} 
 
-const STATSGLOBALES = [
-    {text:"Séquences totales", nombre:"50"},
-    {text:"Activités moy./séquence", nombre:"5"},
-    {text:"Durée moyenne (min)", nombre:"365"},
-    {text:"Total Trous", nombre:"53"}
-]
-
-function SequencesStatistics(){
-    const listeStatsGlobales = []
-    for(let stats of STATSGLOBALES){
-        listeStatsGlobales.push(
-            <OverallSequencesStats nombre={stats.nombre} text={stats.text}/>
+function SequencesStatistics({listeDatasets, nombreSequences, moyActivitesSequence, dureeMoy, nombreTrous} : SequenceStatisticsProps){
+    const listeStatsGlobales : Array<number> = [nombreSequences, moyActivitesSequence, dureeMoy, nombreTrous]
+    const listeStatsGlobalesLabel : Array<string> = ["Séquences affichées", "Activités moy./séquence", "Durée moy. (min)", "Total trous"]
+    const listeOverallSequencesStats : Array<JSX.Element> = []
+    for(let i = 0; i<listeStatsGlobales.length; i++){
+        listeOverallSequencesStats.push(
+            <OverallSequencesStats nombre={listeStatsGlobales[i]} text={listeStatsGlobalesLabel[i]}/>
         )
-    }
+    }//Pas de problème vu qu'elles sont de même taille (fait exprès)
     
     return(
         <div id="div-part-body-sequences" className="part-main-body" hidden>
@@ -28,7 +28,7 @@ function SequencesStatistics(){
                 <h2 className="h2-title">Visualisation des Séquences</h2>
                 <div>
                     <label>Dataset :</label>
-                    <MenuSelect options={DATASETS}/>
+                    <MenuSelect options={listeDatasets}/>
                 </div>
                 <SearchBar placeholder="Rechercher une séquence ou une activité..."/>
                 <DisplaySequencesStats/>

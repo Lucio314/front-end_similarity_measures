@@ -5,6 +5,7 @@ import './index.css';
 import Header from './components/layout/Header';
 import Stepper from './components/layout/Stepper';
 import DataPage from './pages/DataPage';
+import StatsPage from './pages/StatsPage';
 
 function App() {
   const [currentStep, setCurrentStep] = useState<number>(1);
@@ -21,6 +22,13 @@ function App() {
           </div>
         </div>
           <DataPage onNext={() => setCurrentStep(2)} />
+          <StatsPage onNext={() => setCurrentStep(3)} onBack={() => setCurrentStep(1)}/>
+            {
+            /* 
+              Faire le css de StatsPage et encore quelques modif, genre l'appui du bouton 
+              "Visualiser les séquences", mais sinon ça affiche bien 
+            */
+            }
       </div>
     </div>
   );

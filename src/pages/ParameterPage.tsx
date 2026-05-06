@@ -128,6 +128,17 @@ function ParameterPage({onNext, onBack} : ParameterPageProps){
                 </div>
                 <div className="d-flex justify-content-end mt-4">
                     <button 
+                        className="btn-return px-5 py-2 text-black"
+                        onClick={onBack}
+                        style={{
+                            backgroundColor: "#858494",
+                            borderColor: "#858494",
+                            cursor: "pointer",
+                        }}
+                    >
+                        ← Retour
+                    </button>
+                    <button 
                         className="btn-next px-5 py-2 text-white"
                         onClick={onNext}
                         style={{
@@ -138,17 +149,6 @@ function ParameterPage({onNext, onBack} : ParameterPageProps){
                         disabled
                     >
                         Choisir la méthode de similarité →
-                    </button>
-                    <button 
-                        className="btn-return px-5 py-2 text-black"
-                        onClick={onBack}
-                        style={{
-                            backgroundColor: "#858494",
-                            borderColor: "#858494",
-                            cursor: "pointer",
-                        }}
-                    >
-                        ← Retour
                     </button>
                 </div>
             </div>

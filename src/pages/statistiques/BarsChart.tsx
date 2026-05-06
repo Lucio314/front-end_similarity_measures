@@ -1,17 +1,18 @@
 //npm i recharts
 import React from 'react';
-import {BarChart, Bar, ResponsiveContainer, XAxis, YAxis, CartesianGrid, Tooltip} from 'recharts'
-import type { TooltipContentProps } from 'recharts'
+import {BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip} from 'recharts'
+import type { DataStatsProps } from '../../types';
+import type { TooltipIndex } from 'recharts';
 
 interface BarsChartProps {
-    dataset : JSON; //Pour l'instant JSON, à voir si modif
+    dataset : DataStatsProps[]; //Pour l'instant JSON, à voir si modif
+    defaultIndex? : TooltipIndex;
 }
 
-function BarsChart({dataset} : BarsChartProps){
+function BarsChart({dataset, defaultIndex = undefined} : BarsChartProps){
   return (
     <div className="bar-chart-div">
       <h3 className="h3-title">Répartition des activités</h3>
-      <ResponsiveContainer width="100%" height="100%">
         <BarChart 
           width={500}
           height={300}
@@ -21,18 +22,16 @@ function BarsChart({dataset} : BarsChartProps){
           }}
         >
           <CartesianGrid strokeDasharray="3 3"/>
-          <XAxis datakey=""/>
-          <YAxis datakey=""/>
-          <Tooltip content={<CustomToolTip/>}/>
-          <Bar datakey="" fill=""/>
-          <Bar datakey="" fill=""/>
+          <XAxis dataKey="name"/>
+          <YAxis dataKey="value"/>
+          <Tooltip defaultIndex={defaultIndex}/>
+          <Bar dataKey="value" fill="#8884d8"/>
         </BarChart>
-      </ResponsiveContainer>
     </div>
     )
 }
 
-function CustomToolTip({active, payload, label} : TooltipContentProps){
+/*function CustomToolTip({active, payload, label} : TooltipContentProps){
   if(active && payload && payload.length){
     return (
       <div className="p-4 bg-slate-900 flex flex-col gap-4 rounded-md">
@@ -45,5 +44,6 @@ function CustomToolTip({active, payload, label} : TooltipContentProps){
       )
   }
 }
+*/
 
 export default BarsChart

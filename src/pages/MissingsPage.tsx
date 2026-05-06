@@ -48,17 +48,6 @@ function Trous({onNext, onBack} : MissingsPageProps){
                 </div>
                 <div className="d-flex justify-content-end mt-4">
                     <button 
-                        className="btn-next px-5 py-2 text-white"
-                        onClick={handleNextPage}
-                        style={{
-                            backgroundColor: "#4f46e5",
-                            borderColor: "#4f46e5",
-                            cursor: "pointer",
-                        }}
-                    >
-                        Confirmer la stratégie →
-                    </button>
-                    <button 
                         className="btn-return px-5 py-2 text-black"
                         onClick={handlePreviousPage}
                         style={{
@@ -68,6 +57,17 @@ function Trous({onNext, onBack} : MissingsPageProps){
                         }}
                     >
                         ← Retour
+                    </button>
+                    <button 
+                        className="btn-next px-5 py-2 text-white"
+                        onClick={handleNextPage}
+                        style={{
+                            backgroundColor: "#4f46e5",
+                            borderColor: "#4f46e5",
+                            cursor: "pointer",
+                        }}
+                    >
+                        Confirmer la stratégie →
                     </button>
                 </div>
             </div>

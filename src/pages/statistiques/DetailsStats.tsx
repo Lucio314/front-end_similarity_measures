@@ -1,8 +1,8 @@
 import React from 'react';
 
 interface DetailsStatsProps{
-    activite: String;
-    nombre: String;
+    activite: string;
+    nombre: number;
 }
 
 function DetailsStats({ activite, nombre } : DetailsStatsProps) {
