@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { type Dispatch, type SetStateAction } from 'react';
+import type { ResultsActivitiesProps } from '../../types';
 
 interface PatternCreationProps{
     dureeMotif: number;
     setDureeMotif: (nmb : number) => void;
+    pattern: ResultsActivitiesProps[];
+    setPattern: Dispatch<SetStateAction<ResultsActivitiesProps[]>>;
 }
 
-function PatternCreation({dureeMotif, setDureeMotif} : PatternCreationProps){
+function PatternCreation({dureeMotif, setDureeMotif, pattern, setPattern} : PatternCreationProps){
     return (
         <div className="div-motif-body">
 

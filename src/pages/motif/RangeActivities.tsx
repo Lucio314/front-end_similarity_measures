@@ -1,7 +1,13 @@
-import React from 'react';
+import React, { type Dispatch, type SetStateAction } from 'react';
 import Activities from './Activities';
+import type { ResultsActivitiesProps } from '../../types';
 
-function RangeActivities({}){
+interface RangeActivitiesProps{
+    pattern: ResultsActivitiesProps[];
+    setPattern: Dispatch<SetStateAction<ResultsActivitiesProps[]>>;
+}
+
+function RangeActivities({pattern, setPattern} : RangeActivitiesProps){
     return (
         <div className="palette-activites">
             <h3 className="fw-bold mb-1">🎭 Palette d'activités</h3>
