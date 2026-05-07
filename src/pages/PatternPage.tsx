@@ -3,6 +3,7 @@ import RangeActivities from './motif/RangeActivities';
 import PatternCreation from './motif/PatternCreation';
 import SequenceOverview from './motif/SequenceOverview';
 import { useState } from 'react';
+import type { ResultsActivitiesProps } from '../types';
 
 interface PatternPageProps{
     onNext: () => void;
@@ -11,6 +12,7 @@ interface PatternPageProps{
 
 function PatternPage({onNext, onBack} : PatternPageProps){
     const [dureeMotif, setDureeMotif] = useState<number>(0)
+    const [listeActivites, setListeActivites] = useState<Array<ResultsActivitiesProps>>([])
 
     const handleNextPage = () => {
         const divPatternPage = document.getElementById("pattern-card")
@@ -36,7 +38,7 @@ function PatternPage({onNext, onBack} : PatternPageProps){
                     <p className="text-muted mb-0">Glissez des activités pour créer votre séquence recherchée</p>
                 </div>
                 <div>
-                    <RangeActivities/>
+                    <RangeActivities pattern={listeActivites} setPattern={setListeActivites}/>
                     <div className="div-motif">
                         <div className="div-motif-header">
                             <h3 className="fw-bold mb-1">🔨 Votre motif</h3>
@@ -45,12 +47,9 @@ function PatternPage({onNext, onBack} : PatternPageProps){
                                 <span className="motif-total-time-span">{dureeMotif} min</span>
                             </div>
                         </div>
-                        <PatternCreation dureeMotif={dureeMotif} setDureeMotif={setDureeMotif}/>
+                        <PatternCreation dureeMotif={dureeMotif} setDureeMotif={setDureeMotif} pattern={listeActivites} setPattern={setListeActivites}/>
                     </div>
-                    <div className="">
-                        <h3 className="fw-bold mb-1">👁️ Aperçu de votre séquence</h3>
-                        <SequenceOverview dureeMotif={dureeMotif}/>
-                    </div>
+                    <SequenceOverview pattern={listeActivites}/>
                 </div>
                 <div className="d-flex justify-content-end mt-4">
                     <button 

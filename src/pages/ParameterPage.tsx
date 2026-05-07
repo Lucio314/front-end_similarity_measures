@@ -76,23 +76,21 @@ function ParameterPage({onNext, onBack} : ParameterPageProps){
         }
     ]
 
-    /*const handleNextPage = () => {
-        const divPatternPage = document.getElementById("pattern-card")
-        const divMethodPage = document.getElementById("method-card")
-        divPatternPage.hidden = true
-        divMethodPage.hidden = false
+    const handleNextPage = () => {
+        const divResultsPage = document.getElementById("results-card")
+        const divParameterPage = document.getElementById("parameter-card")
+        divParameterPage.hidden = true
+        divResultsPage.hidden = false
         onNext
     }
 
     const handlePreviousPage = () => {
-        const divPatternPage = document.getElementById("pattern-card")
-        const divMissingsPage = document.getElementById("missings-card")
-        divPatternPage.hidden = true
-        divMissingsPage.hidden = false
+        const divParameterPage = document.getElementById("parameter-card")
+        const divMethodPage = document.getElementById("method-card")
+        divParameterPage.hidden = false
+        divMethodPage.hidden = true
         onBack
     }
-        A réaliser plus tard quand la page Résultats sera créer 
-    */
 
     return (
         <div id="parameter-card" className="card border-0 shadow-sm" style={{ borderRadius: 12 }} hidden>
@@ -129,7 +127,7 @@ function ParameterPage({onNext, onBack} : ParameterPageProps){
                 <div className="d-flex justify-content-end mt-4">
                     <button 
                         className="btn-return px-5 py-2 text-black"
-                        onClick={onBack}
+                        onClick={handlePreviousPage}
                         style={{
                             backgroundColor: "#858494",
                             borderColor: "#858494",
@@ -140,7 +138,7 @@ function ParameterPage({onNext, onBack} : ParameterPageProps){
                     </button>
                     <button 
                         className="btn-next px-5 py-2 text-white"
-                        onClick={onNext}
+                        onClick={handleNextPage}
                         style={{
                             backgroundColor: "#4f46e5",
                             borderColor: "#4f46e5",
@@ -148,7 +146,7 @@ function ParameterPage({onNext, onBack} : ParameterPageProps){
                         }}
                         disabled
                     >
-                        Choisir la méthode de similarité →
+                        Lancer la recherche
                     </button>
                 </div>
             </div>
