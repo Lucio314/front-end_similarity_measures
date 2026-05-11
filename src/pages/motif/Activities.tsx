@@ -1,14 +1,31 @@
-import React from 'react';
+import React, { type Dispatch, type SetStateAction } from 'react';
+import type { EmojisProps, PatternActivitiesProps } from '../../types';
 
-function Activities({}){
-    const buttons = []
+interface ActivitiesProps{
+    emoji: EmojisProps
+    pattern: PatternActivitiesProps[];
+    setPattern: Dispatch<SetStateAction<PatternActivitiesProps[]>>;
+}
+
+function Activities({emoji, pattern, setPattern} : ActivitiesProps){
+
+    const handleClick = () => {
+
+    }
 
     return (
-        <div className="activites">
-
-        </div>
+        <button 
+            className=""
+            onClick={() => null}
+        >
+            <div className="">
+                {emoji.emoji}
+            </div>
+            <div className="">
+                {emoji.emojiName}
+            </div>
+        </button>
     )
-    // A faire avec le backend
 }
 
 export default Activities

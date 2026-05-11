@@ -9,7 +9,7 @@ interface ResultsSequencesProps{
 function ResultsSequences({results} : ResultsSequencesProps){
     const listeResultsSeq : Array<JSX.Element> = []
     for(let seq of results){
-        <ResultsSeq sequence={seq}/>
+        listeResultsSeq.push(<ResultsSeq key={seq.rank} sequence={seq}/>)
     }
 
     return ( 

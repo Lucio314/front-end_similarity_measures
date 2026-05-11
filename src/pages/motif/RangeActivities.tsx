@@ -1,17 +1,22 @@
-import React, { type Dispatch, type SetStateAction } from 'react';
+import React, { type Dispatch, type JSX, type SetStateAction } from 'react';
 import Activities from './Activities';
-import type { ResultsActivitiesProps } from '../../types';
+import { EMOJIS, type PatternActivitiesProps} from '../../types';
 
 interface RangeActivitiesProps{
-    pattern: ResultsActivitiesProps[];
-    setPattern: Dispatch<SetStateAction<ResultsActivitiesProps[]>>;
+    pattern: PatternActivitiesProps[];
+    setPattern: Dispatch<SetStateAction<PatternActivitiesProps[]>>;
 }
 
 function RangeActivities({pattern, setPattern} : RangeActivitiesProps){
+    const listeActivities : Array<JSX.Element> = []
+    for(let emoji of EMOJIS){
+        listeActivities.push(<Activities emoji={emoji} pattern={pattern} setPattern={setPattern}/>)
+    }
+
     return (
-        <div className="palette-activites">
+        <div className="">
             <h3 className="fw-bold mb-1">🎭 Palette d'activités</h3>
-            <Activities/>
+            {listeActivities}
         </div>
     )
 }

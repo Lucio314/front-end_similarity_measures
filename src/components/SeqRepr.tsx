@@ -1,12 +1,12 @@
 import type { EmojisProps } from "../types";
 import { EMOJIS } from "../types";
 
-interface PatternReprProps{
+interface SeqReprProps{
     name: string;
     duration: number;
 }
 
-function PatternRepr({name, duration} : PatternReprProps){
+function SeqRepr({name, duration} : SeqReprProps){
     let emojiRepr : EmojisProps = {emoji:"", emojiName:"", emojiColor:""}
         for(let emoji of EMOJIS){
             if(emoji.emojiName === name){
@@ -17,17 +17,14 @@ function PatternRepr({name, duration} : PatternReprProps){
     
     return (
         <div className="">
-            <div className="">
+            <span className="">
                 {emojiRepr.emoji}
-            </div>
-            <div className="">
-                {name}
-            </div>
-            <div className="">
+            </span>
+            <span className="">
                 {duration}m
-            </div>
+            </span>
         </div>
     )
 }
 
-export default PatternRepr
+export default SeqRepr

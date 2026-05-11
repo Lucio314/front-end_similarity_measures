@@ -1,6 +1,93 @@
 import React from 'react';
 import OntologyDiv from './ontologie/OntologyDiv';
 import WuPalmerDiv from './ontologie/WuPalmerDiv';
+import type { OntologyProps } from '../types';
+
+const ONTOLOGY : OntologyProps = {
+    name:"All",
+    children:[
+        {
+            name:"moving",
+            children:[
+                {
+                    name:"human_power",
+                    children: [
+                        {
+                            name:"marcher",
+                            children: []
+                        },
+                        {
+                            name:"vélo",
+                            children: []
+                        }
+                    ]
+                },
+                {
+                    name:"motorized",
+                    children: [
+                        {
+                            name:"voiture",
+                            children: []
+                        },
+                        {
+                            name:"bus",
+                            children: []
+                        }
+                    ]
+                },
+                {
+                    name:"other",
+                    children: []
+                }
+            ]
+        },
+        {
+            name:"stop",
+            children:[
+                {
+                    name:"fun",
+                    children: [
+                        {
+                            name:"sport",
+                            children: []
+                        },
+                        {
+                            name:"shopping",
+                            children: []
+                        }
+                    ]
+                },
+                {
+                    name:"serious",
+                    children: [
+                        {
+                            name:"travail",
+                            children: []
+                        },
+                        {
+                            name:"étude",
+                            children: []
+                        }
+                    ]
+                },
+                {
+                    name:"home",
+                    children: []
+                }
+            ]
+        },
+        {
+            name:"missing",
+            children:[]
+        }
+    ]
+}
+//Exemple d'ontologie renvoyée par l'api
+
+const MATRICEWUPALMER = {
+
+}
+//Exemple de matrice de similarité renvoyée par l'api
 
 interface OntologyPageProps {
   onNext: () => void;
