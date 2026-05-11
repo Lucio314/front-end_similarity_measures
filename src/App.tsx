@@ -6,6 +6,7 @@ import Header from './components/layout/Header';
 import Stepper from './components/layout/Stepper';
 import DataPage from './pages/DataPage';
 import StatsPage from './pages/StatsPage';
+import ResultsPage from './pages/ResultsPage';
 
 function App() {
   const [currentStep, setCurrentStep] = useState<number>(1);
@@ -29,6 +30,7 @@ function App() {
               "Visualiser les séquences", mais sinon ça affiche bien 
             */
             }
+          {/*<ResultsPage onBackParameter={() => setCurrentStep(7)} onBackPattern={() => setCurrentStep(5)}/>*/}
       </div>
     </div>
   );

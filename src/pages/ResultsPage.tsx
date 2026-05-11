@@ -60,7 +60,7 @@ const RESULTS : ResultsProps = {
                 total_durations: 197,
                 activities: [
                     {name: "restaurant", duration: 46},
-                    {name: "mssing", duration: 23},
+                    {name: "missing", duration: 23},
                     {name: "vélo", duration: 128}
                 ],
             }

@@ -75,6 +75,24 @@ export interface DatasetInfoProps{
     missing: DatasetInfoMissingProps;
 }
 
+//============================================================
+// Types utilisés dans la page OntologyPage
+//============================================================
+
+export interface OntologyProps{
+    name: string;
+    children: OntologyProps[]
+}
+
+//============================================================
+// Types utilisés dans la page PatternPage
+//============================================================
+
+export interface PatternActivitiesProps{
+    name: string;
+    emoji: string;
+    duration: number;
+}
 
 //============================================================
 // Types utilisés dans la page ResultsPage
@@ -124,3 +142,23 @@ export interface ResultsProps{
     meta: ResutlsMetaProps;
     results: Array<ResultsOneResultProps>
 }
+
+export interface EmojisProps{
+    emoji: string;
+    emojiName: string;
+    emojiColor: string;
+}
+
+ export const EMOJIS : Array<EmojisProps> = [
+    { emoji: "🚶", emojiName: "marcher", emojiColor: "#ff2828" },
+    { emoji: "🚌", emojiName: "bus", emojiColor: "#fe00e9" },
+    { emoji: "🚴", emojiName: "vélo", emojiColor: "#ff4281" },
+    {emoji: "🚗", emojiName: "voiture", emojiColor:"#ee670d"},
+    { emoji: "💼", emojiName: "travail", emojiColor: "#a36f0e" },
+    { emoji: "❓", emojiName: "missing", emojiColor: "#ddce48" },
+    { emoji: "🏠", emojiName: "6eff42", emojiColor: "#6eff42" },
+    { emoji: "🍽️", emojiName: "restaurant", emojiColor: "#00C49F" },
+    { emoji: "⚽", emojiName: "sport", emojiColor: "#0d7494" },
+    { emoji: "🛍️", emojiName: "shopping", emojiColor: "#2f1cdf" },
+    { emoji: "📚", emojiName: "étude", emojiColor: "#9e28ff" }
+]

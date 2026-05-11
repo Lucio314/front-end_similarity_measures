@@ -16,8 +16,10 @@ function DataPage({ onNext }: DataPageProps) {
   const handleNextPage = () => {
     const divDataPage = document.getElementById("data-card")
     const divStatsPage = document.getElementById("stats-card")
+    /*const divResultsPage = document.getElementById("results-card")*/
     divDataPage.hidden = true
     divStatsPage.hidden = false
+    /*divResultsPage.hidden = false*/
     onNext
   }
 

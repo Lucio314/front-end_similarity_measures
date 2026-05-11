@@ -5,7 +5,7 @@ import type { PieSectorShapeProps, TooltipIndex } from 'recharts'
 import type { DataStatsProps } from '../../types';
 
 const COLORS =[
-    '#ff2828',
+    '#ff2828', /* Mettre couleur rouge pour */
     '#fe00e9',
     '#ff4281',
     '#a36f0e',

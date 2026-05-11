@@ -3,7 +3,7 @@ import RangeActivities from './motif/RangeActivities';
 import PatternCreation from './motif/PatternCreation';
 import SequenceOverview from './motif/SequenceOverview';
 import { useState } from 'react';
-import type { ResultsActivitiesProps } from '../types';
+import type { PatternActivitiesProps } from '../types';
 
 interface PatternPageProps{
     onNext: () => void;
@@ -12,7 +12,7 @@ interface PatternPageProps{
 
 function PatternPage({onNext, onBack} : PatternPageProps){
     const [dureeMotif, setDureeMotif] = useState<number>(0)
-    const [listeActivites, setListeActivites] = useState<Array<ResultsActivitiesProps>>([])
+    const [listeActivites, setListeActivites] = useState<Array<PatternActivitiesProps>>([])
 
     const handleNextPage = () => {
         const divPatternPage = document.getElementById("pattern-card")
