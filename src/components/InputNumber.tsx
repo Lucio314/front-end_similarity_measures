@@ -1,14 +1,17 @@
+import type { Dispatch, SetStateAction } from "react";
+import type { PatternActivitiesProps } from "../types";
+
 interface InputNumberProps{
-    duration: number;
     dureeMotif: number;
-    setDureeMotif: (nmb : number) => void;
+    setDureeMotif: React.Dispatch<React.SetStateAction<number>>;
+    dureeActivite: PatternActivitiesProps;
+    setDureeActivite: Dispatch<SetStateAction<PatternActivitiesProps>>;
 }
 
-function InputNumber({duration, dureeMotif, setDureeMotif} : InputNumberProps){
+function InputNumber({dureeMotif, setDureeMotif, dureeActivite, setDureeActivite} : InputNumberProps){
 
     const handleOnChange = (e : React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => {
-        const duree : number = duration + dureeMotif
-        setDureeMotif(duree)
+        setDureeActivite({...dureeActivite, duration: e.target.valueAsNumber})
     }
 
     return (
@@ -17,7 +20,7 @@ function InputNumber({duration, dureeMotif, setDureeMotif} : InputNumberProps){
             <input 
                 className="" 
                 type="number"
-                value={duration}
+                value={dureeActivite.duration}
                 onChange={handleOnChange}
             >
             </input>

@@ -1,35 +1,47 @@
+import { useState, type Dispatch, type SetStateAction } from "react";
 import DragNDropIcon from "../../components/icons/DragNDropIcon"
 import TrashBinIcon from "../../components/icons/TrashBinIcon"
+import type { PatternActivitiesProps } from "../../types";
+import InputNumber from "../../components/InputNumber";
 
 interface ActivitiesDragNDropProps{
-    emoji: string;
-    name: string;
-    duration: number;
     dureeMotif: number;
-    setDureeMotif: (nmb : number) => void;
+    setDureeMotif: React.Dispatch<React.SetStateAction<number>>;
+    motif: PatternActivitiesProps;
+    pattern: PatternActivitiesProps[];
+    setPattern: Dispatch<SetStateAction<PatternActivitiesProps[]>>;
+    removeDiv: (idToRemove: string) => void;
 }
 
-function ActivitiesDragNDrop({emoji, name, duration, dureeMotif, setDureeMotif} : ActivitiesDragNDropProps){
+function ActivitiesDragNDrop({dureeMotif, setDureeMotif, motif, pattern, setPattern, removeDiv} : ActivitiesDragNDropProps){
+    const [dureeActivite, setDureeActivite] = useState<PatternActivitiesProps>(motif)
+    const id : string = motif.name + motif.id
+
+    const handleClick = () => {
+        setPattern(pattern.filter(acti => acti.id !== id))
+        removeDiv(id)
+    }
+    
     return (
-        <div className="">
+        <div id={id} className="">
             <DragNDropIcon/>
             <div className="">
-                {emoji}
+                {motif.emoji}
             </div>
             <div className="">
                 <p className="">
-                    {name}
+                    {motif.name}
                 </p>
                 <div className="">
                     <div className="">
-                        <InputNumber duration={duration} dureeMotif={dureeMotif} setDureeMotif={setDureeMotif}/>
+                        <InputNumber dureeMotif={dureeMotif} setDureeMotif={setDureeMotif} dureeActivite={dureeActivite} setDureeActivite={setDureeActivite}/>
                         <span>min</span>
                     </div>
                 </div>
             </div>
             <button 
                 className=""
-                onClick= {() => null}
+                onClick={handleClick}
             >
                 <TrashBinIcon/>
             </button>

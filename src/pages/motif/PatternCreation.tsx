@@ -1,31 +1,36 @@
 import React, { type Dispatch, type JSX, type SetStateAction } from 'react';
-import type { PatternActivitiesProps } from '../../types';
 import ActivitiesDragNDrop from './ActivitiesDragNDrop';
+import type { PatternActivitiesProps } from '../../types';
 
 interface PatternCreationProps{
     dureeMotif: number;
-    setDureeMotif: (nmb : number) => void;
+    setDureeMotif: React.Dispatch<React.SetStateAction<number>>;
     pattern: PatternActivitiesProps[];
     setPattern: Dispatch<SetStateAction<PatternActivitiesProps[]>>;
 }
 
 function PatternCreation({dureeMotif, setDureeMotif, pattern, setPattern} : PatternCreationProps){
+    //Pour pouvoir supprimer une div de PatternCreation
+    const removeDiv = (idToRemove : string) => document.getElementById(idToRemove).remove();
+
     const listeActivitiesDragNDrop : Array<JSX.Element> = []
         for(let i=0; i<pattern.length; i++){
             listeActivitiesDragNDrop.push(
                 <ActivitiesDragNDrop 
-                    emoji={pattern[i].emoji} 
-                    name={pattern[i].name} 
-                    duration={pattern[i].duration} 
-                    dureeMotif={dureeMotif} 
+                    dureeMotif={dureeMotif}
                     setDureeMotif={setDureeMotif}
+                    motif={pattern[i]}
+                    pattern={pattern}
+                    setPattern={setPattern}
+                    removeDiv={removeDiv}
                 />
             )
         }
+ 
 
     return (
         <div className="">
-
+            {listeActivitiesDragNDrop}
         </div>
     )
     // A faire plus tard avec drag n drop

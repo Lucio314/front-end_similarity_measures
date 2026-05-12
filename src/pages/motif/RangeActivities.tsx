@@ -12,6 +12,7 @@ function RangeActivities({pattern, setPattern} : RangeActivitiesProps){
     for(let emoji of EMOJIS){
         listeActivities.push(<Activities emoji={emoji} pattern={pattern} setPattern={setPattern}/>)
     }
+    console.log(pattern)
 
     return (
         <div className="">
