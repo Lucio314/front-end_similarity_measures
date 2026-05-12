@@ -1,9 +1,9 @@
-import React from 'react';
 import RangeActivities from './motif/RangeActivities';
 import PatternCreation from './motif/PatternCreation';
 import SequenceOverview from './motif/SequenceOverview';
 import { useState } from 'react';
 import type { PatternActivitiesProps } from '../types';
+import PlusIcon from '../components/icons/PlusIcon';
 
 interface PatternPageProps{
     onNext: () => void;
@@ -38,16 +38,33 @@ function PatternPage({onNext, onBack} : PatternPageProps){
                     <p className="text-muted mb-0">Glissez des activités pour créer votre séquence recherchée</p>
                 </div>
                 <div>
-                    <RangeActivities pattern={listeActivites} setPattern={setListeActivites}/>
+                    <RangeActivities 
+                        pattern={listeActivites} 
+                        setPattern={setListeActivites}
+                    />
                     <div className="div-motif">
                         <div className="div-motif-header">
                             <h3 className="fw-bold mb-1">🔨 Votre motif</h3>
-                            <div className="motif-total-time">
+                            <div id="pattern-total-time" className="" hidden>
                                 Durée totale :
-                                <span className="motif-total-time-span">{dureeMotif} min</span>
+                                <span className="motif-total-time-span"> {dureeMotif} min</span>
                             </div>
                         </div>
-                        <PatternCreation dureeMotif={dureeMotif} setDureeMotif={setDureeMotif} pattern={listeActivites} setPattern={setListeActivites}/>
+                        <div id="pattern-placeholder" className="">
+                            <PlusIcon/>
+                            <p className="">
+                                Aucune activité ajoutée
+                            </p>
+                            <p className="">
+                                Cliquez sur les activités ci-dessus pour construire votre motif
+                            </p>
+                        </div>
+                        <PatternCreation 
+                            dureeMotif={dureeMotif}
+                            setDureeMotif={setDureeMotif} 
+                            pattern={listeActivites} 
+                            setPattern={setListeActivites}
+                        />
                     </div>
                     <SequenceOverview pattern={listeActivites}/>
                 </div>
@@ -80,6 +97,8 @@ function PatternPage({onNext, onBack} : PatternPageProps){
         </div>
     )
     //Le button next doit être disabled tant qu'il n'y a pas de motif
+    //Faire l'affichage de la durée totale
+    //Pour le drag and drop : npm install @dnd-kit/core @dnd-kit/utilities @dnd-kit/sortable
 }
 
 export default PatternPage
