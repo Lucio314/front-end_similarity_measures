@@ -41,3 +41,25 @@ body {
 .icon-poubelle:hover{
   stroke: #7c0404;
 }
+
+.btn-trash:enabled{
+  --bs-btn-hover-bg: #fdf0f0;
+  --bs-btn-active-bg: #fdf0f0;
+  --bs-btn-border-width: 0;
+}
+
+.btn-drag:enabled{
+  --bs-btn-hover-bg: #f3f3f3;
+  --bs-btn-active-bg: #f5f5f5;
+  --bs-btn-border-width: 0;
+}
+
+.btn-activities{
+  min-width:16vh;
+}
+
+.btn-activities:enabled{
+  --bs-btn-bg: #fafafa;
+  --bs-btn-hover-bg: #b8d8eb;
+  --bs-btn-active-bg: #b8d8eb;
+}

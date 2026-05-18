@@ -1,6 +1,7 @@
 import React, { type Dispatch, type JSX, type SetStateAction } from 'react';
 import ActivitiesDragNDrop from './ActivitiesDragNDrop';
 import type { PatternActivitiesProps } from '../../types';
+import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 
 interface PatternCreationProps{
     dureeMotif: number;
@@ -11,7 +12,6 @@ interface PatternCreationProps{
 
 function PatternCreation({dureeMotif, setDureeMotif, pattern, setPattern} : PatternCreationProps){
     //Pour pouvoir supprimer une div de PatternCreation
-    const removeDiv = (idToRemove : string) => document.getElementById(idToRemove).remove();
 
     const listeActivitiesDragNDrop : Array<JSX.Element> = []
         for(let i=0; i<pattern.length; i++){
@@ -22,7 +22,6 @@ function PatternCreation({dureeMotif, setDureeMotif, pattern, setPattern} : Patt
                     motif={pattern[i]}
                     pattern={pattern}
                     setPattern={setPattern}
-                    removeDiv={removeDiv}
                 />
             )
         }
@@ -30,7 +29,12 @@ function PatternCreation({dureeMotif, setDureeMotif, pattern, setPattern} : Patt
 
     return (
         <div className="">
-            {listeActivitiesDragNDrop}
+            <SortableContext 
+                items={pattern} 
+                strategy={verticalListSortingStrategy}
+            >
+                {listeActivitiesDragNDrop}
+            </SortableContext>
         </div>
     )
     // A faire plus tard avec drag n drop

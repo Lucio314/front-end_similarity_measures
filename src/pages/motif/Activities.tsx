@@ -12,38 +12,54 @@ function Activities({emoji, pattern, setPattern} : ActivitiesProps){
 
     const handleClick = () => {
         for(let i=0; i<pattern.length; i++){
-            if(pattern[i].id === pattern.length){
+            if(parseInt(pattern[i].id.substring(pattern[i].id.length-1)) === pattern.length){
                 index++
             }
+            console.log(pattern[i].id.length-1)
         }
         setPattern([
             ...pattern, {
-                id: index,
+                id: emoji.emojiName + index,
                 name: emoji.emojiName,
                 emoji: emoji.emoji,
                 duration: 30
             }
         ])
-        const divPatternPlacholder = document.getElementById("pattern-placeholder")
-        const divPatternTotalTime = document.getElementById("pattern-total-time")
-        if(!divPatternPlacholder.hidden){
-            divPatternPlacholder.hidden = true
+        const divPatternPlaceholder = document.getElementById('pattern-placeholder')
+        const divPatternTotalTime = document.getElementById('pattern-total-time')
+        const divPatternShowSequence = document.getElementById('pattern-show-sequence')
+        if(!divPatternPlaceholder.hidden){
+            divPatternPlaceholder.hidden = true
+            divPatternShowSequence.hidden = false
             divPatternTotalTime.hidden = false
         }
     }
 
     return (
-        <button 
-            className=""
-            onClick={handleClick}
-        >
-            <div className="">
-                {emoji.emoji}
-            </div>
-            <div className="">
-                {emoji.emojiName}
-            </div>
-        </button>
+        <div className="col-2 ">
+            <button 
+                className="btn-activities btn rounded btn-border btn-lg btn-outline-primary"
+                onClick={handleClick}
+            >
+                <div 
+                    className="text-center"
+                    style={{
+                        fontSize: 30
+                    }}
+                >
+                    {emoji.emoji}
+                </div>
+                <div 
+                    className="text-center text-capitalize"
+                    style={{
+                        fontSize: 13,
+                        color: "#5e5c5c"
+                    }}
+                >
+                    {emoji.emojiName}
+                </div>
+            </button>
+        </div>
     )
 }
 

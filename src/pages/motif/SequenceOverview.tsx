@@ -14,16 +14,36 @@ function SequenceOverview({pattern} : SequenceOverviewProps){
         )
         if(i !== pattern.length-1){ //Pour créer les flèches entre chaque activités
             listeMotifSequence.push(
-                <div className="text-gray-400 text-xl">→</div>
+                <div 
+                    className="text-secondary fs-4 p-1 align-self-center"
+                >
+                    →
+                </div>
             )
         }
     }
 
 
     return (
-        <div className="">
-            <h3 className="fw-bold mb-1">👁️ Aperçu de votre séquence</h3>
-            {listeMotifSequence}
+        <div 
+            id="pattern-show-sequence"
+            className="border rounded p-3"
+            style={{
+                borderColor: '#9c86ec',
+                backgroundColor: '#fafafa'
+            }}
+            hidden
+        >
+            <h5 
+                className="text-sm"
+                style={{
+                    color: "#272727"
+                }}
+            >
+                👁️ Aperçu de votre séquence</h5>
+            <div className="d-flex justify-content-start p-3">
+                {listeMotifSequence}
+            </div>
         </div>
     )
     // Il faut ajouter une div à chaque appui sur un button de PaletteActivite
