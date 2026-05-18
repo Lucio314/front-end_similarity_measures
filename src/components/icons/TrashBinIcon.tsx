@@ -7,7 +7,7 @@ function TrashBinIcon({}){
             height="24" 
             viewBox="0 0 24 24" 
             fill="none" 
-            stroke="currentColor" 
+            stroke="#db1515" 
             stroke-width="2" 
             stroke-linecap="round" 
             stroke-linejoin="round" 

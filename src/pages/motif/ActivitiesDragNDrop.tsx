@@ -3,6 +3,8 @@ import DragNDropIcon from "../../components/icons/DragNDropIcon"
 import TrashBinIcon from "../../components/icons/TrashBinIcon"
 import type { PatternActivitiesProps } from "../../types";
 import InputNumber from "../../components/InputNumber";
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 
 interface ActivitiesDragNDropProps{
     dureeMotif: number;
@@ -10,41 +12,71 @@ interface ActivitiesDragNDropProps{
     motif: PatternActivitiesProps;
     pattern: PatternActivitiesProps[];
     setPattern: Dispatch<SetStateAction<PatternActivitiesProps[]>>;
-    removeDiv: (idToRemove: string) => void;
 }
 
-function ActivitiesDragNDrop({dureeMotif, setDureeMotif, motif, pattern, setPattern, removeDiv} : ActivitiesDragNDropProps){
+function ActivitiesDragNDrop({dureeMotif, setDureeMotif, motif, pattern, setPattern,} : ActivitiesDragNDropProps){
     const [dureeActivite, setDureeActivite] = useState<PatternActivitiesProps>(motif)
-    const id : string = motif.name + motif.id
+    const {attributes, listeners, setNodeRef, transform, transition} = useSortable(motif)
 
     const handleClick = () => {
-        setPattern(pattern.filter(acti => acti.id !== id))
-        removeDiv(id)
+        setPattern(pattern.filter(acti => acti.id !== motif.id))
+        console.log(pattern)
+        if(pattern.length === 1){
+            const divPlaceHolder = document.getElementById('pattern-placeholder')
+            const divPatternTotalTime = document.getElementById('pattern-total-time')
+            const divPatternShowSequence = document.getElementById('pattern-show-sequence')
+            divPlaceHolder.hidden = false
+            divPatternTotalTime.hidden = true
+            divPatternShowSequence.hidden = true
+        }
+    }
+
+    const style = {
+        transition,
+        transform: CSS.Transform.toString(transform)
     }
     
     return (
-        <div id={id} className="">
-            <DragNDropIcon/>
-            <div className="">
-                {motif.emoji}
-            </div>
-            <div className="">
-                <p className="">
-                    {motif.name}
-                </p>
-                <div className="">
-                    <div className="">
-                        <InputNumber dureeMotif={dureeMotif} setDureeMotif={setDureeMotif} dureeActivite={dureeActivite} setDureeActivite={setDureeActivite}/>
-                        <span>min</span>
+        <div 
+            id={motif.id} 
+            className="card bg-3 bg-opacity-10 border-3 border-color-gray border shadow" 
+            ref={setNodeRef}  
+            style={style}
+        >
+            <div className="d-flex align-items-center">
+                <button
+                    className="btn btn-drag p-2"
+                    {...attributes} 
+                    {...listeners}
+                >
+                    <DragNDropIcon/>
+                </button>
+                <div 
+                    className="text-center p-2"
+                    style={{
+                        fontSize: 30
+                    }} 
+                >
+                    {motif.emoji}
+                </div>
+                <div className="d-flex align-items-start flex-column p-2">
+                    <p className="text-center text-capitalize">
+                        {motif.name}
+                    </p>
+                    <div className="d-flex">
+                        <div className="d-flex align-self-center">
+                            <InputNumber dureeMotif={dureeMotif} setDureeMotif={setDureeMotif} dureeActivite={dureeActivite} setDureeActivite={setDureeActivite}/>
+                            <span>min</span>
+                        </div>
                     </div>
                 </div>
+                <button 
+                    className="btn-trash btn btn-border p-2"
+                    onClick={handleClick}
+                >
+                    <TrashBinIcon/>
+                </button>
             </div>
-            <button 
-                className=""
-                onClick={handleClick}
-            >
-                <TrashBinIcon/>
-            </button>
         </div>
     )
 }

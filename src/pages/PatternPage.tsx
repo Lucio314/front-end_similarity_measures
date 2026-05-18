@@ -4,6 +4,8 @@ import SequenceOverview from './motif/SequenceOverview';
 import { useState } from 'react';
 import type { PatternActivitiesProps } from '../types';
 import PlusIcon from '../components/icons/PlusIcon';
+import { closestCorners, DndContext } from '@dnd-kit/core';
+import { arrayMove } from '@dnd-kit/sortable';
 
 interface PatternPageProps{
     onNext: () => void;
@@ -30,6 +32,21 @@ function PatternPage({onNext, onBack} : PatternPageProps){
         onBack
     }
 
+    const getActivitesPos = (id : string) => listeActivites.findIndex(activite => activite.id === id)
+
+    const handleDragEnd = (event : any) => {
+        const {active, over} = event
+
+        if(active.id === over.id){
+            return
+        }
+        setListeActivites(listeActivites => {
+            const originalPos = getActivitesPos(active.id)
+            const newPos = getActivitesPos(over.id)
+            return arrayMove(listeActivites, originalPos, newPos)
+        })
+    }
+
     return (
         <div id="pattern-card" className="card border-0 shadow-sm" style={{ borderRadius: 12 }} hidden>
             <div className="card-body p-5">
@@ -42,15 +59,28 @@ function PatternPage({onNext, onBack} : PatternPageProps){
                         pattern={listeActivites} 
                         setPattern={setListeActivites}
                     />
-                    <div className="div-motif">
+                    <div 
+                        className="border rounded p-3"
+                        style={{
+                            borderColor: '#e9eaee',
+                            backgroundColor: '#e9eaee'
+                        }}
+                    >
                         <div className="div-motif-header">
-                            <h3 className="fw-bold mb-1">🔨 Votre motif</h3>
+                            <h5 
+                                className="text-lg"
+                                style={{
+                                    color: "#272727"
+                                }}
+                            >
+                                🔨 Votre motif
+                            </h5>
                             <div id="pattern-total-time" className="" hidden>
                                 Durée totale :
                                 <span className="motif-total-time-span"> {dureeMotif} min</span>
                             </div>
                         </div>
-                        <div id="pattern-placeholder" className="">
+                        <div id="pattern-placeholder" className="text-center">
                             <PlusIcon/>
                             <p className="">
                                 Aucune activité ajoutée
@@ -59,12 +89,17 @@ function PatternPage({onNext, onBack} : PatternPageProps){
                                 Cliquez sur les activités ci-dessus pour construire votre motif
                             </p>
                         </div>
-                        <PatternCreation 
-                            dureeMotif={dureeMotif}
-                            setDureeMotif={setDureeMotif} 
-                            pattern={listeActivites} 
-                            setPattern={setListeActivites}
-                        />
+                        <DndContext
+                            onDragEnd={handleDragEnd}
+                            collisionDetection={closestCorners}
+                        >
+                            <PatternCreation 
+                                dureeMotif={dureeMotif}
+                                setDureeMotif={setDureeMotif} 
+                                pattern={listeActivites} 
+                                setPattern={setListeActivites}
+                            />
+                        </DndContext>
                     </div>
                     <SequenceOverview pattern={listeActivites}/>
                 </div>
