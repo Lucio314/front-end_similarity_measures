@@ -9,43 +9,69 @@ interface ResultsInformationsProps{
 
 function ResultsInformations({summary} : ResultsInformationsProps){
     return ( 
-        <div className="">
-            <div className="">
-                <div className="">
-                    <TrophyIcon/>
-                    <div className="">
-                        <p className="">
-                            {summary.total_results}
-                        </p>
-                        <p className="">
-                            Résultats trouvés
-                        </p>
+        <div className="container">
+            <div className="row">
+                <div 
+                    className="col border rounded"
+                    style={{
+                        borderColor: '#9c86ec',
+                        backgroundColor: '#fafafa'
+                    }}
+                >
+                    <div className="d-flex">
+                        <div className="align-self-center">
+                            <TrophyIcon/>
+                        </div>
+                        <div className="">
+                            <p className="">
+                                {summary.total_results}
+                            </p>
+                            <p className="">
+                                Résultats trouvés
+                            </p>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div className="">
-                <div className="">
-                    <LengthIcon/>
-                    <div className="">
-                        <p className="">
-                            {summary.best_score}%
-                        </p>
-                        <p className="">
-                            Meilleure similarité
-                        </p>
+                <div 
+                    className="col border rounded"
+                    style={{
+                        borderColor: '#9c86ec',
+                        backgroundColor: '#fafafa'
+                    }}
+                >
+                    <div className="d-flex">
+                        <div className="align-self-center">
+                            <LengthIcon/>
+                        </div>
+                        <div className="">
+                            <p className="">
+                                {summary.best_score}%
+                            </p>
+                            <p className="">
+                                Meilleure similarité
+                            </p>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div className="">
-                <div className="">
-                    <ClockIcon/>
-                    <div className="">
-                        <p className="">
-                            {summary.avg_duration} min
-                        </p>
-                        <p className="">
-                            Durée moyenne
-                        </p>
+                <div 
+                    className="col border rounded"
+                    style={{
+                        borderColor: '#9c86ec',
+                        backgroundColor: '#fafafa'
+                    }}
+                >
+                    <div className="d-flex">
+                        <div className="align-self-center">
+                            <ClockIcon/>
+                        </div>
+                        <div className="">
+                            <p className="">
+                                {summary.avg_duration} min
+                            </p>
+                            <p className="">
+                                Durée moyenne
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>

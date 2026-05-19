@@ -15,13 +15,13 @@ function DataPage({ onNext }: DataPageProps) {
 
   const handleNextPage = () => {
     const divDataPage = document.getElementById("data-card")
-    /*const divStatsPage = document.getElementById("stats-card")*/
+    const divStatsPage = document.getElementById("stats-card")
     /*const divResultsPage = document.getElementById("results-card")*/
-    const divPatternPage = document.getElementById("pattern-card")
+    /*const divPatternPage = document.getElementById("pattern-card")*/
     divDataPage.hidden = true
-    /*divStatsPage.hidden = false*/
+    divStatsPage.hidden = false
     /*divResultsPage.hidden = false*/
-    divPatternPage.hidden = false
+    /*divPatternPage.hidden = false*/
     onNext
   }
 

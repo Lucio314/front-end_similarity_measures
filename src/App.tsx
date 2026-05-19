@@ -24,14 +24,14 @@ function App() {
           </div>
         </div>
           <DataPage onNext={() => setCurrentStep(2)} />
-          {/*<StatsPage onNext={() => setCurrentStep(3)} onBack={() => setCurrentStep(1)}/>*/}
+          <StatsPage onNext={() => setCurrentStep(3)} onBack={() => setCurrentStep(1)}/>
             {
             /* 
               Faire le css de StatsPage et encore quelques modif, genre l'appui du bouton 
               "Visualiser les séquences", mais sinon ça affiche bien 
             */
             }
-          <PatternPage onNext={() => setCurrentStep(6)} onBack={() => setCurrentStep(4)}/>
+          {/*<PatternPage onNext={() => setCurrentStep(6)} onBack={() => setCurrentStep(4)}/>*/}
           {/*<ResultsPage onBackParameter={() => setCurrentStep(7)} onBackPattern={() => setCurrentStep(5)}/>*/}
       </div>
     </div>

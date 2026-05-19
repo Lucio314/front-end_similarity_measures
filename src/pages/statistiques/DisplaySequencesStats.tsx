@@ -1,33 +1,16 @@
-import React from 'react';
+import type { DatasetProps } from '../../types';
 import SeqStats from './SeqStats';
 
-const SEQUENCES = [
-    {
-        idSequence: "100010.10",
-        nomSequence:"mobility-seq-0", 
-        nombreActivites: 5, 
-        dureeSequence:"365 minutes", 
-        trousSequence: 2
-    },
-    {
-        idSequence: "100010.11", 
-        nomSequence:"mobility-seq-1", 
-        nombreActivites: 3, 
-        dureeSequence:"200 minutes", 
-        trousSequence: 0
-    }
-]
+interface DisplaySequencesStatsProps{
+    dataset: DatasetProps;
+}
 
-function DisplaySequencesStats(){
+function DisplaySequencesStats({dataset} : DisplaySequencesStatsProps){
     const listeStatsSeq = []
-    for(let seq of SEQUENCES){
+    for(let seq of dataset.sequence){
         listeStatsSeq.push(
             <SeqStats
-                idSequence={seq.idSequence} 
-                nomSequence={seq.nomSequence} 
-                nombreActivites={seq.nombreActivites} 
-                dureeSequence={seq.dureeSequence} 
-                trousSequence={seq.trousSequence}
+                sequence={seq}
             />
         )
     }

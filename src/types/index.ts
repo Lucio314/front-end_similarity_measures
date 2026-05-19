@@ -75,6 +75,22 @@ export interface DatasetInfoProps{
     missing: DatasetInfoMissingProps;
 }
 
+export interface DatasetSequenceProps{
+    id: number;
+    label: string;
+    length: number;
+    total_duration: number;
+    activities: Array<ResultsActivitiesProps>;
+    avg_duration: number
+}
+export interface DatasetProps{
+    dataset_id: string;
+    count: number;
+    limit: number;
+    offset: number; 
+    sequence: Array<DatasetSequenceProps>;
+}
+
 //============================================================
 // Types utilisés dans la page OntologyPage
 //============================================================
@@ -82,6 +98,37 @@ export interface DatasetInfoProps{
 export interface OntologyProps{
     name: string;
     children: OntologyProps[]
+}
+
+//============================================================
+// Types utilisés dans la page MethodPage
+//============================================================
+
+export interface SemanticMeasureProps{
+    name: string;
+    description: string;
+    formula: string;
+    range: Array<number>
+}
+
+export interface MethodPropertiesProps{
+    symmetry: boolean;
+    normalized: boolean;
+    metric: boolean;
+    requires_ontology: boolean;
+    supports_different_lengths: boolean;
+}
+
+export interface MethodProps{
+    name: string;
+    label: string;
+    description: string;
+    principle: string;
+    advantages: Array<string>;
+    limitations: Array<string>;
+    properties: MethodPropertiesProps;
+    params: Array<string>;
+    semantic_measure? : SemanticMeasureProps
 }
 
 //============================================================
@@ -152,12 +199,12 @@ export interface EmojisProps{
 }
 
  export const EMOJIS : Array<EmojisProps> = [
-    { emoji: "🚶", emojiName: "marcher", emojiColor: "#ff2828" },
+    { emoji: "❓", emojiName: "missing", emojiColor: "#ff2828" },
     { emoji: "🚌", emojiName: "bus", emojiColor: "#fe00e9" },
     { emoji: "🚴", emojiName: "vélo", emojiColor: "#ff4281" },
     {emoji: "🚗", emojiName: "voiture", emojiColor:"#ee670d"},
     { emoji: "💼", emojiName: "travail", emojiColor: "#a36f0e" },
-    { emoji: "❓", emojiName: "missing", emojiColor: "#ddce48" },
+    { emoji: "🚶", emojiName: "marcher", emojiColor: "#ddce48" },
     { emoji: "🏠", emojiName: "maison", emojiColor: "#6eff42" },
     { emoji: "🍽️", emojiName: "restaurant", emojiColor: "#00C49F" },
     { emoji: "⚽", emojiName: "sport", emojiColor: "#0d7494" },
