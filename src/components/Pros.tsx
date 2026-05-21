@@ -1,9 +1,8 @@
-import React from 'react';
 import ProsOrCons from './ProsOrCons';
 import GreenCheckIcon from './icons/GreenCheckIcon';
 
 interface ProsProps{
-    avantages: Array<String>;
+    avantages: Array<string>;
 }
 
 function Pros({avantages} : ProsProps){

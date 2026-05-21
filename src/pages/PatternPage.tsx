@@ -21,7 +21,7 @@ function PatternPage({onNext, onBack} : PatternPageProps){
         const divMethodPage = document.getElementById("method-card")
         divPatternPage.hidden = true
         divMethodPage.hidden = false
-        onNext
+        onNext()
     }
 
     const handlePreviousPage = () => {
@@ -29,7 +29,7 @@ function PatternPage({onNext, onBack} : PatternPageProps){
         const divMissingsPage = document.getElementById("missings-card")
         divPatternPage.hidden = true
         divMissingsPage.hidden = false
-        onBack
+        onBack()
     }
 
     const getActivitesPos = (id : string) => listeActivites.findIndex(activite => activite.id === id)

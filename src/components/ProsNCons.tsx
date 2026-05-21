@@ -1,10 +1,9 @@
-import React from 'react';
 import Pros from './Pros';
 import Cons from './Cons';
 
 interface ProsNConsProps{
-    avantages: Array<String>;
-    inconvenients: Array<String>;
+    avantages: Array<string>;
+    inconvenients: Array<string>;
 }
 
 function ProsNCons({avantages, inconvenients} : ProsNConsProps){

@@ -17,7 +17,7 @@ function SequenceRepr({name, duration} : SequenceReprProps){
 
     return (
         <div 
-            className=""
+            className="border rounded"
             style={{
                 backgroundColor: emojiRepr.emojiColor,
             }}

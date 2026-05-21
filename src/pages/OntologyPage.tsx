@@ -100,7 +100,7 @@ function OntologyPage({ onNext, onBack } : OntologyPageProps){
         const divMissingsPage = document.getElementById("missings-card")
         divOntologyPage.hidden = true
         divMissingsPage.hidden = false
-        onNext
+        onNext()
     }
 
     const handlePreviousPage = () => {
@@ -108,7 +108,7 @@ function OntologyPage({ onNext, onBack } : OntologyPageProps){
         const divStatsPage = document.getElementById("stats-card")
         divOntologyPage.hidden = true
         divStatsPage.hidden = false
-        onBack
+        onBack()
     }
 
     return (

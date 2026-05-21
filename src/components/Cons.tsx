@@ -1,9 +1,8 @@
-import React from 'react';
 import ProsOrCons from './ProsOrCons';
 import RedCrossIcon from './icons/RedCrossIcon';
 
 interface ConsProps{
-    inconvenients: Array<String>;
+    inconvenients: Array<string>;
 }
 
 function Cons({inconvenients} : ConsProps){

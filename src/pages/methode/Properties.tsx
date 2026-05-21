@@ -1,13 +1,11 @@
-import React from 'react';
-
 interface PropertiesProps{
-    proprietes: Array<String>
+    proprietes: Array<string>
 }
 
 function Properties({proprietes} : PropertiesProps){
     const ligne = []
     for(let i=0; i<proprietes.length; i++){
-        ligne.push(<li className="property">• proprietes[i]</li>)
+        ligne.push(<li className="property">{proprietes[i]}</li>)
     }
 
     return (

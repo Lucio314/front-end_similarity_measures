@@ -1,4 +1,3 @@
-import React from 'react';
 import MethodsTable from './MethodsTable';
 import GreenCheckIcon from '../../components/icons/GreenCheckIcon';
 import RedCrossIcon from '../../components/icons/RedCrossIcon';
@@ -17,7 +16,7 @@ function ComparativeTable({}){
     for(let advice of ADVICES){ //Pas de changement niveau CSS dans ces balises p
         listeAdvices.push(
             <p>
-                <strong>{advice.adviceStrong}</strong>
+                <strong>{advice.adviceStrong} {" "}</strong>
                 {advice.adviceNotStrong}
             </p>
         )

@@ -1,4 +1,3 @@
-import React from 'react';
 import Pros from '../../components/Pros';
 import Cons from '../../components/Cons';
 import Properties from './Properties';
@@ -7,13 +6,13 @@ import CheckedIcon from '../../components/icons/CheckedIcon';
 import InformationIcon from '../../components/icons/InformationIcon';
 
 interface SimilarityMethodProps{
-    nomMethode: String;
-    descMethode: String;
+    nomMethode: string;
+    descMethode: string;
     specification: Array<string>;
-    avantages: Array<String>;
-    inconvenients: Array<String>;
-    proprietes: Array<String>;
-    parametres: Array<String>;
+    avantages: Array<string>;
+    inconvenients: Array<string>;
+    proprietes: Array<string>;
+    parametres: Array<string>;
 }
 
 function SimilarityMethod({nomMethode, descMethode, specification, avantages, inconvenients, proprietes, parametres} : SimilarityMethodProps){

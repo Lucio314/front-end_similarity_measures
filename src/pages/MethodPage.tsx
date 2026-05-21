@@ -140,7 +140,7 @@ function MethodPage({onNext, onBack} : MethodPageProps){
         const divParameterPage = document.getElementById("parameter-card")
         divMethodPage.hidden = true
         divParameterPage.hidden = false
-        onNext
+        onNext()
     }
 
     const handlePreviousPage = () => {
@@ -148,7 +148,7 @@ function MethodPage({onNext, onBack} : MethodPageProps){
         const divPatternPage = document.getElementById("pattern-card")
         divMethodPage.hidden = true
         divPatternPage.hidden = false
-        onBack
+        onBack()
     }
 
     return (

@@ -140,7 +140,7 @@ function StatsPage({ onNext, onBack }: DataPageProps){
         const divOntologyPage = document.getElementById("ontology-card")
         divStatsPage.hidden = true
         divOntologyPage.hidden = false
-        onNext
+        onNext()
     }
 
     const handlePreviousPage = () => {
@@ -148,7 +148,7 @@ function StatsPage({ onNext, onBack }: DataPageProps){
         const divStatsPage = document.getElementById("stats-card")
         divStatsPage.hidden = true
         divDataPage.hidden = false
-        onBack
+        onBack()
     }
 
     return(

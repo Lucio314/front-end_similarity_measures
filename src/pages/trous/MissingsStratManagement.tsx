@@ -1,8 +1,10 @@
-import React, { type JSX } from 'react';
+import { type JSX } from 'react';
 import MissingsStrat from './MissingsStrat';
+import type { StrategiesProps } from '../../types';
 
-const STRATEGIES = [
+const STRATEGIES : Array<StrategiesProps> = [
   {
+    idStrategie: "strat1",
     strategie: "Ajouter \"missing\" à l'ontologie",
     descriptionStrategie: "Les trous sont traités comme une activité à part entière dans l'ontologie",
     emoji: "🌳",
@@ -10,6 +12,7 @@ const STRATEGIES = [
     inconvenients: ["Augmente la complexité de l'ontologie"]
   },
   {
+    idStrategie: "strat2",
     strategie: "Remplacer par une activité spécifique",
     descriptionStrategie: "Remplacer tous les trous par une activité choisie (ex: \"maison\")",
     emoji: "🔄",
@@ -17,6 +20,7 @@ const STRATEGIES = [
     inconvenients: ["Introduit un biais", "Peut fausser les résultats"]
   },
   {
+    idStrategie: "strat3",
     strategie: "Remplacer par l'activité la plus fréquente",
     descriptionStrategie: "Remplacer les trous par l'activité qui apparaît le plus souvent dans le dataset",
     emoji: "📊",
@@ -24,6 +28,7 @@ const STRATEGIES = [
     inconvenients: ["Peut sur-représenter certaines activités", "Ignore le contexte"]
   },
   {
+    idStrategie: "strat4",
     strategie: "Interpolation contextuelle",
     descriptionStrategie: "Deviner l'activité manquante en fonction des activités voisines",
     emoji: "🧩",
@@ -31,6 +36,7 @@ const STRATEGIES = [
     inconvenients: ["Plus complexe à calculer", "Peut créer des erreurs"]
   },
   {
+    idStrategie: "strat5",
     strategie: "Supprimer les séquences avec trous",
     descriptionStrategie: "Exclure complètement les séquences contenant des données manquantes",
     emoji: "🗑️",
@@ -38,6 +44,7 @@ const STRATEGIES = [
     inconvenients: ["Perte d'information", "Réduit la taille du dataset"]
   },
   {
+    idStrategie: "strat6",
     strategie: "Garder tel quel (avec distance maximale)",
     descriptionStrategie: "Les trous sont comparés avec une distance maximale (similarité = 0)",
     emoji: "⚠️",
@@ -49,13 +56,31 @@ const STRATEGIES = [
 function MissingsStratManagement({}){
   const strategiesMissings : Array<JSX.Element> = []
   for(let strategy of STRATEGIES){
+    let handleClick = () => {
+      const divHidden = document.getElementById(strategy.idStrategie)
+      if(divHidden.hidden){
+        divHidden.hidden = false
+        for(let i=0; i<STRATEGIES.length; i++){
+          if(STRATEGIES[i].idStrategie !== strategy.idStrategie){
+            document.getElementById(STRATEGIES[i].idStrategie).hidden = true
+          }
+        }
+      }else{
+        divHidden.hidden = true
+    }
+  }
+
+
     strategiesMissings.push(
     <MissingsStrat
+      key={strategy.idStrategie}
+      id={strategy.idStrategie}
       emoji={strategy.emoji}
       strategie={strategy.strategie}
       descriptionStrategie={strategy.descriptionStrategie}
       avantages={strategy.avantages}
       inconvenients={strategy.inconvenients}
+      onClick={handleClick}
     />
     )
   }
@@ -65,7 +90,6 @@ function MissingsStratManagement({}){
       {strategiesMissings}
     </div>
   )
-  // A modif pour faire comme une checkbox 
 }
 
 export default MissingsStratManagement

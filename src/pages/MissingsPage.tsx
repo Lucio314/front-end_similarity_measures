@@ -1,4 +1,3 @@
-import React from 'react';
 import MissingsStratManagement from './trous/MissingsStratManagement';
 
 interface MissingsPageProps {
@@ -12,7 +11,7 @@ function Trous({onNext, onBack} : MissingsPageProps){
         const divPatternPage = document.getElementById("pattern-card")
         divMissingsPage.hidden = true
         divPatternPage.hidden = false
-        onNext
+        onNext()
     }
 
     const handlePreviousPage = () => {
@@ -20,7 +19,7 @@ function Trous({onNext, onBack} : MissingsPageProps){
         const divOntologyPage = document.getElementById("ontology-card")
         divMissingsPage.hidden = true
         divOntologyPage.hidden = false
-        onBack
+        onBack()
     }
 
     return (
@@ -73,7 +72,6 @@ function Trous({onNext, onBack} : MissingsPageProps){
             </div>
         </div>
     )
-    //Modifier les buttons plus tard
 }
 
 export default Trous

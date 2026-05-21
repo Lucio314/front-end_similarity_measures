@@ -25,7 +25,7 @@ export interface ActivitiesProps{
     actiId: string;
     icon: string;
     nomActi: string;
-    temps: string;
+    temps: number;
 } //Type pour les json des séquence de méthodes
 
 export interface ListParametersProps{
@@ -98,6 +98,19 @@ export interface DatasetProps{
 export interface OntologyProps{
     name: string;
     children: OntologyProps[]
+}
+
+//============================================================
+// Types utilisés dans la page OntologyPage
+//============================================================
+
+export interface StrategiesProps{
+    idStrategie: string;
+    strategie: string;
+    descriptionStrategie: string;
+    emoji: string;
+    avantages: Array<string>;
+    inconvenients: Array<string>
 }
 
 //============================================================
@@ -198,11 +211,11 @@ export interface EmojisProps{
     emojiColor: string;
 }
 
- export const EMOJIS : Array<EmojisProps> = [
+export const EMOJIS : Array<EmojisProps> = [
     { emoji: "❓", emojiName: "missing", emojiColor: "#ff2828" },
     { emoji: "🚌", emojiName: "bus", emojiColor: "#fe00e9" },
     { emoji: "🚴", emojiName: "vélo", emojiColor: "#ff4281" },
-    {emoji: "🚗", emojiName: "voiture", emojiColor:"#ee670d"},
+    { emoji: "🚗", emojiName: "voiture", emojiColor:"#ee670d"},
     { emoji: "💼", emojiName: "travail", emojiColor: "#a36f0e" },
     { emoji: "🚶", emojiName: "marcher", emojiColor: "#ddce48" },
     { emoji: "🏠", emojiName: "maison", emojiColor: "#6eff42" },

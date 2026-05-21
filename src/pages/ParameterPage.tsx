@@ -81,7 +81,7 @@ function ParameterPage({onNext, onBack} : ParameterPageProps){
         const divParameterPage = document.getElementById("parameter-card")
         divParameterPage.hidden = true
         divResultsPage.hidden = false
-        onNext
+        onNext()
     }
 
     const handlePreviousPage = () => {
@@ -89,7 +89,7 @@ function ParameterPage({onNext, onBack} : ParameterPageProps){
         const divMethodPage = document.getElementById("method-card")
         divParameterPage.hidden = false
         divMethodPage.hidden = true
-        onBack
+        onBack()
     }
 
     return (

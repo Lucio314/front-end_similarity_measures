@@ -100,11 +100,16 @@ function SeqStats({sequence} : SeqStatsProps){
                 <div className="">
                     {listeSequenceRepr}
                 </div>
-                <div className="">
+                <div 
+                    className="border rounded p-2"
+                    style={{
+                        backgroundColor: "#dadada"
+                    }}
+                >
                     <div className="">
                         Visualisation temporelle: 
                     </div>
-                    <div className="">
+                    <div className="d-flex">
                         {listeSequenceReprLine}
                     </div>
                 </div>

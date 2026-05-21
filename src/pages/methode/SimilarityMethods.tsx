@@ -1,4 +1,3 @@
-import React from 'react';
 import SimilarityMethod from './SimilarityMethod';
 import { useState } from 'react';
 
@@ -202,7 +201,7 @@ function SimilarityMethods({}){
     }
     return (
         <div className="methods-list">
-            <div id="div-main-methods" className="methods">
+            <div id="div-main-methods" className="d-flex">
                 {listeMethodesPrincipales}
             </div>
             <div id="div-more-methods" className="methods" hidden>
