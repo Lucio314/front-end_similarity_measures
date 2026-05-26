@@ -16,15 +16,19 @@ function DataPage({ onNext }: DataPageProps) {
   const handleNextPage = () => {
     const divDataPage = document.getElementById("data-card")
     /*const divStatsPage = document.getElementById("stats-card")*/
+    const divOntologyPage = document.getElementById("ontology-card")
     /*const divMissingsPage = document.getElementById("missings-card")*/
     /*const divPatternPage = document.getElementById("pattern-card")*/
-    const divMethodPage = document.getElementById("method-card")
+    /*const divMethodPage = document.getElementById("method-card")*/
+    /*const divParameterPage = document.getElementById("parameter-card")*/
     /*const divResultsPage = document.getElementById("results-card")*/
     divDataPage.hidden = true
     /*divStatsPage.hidden = false*/
+    divOntologyPage.hidden = false
     /*divMissingsPage.hidden = false*/
     /*divPatternPage.hidden = false*/
-    divMethodPage.hidden = false
+    /*divMethodPage.hidden = false*/
+    /*divParameterPage.hidden = false*/
     /*divResultsPage.hidden = false*/
     onNext()
   }

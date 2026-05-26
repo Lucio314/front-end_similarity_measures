@@ -182,6 +182,8 @@ function StatsPage({ onNext, onBack }: DataPageProps){
                                 Sélectionner le dataset :
                                 <MenuSelect 
                                     options={LISTDATASETS}
+                                    value={-1}
+                                    onValueChange={() => null}
                                 />
                             </label>
                         </div>

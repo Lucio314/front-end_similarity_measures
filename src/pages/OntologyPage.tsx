@@ -1,4 +1,3 @@
-import React from 'react';
 import OntologyDiv from './ontologie/OntologyDiv';
 import WuPalmerDiv from './ontologie/WuPalmerDiv';
 import type { OntologyProps } from '../types';
@@ -83,10 +82,33 @@ const ONTOLOGY : OntologyProps = {
     ]
 }
 //Exemple d'ontologie renvoyée par l'api
+const activites : Array<string> = []
 
-const MATRICEWUPALMER = {
-
+interface OntologyActivitesProps {
+    ontology: OntologyProps;
+    i: number;
 }
+function OntologyActivites({ontology, i} : OntologyActivitesProps){
+    if(ontology.children.length === 0 && i === 3){
+        activites.push(ontology.name)
+    }
+    else {
+        ontology.children.forEach((child : OntologyProps) => OntologyActivites({ontology: child, i: i + 1}))
+    }
+}
+OntologyActivites({ontology: ONTOLOGY, i: 0});
+//Récupère toutes les activités de l'ontologie dans un Array
+
+const MATRICEWUPALMER = [
+    [1.0, 0.67, 0.33, 0.33, 0.0, 0.0, 0.0, 0.0],
+    [0.67, 1.0, 0.33, 0.33, 0.0, 0.0, 0.0, 0.0],
+    [0.33, 0.33, 1.0, 0.67, 0.0, 0.0, 0.0, 0.0],
+    [0.33, 0.33, 0.67, 1.0, 0.0, 0.0, 0.0, 0.0],
+    [0.0, 0.0, 0.0, 0.0, 1.0, 0.67, 0.33, 0.33],
+    [0.0, 0.0, 0.0, 0.0, 0.67, 1.0, 0.33, 0.33],
+    [0.0, 0.0, 0.0, 0.0, 0.33, 0.33, 1.0, 0.67],
+    [0.0, 0.0, 0.0, 0.0, 0.33, 0.33, 0.67, 1.0]
+]
 //Exemple de matrice de similarité renvoyée par l'api
 
 interface OntologyPageProps {
@@ -121,9 +143,9 @@ function OntologyPage({ onNext, onBack } : OntologyPageProps){
                     </p>
                 </div>
 
-                <OntologyDiv/>
+                <OntologyDiv ontology={ONTOLOGY} />
 
-                <WuPalmerDiv/>
+                <WuPalmerDiv matrice={MATRICEWUPALMER} activites={activites}/>
             </div>
             <div className="d-flex justify-content-end mt-4">
                 <button 
@@ -151,7 +173,6 @@ function OntologyPage({ onNext, onBack } : OntologyPageProps){
             </div>
         </div>
     )
-  //Modif button plus tard
 }
 
 export default OntologyPage

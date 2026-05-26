@@ -1,4 +1,3 @@
-import React from 'react';
 import GreenCheckIcon from '../components/icons/GreenCheckIcon';
 import RFTHParameter from './parametre/RFTHParameter';
 import { useState } from 'react';
@@ -6,6 +5,7 @@ import SlidersParameter from './parametre/SlidersParameter';
 import ConfigurationsParameter from './parametre/ConfigurationsParameter';
 import MultidimParameter from './parametre/MultidimParameter';
 import type { ListParametersProps } from '../types';
+import SlidersIcon from '../components/icons/SlidersIcon';
 
 interface ParameterPageProps{
     onNext: () => void;
@@ -21,14 +21,14 @@ function ParameterPage({onNext, onBack} : ParameterPageProps){
     const [valueSliderPositionWeight, setValueSliderPositionWeight] = useState<number>(0.50)
     const [valueSliderSemanticWeight, setValueSliderSemanticWeight] = useState<number>(0.50)
     const [valueSliderFuzzyWindow, setValueSliderFuzzyWindow] = useState<number>(50)
-    const [valueSliderAlignementStrategy, setValueSliderAlignementStrategy] = useState<string>("exhaustive")
+    const [valueSliderAlignementStrategy, setValueSliderAlignementStrategy] = useState<number>(0)
     const [valueSliderLambda, setValueSliderLambda] = useState<number>(60)
     const [valueSliderWarpingWindow, setValueSliderWarpingWindow] = useState<number>(10)
     const [valueSliderTransitionThreshold, setValueSliderTransitionThreshold] = useState<number>(0.10)
 
     //Liste de listes contenant tous les getters et setters des useState pour SlidersParameter et ConfigurationParameter
     
-    const listeParametres : ListParametersProps[] = [  
+    const listeParametres : Array<ListParametersProps> = [  
         {
             nomParam: "K",
             getter: valueSliderK,
@@ -40,7 +40,7 @@ function ParameterPage({onNext, onBack} : ParameterPageProps){
             setter: setValueSliderSimilarite
         },
         {
-            nomParam: "poistion_weight",
+            nomParam: "position_weight",
             getter: valueSliderPositionWeight,
             setter: setValueSliderPositionWeight
         },
@@ -55,12 +55,12 @@ function ParameterPage({onNext, onBack} : ParameterPageProps){
             setter: setValueSliderFuzzyWindow
         },
         {
-            nomParam: "alignement_strategy",
+            nomParam: "alignment_strategy",
             getter: valueSliderAlignementStrategy,
             setter: setValueSliderAlignementStrategy
         },
         {
-            nomParam: "lamba",
+            nomParam: "lambda",
             getter: valueSliderLambda,
             setter: setValueSliderLambda
         },
@@ -75,6 +75,7 @@ function ParameterPage({onNext, onBack} : ParameterPageProps){
             setter: setValueSliderTransitionThreshold
         }
     ]
+    //Définir si RFTH sélectionné que le paramètre semantic_measure soit Wu Palmer, sans modification possible
 
     const handleNextPage = () => {
         const divResultsPage = document.getElementById("results-card")
@@ -99,12 +100,20 @@ function ParameterPage({onNext, onBack} : ParameterPageProps){
                     <h2 className="fw-bold mb-1">Configuration des Paramètres</h2>
                     <p className="text-muted mb-0">
                         Ajustez finement les paramètres de la méthode
-                        <strong></strong>
+                        <strong>{"FTH-T"}</strong> {/*Sert d'exemple ici, doit être la méthode sélectionné de MethodPage*/}
                     </p>
-                    <RFTHParameter/> {/* Paramètre à ajouter (un useState) */}
+                    <RFTHParameter 
+                        RFTHIsSelected={false}
+                    /> {/* Paramètre à ajouter (un useState) */}
                     <div className="param-div">
-                        <h3 className="fw-bold mb-1">Paramètres réglables</h3>
-                        <SlidersParameter listeParametres={listeParametres}/> {/* Paramètre à ajouter (nom de la méthode sélectionnée à la page d'avant) */}
+                        <h3 className="fw-bold mb-1">
+                            <SlidersIcon/>
+                            Paramètres réglables
+                        </h3>
+                        <SlidersParameter 
+                            listeParametres={listeParametres} 
+                            nomMethode="FTH-T"
+                        /> {/* Paramètre à ajouter (nom de la méthode sélectionnée à la page d'avant) */}
                     </div>
                     <div className="param-multidim" hidden>
                         <h3 className="fw-bold mb-1">Pondération Multidimensionnelle</h3>
@@ -117,11 +126,10 @@ function ParameterPage({onNext, onBack} : ParameterPageProps){
                         />
                     </div>
                     <div className="param-actual-config">
-                        <h4 className="fw-bold mb-1">
-                            <GreenCheckIcon/>
-                            Configuration actuelle
-                        </h4>
-                        <ConfigurationsParameter listeParametres={listeParametres}/> {/* Paramètre à ajouter (nom de la méthode sélectionnée à la page d'avant) */}
+                        <ConfigurationsParameter 
+                            listeParametres={listeParametres} 
+                            nomMethode="FTH-T"
+                        /> {/* Paramètre à ajouter (nom de la méthode sélectionnée à la page d'avant) */}
                     </div>
                 </div>
                 <div className="d-flex justify-content-end mt-4">
@@ -144,9 +152,8 @@ function ParameterPage({onNext, onBack} : ParameterPageProps){
                             borderColor: "#4f46e5",
                             cursor: "pointer",
                         }}
-                        disabled
                     >
-                        Lancer la recherche
+                        Lancer la recherche →
                     </button>
                 </div>
             </div>

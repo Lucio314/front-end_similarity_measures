@@ -123,7 +123,6 @@ function PatternPage({onNext, onBack} : PatternPageProps){
                             borderColor: "#4f46e5",
                             cursor: "pointer",
                         }}
-                        disabled
                     >
                         Choisir la méthode de similarité →
                     </button>

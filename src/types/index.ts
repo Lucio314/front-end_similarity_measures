@@ -28,13 +28,6 @@ export interface ActivitiesProps{
     temps: number;
 } //Type pour les json des séquence de méthodes
 
-export interface ListParametersProps{
-    nomParam: string;
-    getter: string | number;
-    setter: React.Dispatch<React.SetStateAction<string>> | React.Dispatch<React.SetStateAction<number>>;
-} //Type pour ListeParametres dans ParameterPage
-
-
 //============================================================
 // Types utilisés dans la page StatsPage
 //============================================================
@@ -100,8 +93,10 @@ export interface OntologyProps{
     children: OntologyProps[]
 }
 
+export const ONTOLOGY_COLORS : Array<string> = ["#c226ff", "#5046e6", "#839ef8", "#62cdee"]
+
 //============================================================
-// Types utilisés dans la page OntologyPage
+// Types utilisés dans la page MissingsPage
 //============================================================
 
 export interface StrategiesProps{
@@ -155,6 +150,27 @@ export interface PatternActivitiesProps{
     duration: number;
 }
 
+//============================================================
+// Types utilisés dans la page ParameterPage
+//============================================================
+
+export interface ParamsProps{
+    param: string;
+    nomClasse: string;
+    paramTitre: string;
+    paramValue: Array<string>;
+    paramValueMax: number;
+    paramValueMin: number;
+    paramValuePas: number;
+    paramLegend: Array<string>;
+    paramInfo: string;
+}
+
+export interface ListParametersProps{
+    nomParam: string;
+    getter: number;
+    setter: React.Dispatch<React.SetStateAction<number>>;
+} //Type pour ListeParametres dans ParameterPage
 
 //============================================================
 // Types utilisés dans la page ResultsPage

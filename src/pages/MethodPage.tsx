@@ -89,7 +89,7 @@ const METHODS : Array<MethodProps> = [
         "params": ["beta"]
     }
 ]
-//Element METHOD de l'api
+//Element METHODS de l'api
 
 interface MethodPageProps {
   onNext: () => void;
@@ -195,15 +195,12 @@ function MethodPage({onNext, onBack} : MethodPageProps){
                         borderColor: "#4f46e5",
                         cursor: "pointer",
                     }}
-                    disabled
                 >
                     Configurer les paramètres →
                 </button>
             </div>
         </div>
     )
-    //Finir FTHTDemo
-    //Faire RFTHDemo
     //Le button next doit être disabled tant qu'il n'y a pas de sélection de méthode
     //Faire un isChecked pour MethodesSimilarite pour permettre la communication avec Parametres.jsx (envoie des paramètres et nom méthode)
 }

@@ -1,23 +1,72 @@
-import React from 'react';
 import OntologyTree from './OntologyTree';
 import Checkbox from '../../components/Checkbox';
 import { useState } from 'react';
+import type { OntologyProps } from '../../types';
+import OntologyIcon from '../../components/icons/OntologyIcon';
+import { ONTOLOGY_COLORS } from '../../types';
 
-function OntologyDiv({}){
+interface OntologyDivProps{
+  ontology: OntologyProps;
+}
+
+function OntologyDiv({ontology}: OntologyDivProps){
   const [isChecked, setIsChecked] = useState(true)
   
   return (
-    <div>
-      <div>
+    <div className="">
+      <div className="border rounded p-4">
         <Checkbox 
           id="checkbox-ontologie"
           checked={isChecked}
           onChange={setIsChecked}
           label="Utiliser l'ontologie par défaut pour les activités humaines"
         />
-        <OntologyTree/>
+        <div className="border rounded">
+          <h4>
+            <OntologyIcon/>
+            Structure de l'ontologie
+          </h4>
+          <OntologyTree ontology={ontology} layer={0}/>
+          <div className="border rounded">
+            <p className="">Légende :</p>
+            <div>
+              <span>
+                <div 
+                  className="border rounded" 
+                  style={{backgroundColor: ONTOLOGY_COLORS[0]}}
+                >
+                </div>
+                Niveau 0 (Racine)
+              </span>
+              <span>
+                <div 
+                  className="border rounded" 
+                  style={{backgroundColor: ONTOLOGY_COLORS[1]}}
+                >
+                </div>
+                Niveau 1 (Catégorie)
+              </span>
+              <span>
+                <div 
+                  className="border rounded" 
+                  style={{backgroundColor: ONTOLOGY_COLORS[2]}}
+                >
+                </div>
+                Niveau 2 (Sous-catégorie)
+              </span>
+              <span>
+                <div 
+                  className="border rounded" 
+                  style={{backgroundColor: ONTOLOGY_COLORS[3]}}
+                >
+                </div>
+                Niveau 3 (Activité)
+              </span>
+            </div>
+          </div>
+        </div>
       </div>
-      <div>
+      <div className="border rounded mt-4 p-3">
         <p className="text-muted mb-0">
           <strong>💡 À quoi sert l'ontologie ?</strong>
           <br/>

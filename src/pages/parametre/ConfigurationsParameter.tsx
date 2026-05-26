@@ -1,4 +1,3 @@
-import React from 'react';
 import type { ListParametersProps } from '../../types';
 import GreenCheckIcon from '../../components/icons/GreenCheckIcon';
 import ConfigurationParameter from './ConfigurationParameter';
@@ -18,7 +17,7 @@ const PARAMETRES = [
     },
     {
         nomMethode: "RFTH",
-        parametres: ["lambda",  "fuzzy_window",  "semantic_measure"]
+        parametres: ["lambda",  "fuzzy_window"]
     },
     {
         nomMethode: "DTW",
@@ -44,9 +43,8 @@ function ConfigurationsParameter({listeParametres, nomMethode} : ConfigurationPa
     for(let param of PARAMETRES){
         if(param.nomMethode === nomMethode && param.parametres.length !== 0){
             for(let i = 0; i < param.parametres.length; i++){
-                listConfigParam.push(<ConfigurationParameter nomParam={param.parametres[i]} param={listeParametres}/>)
+                listConfigParam.push(<ConfigurationParameter nomParam={param.parametres[i]} listeParametres={listeParametres}/>)
             }
-            break
         }
     }
 
@@ -57,8 +55,8 @@ function ConfigurationsParameter({listeParametres, nomMethode} : ConfigurationPa
                 Configuration actuelle
             </h4>
             <div className="">
-                <ConfigurationParameter nomParam="K" param={listeParametres}/>
-                <ConfigurationParameter nomParam="Similarite" param={listeParametres}/>
+                <ConfigurationParameter nomParam="K" listeParametres={listeParametres}/>
+                <ConfigurationParameter nomParam="Similarite" listeParametres={listeParametres}/>
                 {listConfigParam}
             </div>
         </div>

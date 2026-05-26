@@ -6,10 +6,12 @@ import Header from './components/layout/Header';
 import Stepper from './components/layout/Stepper';
 import DataPage from './pages/DataPage';
 import StatsPage from './pages/StatsPage';
-import ResultsPage from './pages/ResultsPage';
+import MissingsPage from './pages/MissingsPage';
 import PatternPage from './pages/PatternPage';
 import MethodPage from './pages/MethodPage';
-import MissingsPage from './pages/MissingsPage';
+import ParameterPage from './pages/ParameterPage';
+import ResultsPage from './pages/ResultsPage';
+import OntologyPage from './pages/OntologyPage';
 
 function App() {
   const [currentStep, setCurrentStep] = useState<number>(1);
@@ -33,9 +35,11 @@ function App() {
               "Visualiser les séquences", mais sinon ça affiche bien 
             */
             }
-           { /*<MissingsPage onNext={() => setCurrentStep(5)} onBack={() => setCurrentStep(3)}/>*/}
+          <OntologyPage onNext={() => setCurrentStep(4)} onBack={() => setCurrentStep(2)}/>
+          {/*<MissingsPage onNext={() => setCurrentStep(5)} onBack={() => setCurrentStep(3)}/>*/}
           {/*<PatternPage onNext={() => setCurrentStep(6)} onBack={() => setCurrentStep(4)}/>*/}
-          <MethodPage onNext={() => setCurrentStep(7)} onBack={() => setCurrentStep(5)}/>
+          {/*<MethodPage onNext={() => setCurrentStep(7)} onBack={() => setCurrentStep(5)}/>*/}
+          {/*<ParameterPage onNext={() => setCurrentStep(8)} onBack={() => setCurrentStep(6)}/>*/}
           {/*<ResultsPage onBackParameter={() => setCurrentStep(7)} onBackPattern={() => setCurrentStep(5)}/>*/}
       </div>
     </div>
