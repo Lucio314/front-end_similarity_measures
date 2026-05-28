@@ -26,17 +26,9 @@ function Trous({onNext, onBack} : MissingsPageProps){
         <div id="missings-card" className="card border-0 shadow-sm" style={{ borderRadius: 12 }} hidden>
             <div className="card-body p-5">
                 <div className="text-center mb-4">
-                    <div className="div-missing-warning">
-                        <p className="text-muted mb-0">
-                            <strong>⚠️ Données manquantes détectées !</strong>
-                            <br/>
-                            Votre dataset contient des trous (activités manquantes).
-                            Choisissez comment vous souhaitez les gérer pour la recherche.
-                        </p>
-                    </div>
                     <h2 className="text-center mb-4">🔧 Gestion des données manquantes</h2>
                     <MissingsStratManagement/>
-                    <div className="div-strategy-recommendation">
+                    <div className="border rounded mt-4 p-3">
                         <p className="text-muted mb-0">
                             <strong>💡 Recommandation :</strong>
                             Pour une recherche sémantique, l'option "Ajouter missing à l'ontologie"

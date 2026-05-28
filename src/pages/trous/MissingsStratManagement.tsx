@@ -86,8 +86,24 @@ function MissingsStratManagement({}){
   }
 
   return (
-    <div className= "gestion-strategy-missings">
-      {strategiesMissings}
+    <div className="border rounded p-3 mb-4">
+      <div className="border rounded mb-4 p-3">
+        <p className="text-muted mb-0">
+          <strong>⚠️ Données manquantes détectées !</strong>
+          <br/>
+          Votre dataset contient des trous (activités manquantes).
+          Choisissez comment vous souhaitez les gérer pour la recherche.
+        </p>
+      </div>
+      <div className="d-flex flex-column">
+        <div className="row g-3">
+          {strategiesMissings.map((strategy) => (
+            <div className="col-md-6" key={strategy.key}>
+              {strategy}
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   )
 }

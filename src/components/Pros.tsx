@@ -7,7 +7,7 @@ interface ProsProps{
 
 function Pros({avantages} : ProsProps){
     return (
-        <div className="div-pros">
+        <div className="col-md-6">
             <GreenCheckIcon/>
             <span className="pros"> Avantages :</span>
             <ProsOrCons liste={avantages}/>

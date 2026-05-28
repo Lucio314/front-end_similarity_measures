@@ -101,7 +101,7 @@ function ResultsSeq({sequence} : ResultsSeqProps){
                         <div className="">
                             Visualisation temporelle :
                         </div>
-                        <div className="">
+                        <div className="d-flex">
                             {listeSequenceReprLine}
                         </div>
                     </div>

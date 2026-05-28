@@ -7,7 +7,7 @@ interface ConsProps{
 
 function Cons({inconvenients} : ConsProps){
     return (
-        <div className="div-cons">
+        <div className="col-md-6">
             <RedCrossIcon/>
             <span className="cons"> Inconvénients :</span>
             <ProsOrCons liste={inconvenients}/>

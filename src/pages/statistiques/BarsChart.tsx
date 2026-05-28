@@ -11,7 +11,7 @@ interface BarsChartProps {
 
 function BarsChart({dataset, defaultIndex = undefined} : BarsChartProps){
   return (
-    <div className="col">
+    <div className="col-md-6 border rounded d-flex flex-column align-items-center">
       <h5 className="fw-bold mb-1">Répartition des activités</h5>
         <BarChart 
           width={500}

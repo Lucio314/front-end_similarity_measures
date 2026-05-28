@@ -83,7 +83,7 @@ function DatasetStatistics({ datasetInfo } : DatasetStatisticsProps){
                     </p>
                 </div>
             </div>
-            <div className="row">
+            <div className="row border rounded">
                 <BarsChart dataset={datasetInfo.activities.distribution}/>
                 <PiesChart dataset={datasetInfo.activities.distribution}/>
             </div>

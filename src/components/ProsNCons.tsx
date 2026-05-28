@@ -8,7 +8,7 @@ interface ProsNConsProps{
 
 function ProsNCons({avantages, inconvenients} : ProsNConsProps){
   return (
-    <div className="div-pros-cons">
+    <div className="row g-3">
       <Pros avantages={avantages}/>
       <Cons inconvenients={inconvenients}/>
     </div>

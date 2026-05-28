@@ -10,12 +10,9 @@ function WuPalmerMatrix({matrice, activites} : WuPalmerMatrixProps){
       <th key={i} className="text-center border">{activites[i]}</th>
     )
   }
-  console.log(matrice)
   const listeTBody = []
   for(let i = 0; i < activites.length; i++){
     const ligne = []
-    console.log(i)
-    console.log(activites)
     for(let j = 0; j < activites.length; j++){
       let style = {}
       if(matrice[i][j] === 1){

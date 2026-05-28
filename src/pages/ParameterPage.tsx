@@ -88,8 +88,8 @@ function ParameterPage({onNext, onBack} : ParameterPageProps){
     const handlePreviousPage = () => {
         const divParameterPage = document.getElementById("parameter-card")
         const divMethodPage = document.getElementById("method-card")
-        divParameterPage.hidden = false
-        divMethodPage.hidden = true
+        divParameterPage.hidden = true
+        divMethodPage.hidden = false
         onBack()
     }
 
@@ -100,12 +100,12 @@ function ParameterPage({onNext, onBack} : ParameterPageProps){
                     <h2 className="fw-bold mb-1">Configuration des Paramètres</h2>
                     <p className="text-muted mb-0">
                         Ajustez finement les paramètres de la méthode
-                        <strong>{"FTH-T"}</strong> {/*Sert d'exemple ici, doit être la méthode sélectionné de MethodPage*/}
+                        <strong>{" FTH-T"}</strong> {/*Sert d'exemple ici, doit être la méthode sélectionné de MethodPage*/}
                     </p>
                     <RFTHParameter 
                         RFTHIsSelected={false}
                     /> {/* Paramètre à ajouter (un useState) */}
-                    <div className="param-div">
+                    <div className="border rounded mt-4 p-3">
                         <h3 className="fw-bold mb-1">
                             <SlidersIcon/>
                             Paramètres réglables
@@ -125,7 +125,7 @@ function ParameterPage({onNext, onBack} : ParameterPageProps){
                             onValueSliderMeteoChange={setValueSliderMeteo}
                         />
                     </div>
-                    <div className="param-actual-config">
+                    <div className="border rounded mt-4 p-3">
                         <ConfigurationsParameter 
                             listeParametres={listeParametres} 
                             nomMethode="FTH-T"

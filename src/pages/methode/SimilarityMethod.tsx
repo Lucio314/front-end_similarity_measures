@@ -51,7 +51,7 @@ function SimilarityMethod({nomMethode, descMethode, specification, avantages, in
     }
     
     return (
-        <div className="method">
+        <div className="border rounded">
             <div className="method-header">
                 <div className="method-name-desc">
                     <h3 className="h3-title">{nomMethode}</h3>

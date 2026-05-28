@@ -166,8 +166,8 @@ function StatsPage({ onNext, onBack }: DataPageProps){
                 >
                     Visualiser toutes les séquences
                 </button>
-                <div id="div-part-body-stats" className="part-main-body">
-                    <div className="part-body">
+                <div id="div-part-body-stats" className="border rounded p-3 mt-4 row">
+                    <div className="col-md-12">
                         <div className="">
                             <h2 className="fw-bold mb-1 text-center">Statistiques du Dataset</h2>
                             <div className="div-checkbox-multi">
@@ -225,7 +225,6 @@ function StatsPage({ onNext, onBack }: DataPageProps){
             </div>
         </div>
     )
-    //Faire les event des buttons
 }
 
 export default StatsPage

@@ -201,10 +201,10 @@ function SimilarityMethods({}){
     }
     return (
         <div className="methods-list">
-            <div id="div-main-methods" className="d-flex">
+            <div id="div-main-methods" className="d-flex border rounded">
                 {listeMethodesPrincipales}
             </div>
-            <div id="div-more-methods" className="methods" hidden>
+            <div id="div-more-methods" className="methods border rounded" hidden>
                 {listeMethodesSecondaires}
             </div>
             <button 

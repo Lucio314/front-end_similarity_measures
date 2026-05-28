@@ -15,32 +15,36 @@ function MissingsStrat({id, emoji, strategie, descriptionStrategie, avantages, i
   
   if(id === "strat1"){
     return (
-      <div className="div-strategy-missings" onClick={onClick}>
-        <span className="strategy-emoji">{emoji}</span>
-        <div className="div-header-strategy">
-          <h4 className="strategy-name">{strategie}</h4>
-          <p className="strategy-description">{descriptionStrategie}</p>
+      <div className="border rounded" onClick={onClick}>
+        <div className="d-flex align-items-left gap-3">
+          <span className="strategy-emoji">{emoji}</span>
+          <div className="div-header-strategy">
+            <h4 className="strategy-name">{strategie}</h4>
+            <p className="strategy-description">{descriptionStrategie}</p>
+          </div>
+          <div id={id}>
+            <CheckedIcon/>
+          </div>
         </div>
-        <div id={id}>
-          <CheckedIcon/>
-        </div>
-        <div className="div-body-strategy">
+        <div className="mt-3">
           <ProsNCons avantages={avantages} inconvenients={inconvenients}/>
         </div>
       </div>
     )
   }else{
     return (
-    <div className="div-strategy-missings" onClick={onClick}>
-      <span className="strategy-emoji">{emoji}</span>
-      <div className="div-header-strategy">
-        <h4 className="strategy-name">{strategie}</h4>
-        <p className="strategy-description">{descriptionStrategie}</p>
+    <div className="border rounded d-flex flex-column gap-3" onClick={onClick}>
+      <div className="dlex d-flex align-items-left gap-3">
+        <span className="strategy-emoji">{emoji}</span>
+        <div className="div-header-strategy">
+          <h4 className="strategy-name">{strategie}</h4>
+          <p className="strategy-description">{descriptionStrategie}</p>
+        </div>
+        <div id={id} hidden>
+          <CheckedIcon/>
+        </div>
       </div>
-      <div id={id} hidden>
-        <CheckedIcon/>
-      </div>
-      <div className="div-body-strategy">
+      <div className="mt-3">
         <ProsNCons avantages={avantages} inconvenients={inconvenients}/>
       </div>
     </div>

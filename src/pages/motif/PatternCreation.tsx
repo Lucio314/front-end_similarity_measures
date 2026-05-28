@@ -17,6 +17,7 @@ function PatternCreation({dureeMotif, setDureeMotif, pattern, setPattern} : Patt
         for(let i=0; i<pattern.length; i++){
             listeActivitiesDragNDrop.push(
                 <ActivitiesDragNDrop 
+                    key={pattern[i].id}
                     dureeMotif={dureeMotif}
                     setDureeMotif={setDureeMotif}
                     motif={pattern[i]}

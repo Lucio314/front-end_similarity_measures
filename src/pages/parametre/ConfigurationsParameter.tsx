@@ -54,7 +54,7 @@ function ConfigurationsParameter({listeParametres, nomMethode} : ConfigurationPa
                 <GreenCheckIcon/>
                 Configuration actuelle
             </h4>
-            <div className="">
+            <div className="d-flex justify-content-between">
                 <ConfigurationParameter nomParam="K" listeParametres={listeParametres}/>
                 <ConfigurationParameter nomParam="Similarite" listeParametres={listeParametres}/>
                 {listConfigParam}

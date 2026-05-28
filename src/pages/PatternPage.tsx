@@ -54,10 +54,12 @@ function PatternPage({onNext, onBack} : PatternPageProps){
                     <h2 className="fw-bold mb-1">🎨 Construire votre motif de recherche</h2>
                     <p className="text-muted mb-0">Glissez des activités pour créer votre séquence recherchée</p>
                 </div>
-                <div>
+                <div className="row g-3">
                     <RangeActivities 
                         pattern={listeActivites} 
                         setPattern={setListeActivites}
+                        dureeMotif={dureeMotif}
+                        setDureeMotif={setDureeMotif}
                     />
                     <div 
                         className="border rounded p-3"
