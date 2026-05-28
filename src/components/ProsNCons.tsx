@@ -1,15 +1,14 @@
-import React from 'react';
 import Pros from './Pros';
 import Cons from './Cons';
 
 interface ProsNConsProps{
-    avantages: Array<String>;
-    inconvenients: Array<String>;
+    avantages: Array<string>;
+    inconvenients: Array<string>;
 }
 
 function ProsNCons({avantages, inconvenients} : ProsNConsProps){
   return (
-    <div className="div-pros-cons">
+    <div className="row g-3">
       <Pros avantages={avantages}/>
       <Cons inconvenients={inconvenients}/>
     </div>

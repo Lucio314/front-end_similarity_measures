@@ -1,13 +1,13 @@
-import React from 'react';
 import WuPalmerMatrix from './WuPalmerMatrix';
 
 interface WuPalmerDivProps{
-    ontologieActivites: ; //A faire
+    matrice: Array<Array<number>>;
+    activites: Array<string>;
 }
 
-function WuPalmerDiv({ontologieActivites} : WuPalmerDivProps){
+function WuPalmerDiv({matrice, activites} : WuPalmerDivProps){
   return (
-    <div>
+    <div className="border rounded mt-4 p-3">
       <h2 className="fw-bold mb-1">📐 Mesure de Similarité Sémantique</h2>
       <div id="methode-wupalmer">
         <h3 className="fw-bold mb-1">Méthode : Wu-Palmer (par défaut)</h3>
@@ -15,7 +15,7 @@ function WuPalmerDiv({ontologieActivites} : WuPalmerDivProps){
             La similarité de Wu-Palmer mesure la proximité sémantique entre deux concepts 
             en utilisant la profondeur de leur ancêtre commun le plus proche dans l'ontologie.
         </p>
-        <div id="formule-wupalmer">
+        <div id="formule-wupalmer" className=" border rounded mt-2 p-3">
           <p className="text-muted mb-0"><strong>Formule mathématique :</strong></p>
           <div>
             sim<sub>WP</sub>
@@ -26,36 +26,38 @@ function WuPalmerDiv({ontologieActivites} : WuPalmerDivProps){
           </div>
           <p className="text-muted mb-0">Où LCA (Lowest Common Ancestor) est l'ancêtre commun le plus profond dans l'arbre de l'ontologie.</p>
         </div>
-        <div id="principe-fonctionnement">
+        <div id="principe-fonctionnement" className="border rounded mt-2 p-3">
           <h4 className="fw-bold mb-1">🔍 Principe de fonctionnement :</h4>
-          <ul>
-            <li>
-              <span>1.</span>
-              <span>On cherche l'ancêtre commun le plus proche de deux activités dans l'arbre</span>
+          <ul className="">
+            <li className="">
+              <span className="">1.</span>
+              <span className="">On cherche l'ancêtre commun le plus proche de deux activités dans l'arbre</span>
             </li>
-            <li>
-              <span>2.</span>
-              <span>Plus cet ancêtre est profond dans l'arbre, plus les activités sont similaires</span>
+            <li className="">
+              <span className="">2.</span>
+              <span className="">Plus cet ancêtre est profond dans l'arbre, plus les activités sont similaires</span>
             </li>
-            <li>
-              <span>3.</span>
-              <span>La similarité est normalisée entre 0 (très différent) et 1 (identique)</span>
+            <li className="">
+              <span className="">3.</span>
+              <span className="">La similarité est normalisée entre 0 (très différent) et 1 (identique)</span>
             </li>
           </ul>
         </div>
-        <h5 className="fw-bold mb-1">📊 Matrice de similarité entre toutes les activités :</h5>
-        <WuPalmerMatrix ontologieActivites={ontologieActivites}/>
+        <div className="border rounded mt-4 p-3">
+          <h5 className="fw-bold mb-1">📊 Matrice de similarité entre toutes les activités :</h5>
+          <WuPalmerMatrix matrice={matrice} activites={activites}/>
+        </div>
       </div>
-      <div id="interpretation-wupalmer">
+      <div id="interpretation-wupalmer" className="border rounded mt-4 p-3">
         <p className="text-muted mb-0"><strong>Exemple d'interprétation :</strong></p>
-        <ul>
-          <li>
+        <ul className="">
+          <li className="">
             "marcher" et "vélo" ont une similarité élevée (~0.67) car ils partagent "human_power"
           </li>
-          <li>
+          <li className="">
             "marcher" et "bus" ont une similarité plus faible (~0.5) car ils sont sous "moving" mais dans des branches différentes
           </li>
-          <li>
+          <li className="">
             "travail" et "sport" ont une faible similarité car ils sont sous "stop" mais dans des branches différentes
           </li>
         </ul>

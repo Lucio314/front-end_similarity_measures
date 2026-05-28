@@ -1,6 +1,12 @@
 import type { ListParametersProps } from "../../types";
 
-const PARAMS = [
+interface ParamsProps{
+    nomParam: string;
+    paramTitre: string;
+    paramValue: Array<string>;
+}
+
+const PARAMS : Array<ParamsProps> = [
     {
         nomParam: "K",
         paramTitre: "K - Nombre de résultats",
@@ -50,28 +56,42 @@ const PARAMS = [
 //nomParam dans PARAMS est simplement un repère visuel pour nous, va sans dpute être modif plus tard
 interface ConfigurationParameterProps{
     nomParam: string;
-    param: ListParametersProps[]
+    listeParametres: Array<ListParametersProps>;
 }
 
-function ConfigurationParameter({nomParam, param} : ConfigurationParameterProps){
+function ConfigurationParameter({nomParam, listeParametres} : ConfigurationParameterProps){
     let index = 0
-    for(let i=0; i<param.length; i++){
-        if(nomParam === param[i].nomParam){
+    for(let i=0; i<listeParametres.length; i++){
+        if(nomParam === listeParametres[i].nomParam){
             index = i
             break
         }
     }
 
-    return(
-        <div className="">
-            <p className="">
-                {PARAMS[index].paramTitre} {PARAMS[index].paramValue}
-            </p> {/* Pas de problème ici, PARAMS et param ont le même nombre d'éléments dans le même ordre */}
-            <p className="">
-                {param[index].getter}
-            </p>
-        </div>
-    )
+    if(nomParam === "alignment_strategy"){
+        const paramMenuSelect : Array<string> = ["exhaustive", "centered", "greedy"]
+        return(
+            <div className="">
+                <p className="">
+                    {PARAMS[index].paramTitre}
+                </p> {/* Pas de problème ici, PARAMS et param ont le même nombre d'éléments dans le même ordre */}
+                <p className="">
+                    {paramMenuSelect[listeParametres[index].getter]} {PARAMS[index].paramValue}
+                </p>
+            </div>
+        )
+    }else{
+        return(
+            <div className="">
+                <p className="">
+                    {PARAMS[index].paramTitre}
+                </p> {/* Pas de problème ici, PARAMS et param ont le même nombre d'éléments dans le même ordre */}
+                <p className="">
+                    {listeParametres[index].getter} {PARAMS[index].paramValue}
+                </p>
+            </div>
+        )
+    }
 }
 
 export default ConfigurationParameter

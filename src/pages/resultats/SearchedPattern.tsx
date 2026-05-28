@@ -16,7 +16,11 @@ function SearchedPattern({pattern, method} : SearchedPatternProps){
         )
         if(i !== pattern.activities.length-1){ //Pour créer les flèches entre chaque activités
             listeMotifResults.push(
-                <div className="text-gray-400 text-xl">→</div>
+                <div 
+                    className="text-secondary fs-4 p-1 align-self-center"
+                >
+                    →
+                </div>
             )
         }
     }
@@ -24,22 +28,33 @@ function SearchedPattern({pattern, method} : SearchedPatternProps){
     const listeParametresResults : Array<string> = [] //Les paramètres de la page ParameterMethod
 
     return ( 
-        <div className="">
-            <h3 className="fw-bold mb-1">
-                <EyeIcon/>
+        <div 
+            className="border rounded p-3"
+            style={{
+                borderColor: '#9c86ec',
+                backgroundColor: '#fafafa'
+            }}
+        >
+            <h5 
+                className="text-sm"
+                style={{
+                    color: "#272727"
+                }}
+            >
+                <EyeIcon/> {" "}
                 Votre motif recherché
-            </h3>
-            <div className="">
+            </h5>
+            <div className="d-flex justify-content-start p-3">
                 {listeMotifResults}
             </div>
             <div className="">
                 <p>
                     <strong>
-                        Méthode :
+                        Méthode : {" "}
                     </strong>
-                    {method}
+                    {method} {" "}
                     <strong>
-                        | Paramètres :
+                        | Paramètres : {" "}
                     </strong>
                     {listeParametresResults}
                 </p>

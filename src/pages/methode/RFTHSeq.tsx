@@ -1,21 +1,21 @@
-interface SeqProps{
+interface RFTHSeqProps{
     id: string;
     icon: string;
     temps: number;
 }
 
-function Seq({id, icon, temps} : SeqProps){
+function RFTHSeq({id, icon, temps} : RFTHSeqProps){
     return (
-        <div id={id} className="repr-seq-demo">
+        <div id={id} className="d-flex">
             <div className="icon-seq-demo">
                 {icon}
             </div>
             <div className="time-seq-demo">
-                {temps}m
+                {temps} %
             </div>
         </div>
     )
 }
-//Peut-être modif "temps" en number à cause du JSON de l'api, rien de grave à modif
 
-export default Seq
+
+export default RFTHSeq

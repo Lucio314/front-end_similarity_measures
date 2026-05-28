@@ -19,8 +19,8 @@ function ActivitiesDragNDrop({dureeMotif, setDureeMotif, motif, pattern, setPatt
     const {attributes, listeners, setNodeRef, transform, transition} = useSortable(motif)
 
     const handleClick = () => {
+        setDureeMotif(dureeMotif - dureeActivite.duration)
         setPattern(pattern.filter(acti => acti.id !== motif.id))
-        console.log(pattern)
         if(pattern.length === 1){
             const divPlaceHolder = document.getElementById('pattern-placeholder')
             const divPatternTotalTime = document.getElementById('pattern-total-time')
@@ -28,6 +28,7 @@ function ActivitiesDragNDrop({dureeMotif, setDureeMotif, motif, pattern, setPatt
             divPlaceHolder.hidden = false
             divPatternTotalTime.hidden = true
             divPatternShowSequence.hidden = true
+            setDureeMotif(0)
         }
     }
 

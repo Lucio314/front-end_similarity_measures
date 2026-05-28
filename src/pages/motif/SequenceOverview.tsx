@@ -1,4 +1,4 @@
-import React, { type JSX } from 'react';
+import { type JSX } from 'react';
 import type { ResultsActivitiesProps } from '../../types';
 import PatternRepr from '../../components/PatternRepr';
 

@@ -1,4 +1,3 @@
-import React from 'react';
 import MissingsStratManagement from './trous/MissingsStratManagement';
 
 interface MissingsPageProps {
@@ -12,7 +11,7 @@ function Trous({onNext, onBack} : MissingsPageProps){
         const divPatternPage = document.getElementById("pattern-card")
         divMissingsPage.hidden = true
         divPatternPage.hidden = false
-        onNext
+        onNext()
     }
 
     const handlePreviousPage = () => {
@@ -20,24 +19,16 @@ function Trous({onNext, onBack} : MissingsPageProps){
         const divOntologyPage = document.getElementById("ontology-card")
         divMissingsPage.hidden = true
         divOntologyPage.hidden = false
-        onBack
+        onBack()
     }
 
     return (
         <div id="missings-card" className="card border-0 shadow-sm" style={{ borderRadius: 12 }} hidden>
             <div className="card-body p-5">
                 <div className="text-center mb-4">
-                    <div className="div-missing-warning">
-                        <p className="text-muted mb-0">
-                            <strong>⚠️ Données manquantes détectées !</strong>
-                            <br/>
-                            Votre dataset contient des trous (activités manquantes).
-                            Choisissez comment vous souhaitez les gérer pour la recherche.
-                        </p>
-                    </div>
                     <h2 className="text-center mb-4">🔧 Gestion des données manquantes</h2>
                     <MissingsStratManagement/>
-                    <div className="div-strategy-recommendation">
+                    <div className="border rounded mt-4 p-3">
                         <p className="text-muted mb-0">
                             <strong>💡 Recommandation :</strong>
                             Pour une recherche sémantique, l'option "Ajouter missing à l'ontologie"
@@ -73,7 +64,6 @@ function Trous({onNext, onBack} : MissingsPageProps){
             </div>
         </div>
     )
-    //Modifier les buttons plus tard
 }
 
 export default Trous

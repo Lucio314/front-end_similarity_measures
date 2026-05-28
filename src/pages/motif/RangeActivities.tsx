@@ -5,14 +5,23 @@ import { EMOJIS, type PatternActivitiesProps} from '../../types';
 interface RangeActivitiesProps{
     pattern: PatternActivitiesProps[];
     setPattern: Dispatch<SetStateAction<PatternActivitiesProps[]>>;
+    dureeMotif: number;
+    setDureeMotif: React.Dispatch<React.SetStateAction<number>>;
 }
 
-function RangeActivities({pattern, setPattern} : RangeActivitiesProps){
+function RangeActivities({pattern, setPattern, dureeMotif, setDureeMotif} : RangeActivitiesProps){
     const listeActivities : Array<JSX.Element> = []
     for(let emoji of EMOJIS){
-        listeActivities.push(<Activities emoji={emoji} pattern={pattern} setPattern={setPattern}/>)
+        listeActivities.push(
+            <Activities 
+                emoji={emoji} 
+                pattern={pattern} 
+                setPattern={setPattern} 
+                dureeMotif={dureeMotif} 
+                setDureeMotif={setDureeMotif}
+            />
+        )
     }
-    console.log(pattern)
 
     return (
         <div 

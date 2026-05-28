@@ -9,7 +9,7 @@ function LengthIcon(){
             height="24" 
             viewBox="0 0 24 24" 
             fill="none" 
-            stroke="#ffffff" 
+            stroke="#000000" 
             stroke-width="2" 
             stroke-linecap="round" 
             stroke-linejoin="round" 

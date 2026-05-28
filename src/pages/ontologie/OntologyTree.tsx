@@ -1,13 +1,30 @@
-import React from 'react';
+import type { JSX } from "react";
+import { ONTOLOGY_COLORS, type OntologyProps } from "../../types";
 
 interface OntologyTreeProps{
-    
+    ontology: OntologyProps;
+    layer: number;
 }
 
-function OntologyTree({}){
+function OntologyTree({ ontology, layer }: OntologyTreeProps){
+  const litsteOntology : Array<JSX.Element> = []
+  for(let onto of ontology.children){
+    litsteOntology.push(
+      <OntologyTree ontology={onto} layer={layer+1}/>
+    )
+  }
+
   return (
-    <div>
-      
+    <div className="">
+      <div 
+        className="border rounded" 
+        style={{backgroundColor: ONTOLOGY_COLORS[layer]}}
+      >
+        {ontology.name}
+      </div>
+      <div className="">
+        {litsteOntology}
+      </div>
     </div>
   )
 }

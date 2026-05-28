@@ -27,7 +27,7 @@ function ResultsSeq({sequence} : ResultsSeqProps){
         }
         if(i !== sequence.sequence.activities.length-1){ //Pour créer les flèches entre chaque activités
             listeSeqRepr.push(
-                <div className="text-gray-400 text-xl">→</div>
+                <div className="text-secondary fs-4 p-1 align-self-center">→</div>
             )
         }
     }
@@ -51,11 +51,17 @@ function ResultsSeq({sequence} : ResultsSeqProps){
     }
 
     return ( 
-        <div className="">
-            <div className="">
-                <div className="">
-                    <div className="">
-                        <div className="">
+        <div className="container">
+            <div 
+                className="border rounded row"
+                style={{
+                    backgroundColor: "#fafafa",
+                    borderColor: "#fafafa"
+                }}
+            >
+                <div className="d-flex justify-content-between">
+                    <div className="d-flex">
+                        <div className="align-self-center">
                             {sequence.rank}
                         </div>
                         <div className="">
@@ -67,7 +73,7 @@ function ResultsSeq({sequence} : ResultsSeqProps){
                             </p>
                         </div>
                     </div>
-                    <div className="">
+                    <div className="d-flex align-items-center">
                         <div className="">
                             <span className="">
                                 {sequence.score}%
@@ -81,7 +87,7 @@ function ResultsSeq({sequence} : ResultsSeqProps){
                         </button>
                     </div>
                 </div>
-                <div className="">
+                <div className="d-flex">
                     {listeSeqRepr}
                 </div>
                 <div id={id} className="" hidden>
@@ -95,7 +101,7 @@ function ResultsSeq({sequence} : ResultsSeqProps){
                         <div className="">
                             Visualisation temporelle :
                         </div>
-                        <div className="">
+                        <div className="d-flex">
                             {listeSequenceReprLine}
                         </div>
                     </div>

@@ -126,7 +126,7 @@ function ResultsPage({onBackParameter, onBackPattern} : ResultsPageProps ){
         const divResultsPage = document.getElementById("results-card")
         divParameterPage.hidden = false
         divResultsPage.hidden = true
-        onBackParameter
+        onBackParameter()
     }
 
     const handleBackPatternPage = () => {
@@ -134,7 +134,7 @@ function ResultsPage({onBackParameter, onBackPattern} : ResultsPageProps ){
         const divPatternPage = document.getElementById("pattern-card")
         divResultsPage.hidden = true
         divPatternPage.hidden = false
-        onBackPattern
+        onBackPattern()
     }
 
     return(

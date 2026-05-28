@@ -7,10 +7,10 @@ interface DetailsStatsProps{
 
 function DetailsStats({ activite, nombre } : DetailsStatsProps) {
     return(
-        <div className="stats-details-activite">
-            <div className="details-activite">
-                <span className="details-activite-nom">{activite}</span>
-                <span className="details-activite-nombre">{nombre}</span>
+        <div className="col">
+            <div className="border rounded">
+                <span className="">{activite} {""}</span>
+                <span className="border rounded">{nombre}</span>
             </div>
         </div>
     )

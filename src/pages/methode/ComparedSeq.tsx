@@ -1,18 +1,16 @@
-import React from 'react';
-
 interface ComparedSeqProps{
     id: string;
     icon: string;
     nomActi: string;
-    temps: string;
+    temps: number;
 }
 
 function ComparedSeq({id, icon, nomActi, temps} : ComparedSeqProps){
     return (
         <div id={id} className="repr-seq-comparee-demo">
-            <span>{icon}</span>
-            <span>{nomActi}</span>
-            <span>{temps}</span>
+            <span>{icon}{" "}</span>
+            <span>{nomActi}{" "}</span>
+            <span>{temps}m</span>
         </div>
     )
 }

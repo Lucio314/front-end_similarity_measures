@@ -1,4 +1,3 @@
-import React from 'react';
 import GreenCheckIcon from '../../components/icons/GreenCheckIcon';
 import RedCrossIcon from '../../components/icons/RedCrossIcon';
 

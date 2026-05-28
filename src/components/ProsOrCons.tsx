@@ -1,13 +1,11 @@
-import React from 'react';
-
 interface ProsOrConsProps{
-    liste: Array<String>;
+    liste: Array<string>;
 }
 
 function ProsOrCons({liste} : ProsOrConsProps){
   const ligne = []
   for(let i=0; i<liste.length; i++){
-    ligne.push(<li className="pros-cons">• liste[i]</li>)
+    ligne.push(<li className="pros-cons">{liste[i]}</li>)
   }
   
   return (

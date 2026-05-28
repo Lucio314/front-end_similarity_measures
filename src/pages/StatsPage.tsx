@@ -1,10 +1,9 @@
-import React from "react";
 import { useState } from "react";
 import MenuSelect from "../components/MenuSelect";
 import Checkbox from "../components/Checkbox";
 import DatasetStatistics from "./statistiques/DatasetStatistics";
 import SequencesStatistics from "./statistiques/SequencesStatistics";
-import type { DatasetInfoProps } from "../types";
+import type { DatasetInfoProps, DatasetProps } from "../types";
 
 const DATASETINFO : DatasetInfoProps = {
         "global": {
@@ -38,8 +37,8 @@ const DATASETINFO : DatasetInfoProps = {
             "avg_gaps_per_sequence": 1.6,
             "percentage_missing_activities": 21.46
         }
-    }           
-
+    }   
+    
 //Exemple de données d'un dataset
 /* 
     Les données à mettre dans les graphes doivent être de la forme :
@@ -50,8 +49,65 @@ const DATASETINFO : DatasetInfoProps = {
         { name: 'Group D', value: 200 },
     ];
 */
+    
+const DATASET : DatasetProps = {
+    "dataset_id": "sidos",
+    "count" : 2,
+    "limit" : 50,
+    "offset": 0,
+    "sequence" : [
+        {
+            "id": 1,
+            "label": "#mobility-seq-1",
+            "length": 4,
+            "total_duration": 200,
+            "activities": [
+                {
+                    "name": "marcher",
+                    "duration" : 60
+                },
+                {
+                    "name": "bus",
+                    "duration" : 35
+                },
+                {
+                    "name": "travail",
+                    "duration" : 45
+                },
+                {
+                    "name": "restaurant",
+                    "duration" : 60
+                }
+            ],
+            "avg_duration": 50
+        },
+        {
+            "id": 2,
+            "label": "#mobility-seq-2",
+            "length": 3,
+            "total_duration": 300,
+            "activities": [
+                {
+                    "name": "travail",
+                    "duration" : 105
+                },
+                {
+                    "name": "missing",
+                    "duration" : 80
+                },
+                {
+                    "name": "travail",
+                    "duration" : 115
+                }
+            ],
+            "avg_duration": 100
+        }
+    ]
+}
 
-const LISTDATASETS : Array<string> = ["Activités humaines - mobility", "Données météo - weather"]
+//Exemple de dataset
+
+const LISTDATASETS : Array<string> = [DATASET.dataset_id]
 
 //Exemple de liste de tous les datasets pour le MenuSelect
 
@@ -67,12 +123,13 @@ function StatsPage({ onNext, onBack }: DataPageProps){
     const handleShowSequencesClick = () => {
         const divSequences = document.getElementById("div-part-body-sequences");
         const divStats = document.getElementById("div-part-body-stats");
+        const button = document.getElementById("btn-show-seq")
         if(divSequences.hidden) {
-            setButtonText("Voir les statistiques")
+            button.textContent = "Voir les statistiques"
             divSequences.hidden = false
             divStats.hidden = true
         }else{
-            setButtonText("Visualiser toutes les séquences")
+            button.textContent = "Visualiser toutes les séquences"
             divSequences.hidden = true
             divStats.hidden = false
         }
@@ -83,7 +140,7 @@ function StatsPage({ onNext, onBack }: DataPageProps){
         const divOntologyPage = document.getElementById("ontology-card")
         divStatsPage.hidden = true
         divOntologyPage.hidden = false
-        onNext
+        onNext()
     }
 
     const handlePreviousPage = () => {
@@ -91,27 +148,28 @@ function StatsPage({ onNext, onBack }: DataPageProps){
         const divStatsPage = document.getElementById("stats-card")
         divStatsPage.hidden = true
         divDataPage.hidden = false
-        onBack
+        onBack()
     }
 
     return(
         <div id="stats-card" className="card border-0 shadow-sm" style={{ borderRadius: 12 }} hidden>
             <div className="card-body p-5">
-                <div id="div-part-body-stats" className="part-main-body">
-                    <div className="part-body">
-                        <div className="part-body-header">
-                            <h2 className="fw-bold mb-1">Statistiques du Dataset</h2>
-                            <button 
-                                className="btn-show-seq px-5 py-2 text-white"
-                                onClick={handleShowSequencesClick}
-                                style={{
-                                    backgroundColor: "#662fcc",
-                                    borderColor: "#662fcc",
-                                    cursor: "pointer",
-                                }}
-                            >
-                                Visualiser toutes les séquences
-                            </button>
+                <button 
+                    id="btn-show-seq"
+                    className="btn-show-seq px-5 py-2 text-white"
+                    onClick={handleShowSequencesClick}
+                    style={{
+                        backgroundColor: "#662fcc",
+                        borderColor: "#662fcc",
+                        cursor: "pointer",
+                    }}
+                >
+                    Visualiser toutes les séquences
+                </button>
+                <div id="div-part-body-stats" className="border rounded p-3 mt-4 row">
+                    <div className="col-md-12">
+                        <div className="">
+                            <h2 className="fw-bold mb-1 text-center">Statistiques du Dataset</h2>
                             <div className="div-checkbox-multi">
                                 <Checkbox 
                                     id="checkbox-multi"
@@ -120,17 +178,20 @@ function StatsPage({ onNext, onBack }: DataPageProps){
                                     label="Activer la recherche multidimensionnelle (Activités Humaines + Données Météo)"
                                 />
                             </div>
-                            <p className="text-muted mb-0">
+                            <label className="text-muted mb-0">
                                 Sélectionner le dataset :
                                 <MenuSelect 
                                     options={LISTDATASETS}
+                                    value={-1}
+                                    onValueChange={() => null}
                                 />
-                            </p>
+                            </label>
                         </div>
                         <DatasetStatistics datasetInfo={DATASETINFO}/>
                     </div>
                 </div>
                 <SequencesStatistics 
+                    dataset = {DATASET}
                     listeDatasets={LISTDATASETS} 
                     nombreSequences={DATASETINFO.global.num_activities}
                     moyActivitesSequence={DATASETINFO.global.avg_length}
@@ -164,7 +225,6 @@ function StatsPage({ onNext, onBack }: DataPageProps){
             </div>
         </div>
     )
-    //Faire les event des buttons
 }
 
 export default StatsPage

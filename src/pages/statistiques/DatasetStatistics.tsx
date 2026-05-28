@@ -1,4 +1,4 @@
-import React, { type JSX } from "react";
+import { type JSX } from "react";
 import OverallStats from "./OverallStats";
 import DurationStats from "./DurationStats";
 import InformationIcon from "../../components/icons/InformationIcon";
@@ -51,21 +51,28 @@ function DatasetStatistics({ datasetInfo } : DatasetStatisticsProps){
 
     return(
         <div className="part-body-stats">
-            <div className="stats-dataset-globales">
+            <div className="row">
                 {listeOverallStats}
             </div>
-            <div className="stats-dataset-durees">
-                <h3 className="fw-bold mb-1">Durées des séquences</h3>
-                <div className="stats-durees">
+            <div className="border rounded">
+                <h5 className="fw-bold mb-1">Durées des séquences</h5>
+                <div className="d-flex justify-content-between">
                     {listeDurationStats}
                 </div>
             </div>
-            <div id="div-stats-dataset-trous" className="stats-dataset-trous" hidden>
-                <h3 className="fw-bold mb-1">
+            <div 
+                id="div-stats-dataset-trous" 
+                className="border rounded" 
+                style={{
+                    backgroundColor: "#f8d3d3",
+                    borderColor: "#f8c3c3"
+                }}
+            >
+                <h5 className="fw-bold mb-1">
                     <InformationIcon/>
                     Données Manquantes (Trous)
-                </h3>
-                <div className="stats-trous">
+                </h5>
+                <div className="d-flex justify-content-between">
                     {listeMissingStats}
                 </div>
                 <div className="stats-dataset-trous-impact">
@@ -76,13 +83,13 @@ function DatasetStatistics({ datasetInfo } : DatasetStatisticsProps){
                     </p>
                 </div>
             </div>
-            <div className="stats-dataset-graphes">
+            <div className="row border rounded">
                 <BarsChart dataset={datasetInfo.activities.distribution}/>
                 <PiesChart dataset={datasetInfo.activities.distribution}/>
             </div>
-            <div className="stats-dataset-details">
-                <h3 className="fw-bold mb-1">Détails des activités présentes</h3>
-                <div className="stats-details">
+            <div className="border rounded">
+                <h5 className="fw-bold mb-1">Détails des activités présentes</h5>
+                <div className="row">
                     {listeDetailsStats}
                 </div>
             </div>

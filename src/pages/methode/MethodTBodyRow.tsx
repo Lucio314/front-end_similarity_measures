@@ -1,4 +1,3 @@
-import React from 'react';
 import MethodTBodyCell from './MethodTBodyCell';
 
 interface MethodTBodyRowProps{

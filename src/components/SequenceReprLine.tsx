@@ -1,5 +1,6 @@
 import type { EmojisProps } from "../types";
 import { EMOJIS } from "../types";
+import TooltipComponent from "./TooltipComponent";
 
 interface SequenceReprLineProps{
     name: string;
@@ -8,6 +9,7 @@ interface SequenceReprLineProps{
 }
 
 function SequenceReprLine({name, duration, totalDuration} : SequenceReprLineProps){
+
     let emojiRepr : EmojisProps = {emoji:"", emojiName:"", emojiColor:""}
     for(let emoji of EMOJIS){
         if(emoji.emojiName === name){
@@ -19,15 +21,17 @@ function SequenceReprLine({name, duration, totalDuration} : SequenceReprLineProp
     const widthRepr : number = duration/totalDuration * 100
 
     return (
-        <div 
-            className=""
-            style={{
-                width: widthRepr+"%",
-                backgroundColor: emojiRepr.emojiColor,
-            }}
+        <TooltipComponent 
+            text={name + " - " + duration + "m (" + widthRepr + "%)"}
+            width={widthRepr}
+            bgColor={emojiRepr.emojiColor}
         >
-            {name}
-        </div>
+            <div 
+                className="d-flex justify-content-center"
+            >
+                {emojiRepr.emoji}
+            </div>
+        </TooltipComponent>
     )
 }
 

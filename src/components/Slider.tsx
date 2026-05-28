@@ -1,5 +1,3 @@
-import React from 'react';
-
 interface SliderProps{
     valueSlider: number;
     onValueSliderChange: (value : number) => void;
@@ -14,10 +12,10 @@ function Slider({valueSlider, onValueSliderChange, minValue, maxValue, pas} : Sl
       <input
         type="range"
         className="form-range"
-        min={minValue}
-        max={maxValue}
-        value={valueSlider}
-        step={pas}
+        min={""+minValue}
+        max={""+maxValue}
+        value={""+valueSlider}
+        step={""+pas}
         onChange={(e) => onValueSliderChange((e.target.valueAsNumber))}
       />
     </div>

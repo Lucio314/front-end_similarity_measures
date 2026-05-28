@@ -1,14 +1,13 @@
-import React from 'react';
 import ProsOrCons from './ProsOrCons';
 import RedCrossIcon from './icons/RedCrossIcon';
 
 interface ConsProps{
-    inconvenients: Array<String>;
+    inconvenients: Array<string>;
 }
 
 function Cons({inconvenients} : ConsProps){
     return (
-        <div className="div-cons">
+        <div className="col-md-6">
             <RedCrossIcon/>
             <span className="cons"> Inconvénients :</span>
             <ProsOrCons liste={inconvenients}/>

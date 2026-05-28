@@ -29,8 +29,8 @@ interface PiesChartProps {
 
 function PiesChart({dataset, isAnimationActive = true, defaultIndex = undefined} : PiesChartProps){ 
   return (
-    <div className="pie-chart-div">
-      <h3 className="h3-title">Distribution des activités</h3>
+    <div className="col-md-6 border rounded d-flex flex-column align-items-center">
+      <h5 className="fw-bold mb-1">Distribution des activités</h5>
         <PieChart style={{ width: '100%', maxWidth: '500px', maxHeight: '80vh', aspectRatio: 1 }} responsive>
           <Pie
             dataKey="value"

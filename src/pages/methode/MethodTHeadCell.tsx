@@ -1,5 +1,3 @@
-import React from 'react';
-
 interface MethodTHeadCellProps{
     upperText: string;
     lowerText: string;

@@ -16,7 +16,7 @@ function SeqRepr({name, duration} : SeqReprProps){
         }
     
     return (
-        <div className="">
+        <div className="border rounded">
             <span className="">
                 {emojiRepr.emoji}
             </span>

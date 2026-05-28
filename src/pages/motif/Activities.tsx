@@ -5,9 +5,11 @@ interface ActivitiesProps{
     emoji: EmojisProps
     pattern: PatternActivitiesProps[];
     setPattern: Dispatch<SetStateAction<PatternActivitiesProps[]>>;
+    dureeMotif: number;
+    setDureeMotif: React.Dispatch<React.SetStateAction<number>>;
 }
 
-function Activities({emoji, pattern, setPattern} : ActivitiesProps){
+function Activities({emoji, pattern, setPattern, dureeMotif, setDureeMotif} : ActivitiesProps){
     let index : number = pattern.length
 
     const handleClick = () => {
@@ -15,7 +17,7 @@ function Activities({emoji, pattern, setPattern} : ActivitiesProps){
             if(parseInt(pattern[i].id.substring(pattern[i].id.length-1)) === pattern.length){
                 index++
             }
-            console.log(pattern[i].id.length-1)
+            console.log(index)
         }
         setPattern([
             ...pattern, {
@@ -25,6 +27,8 @@ function Activities({emoji, pattern, setPattern} : ActivitiesProps){
                 duration: 30
             }
         ])
+        console.log(dureeMotif)
+        setDureeMotif(dureeMotif + 30)
         const divPatternPlaceholder = document.getElementById('pattern-placeholder')
         const divPatternTotalTime = document.getElementById('pattern-total-time')
         const divPatternShowSequence = document.getElementById('pattern-show-sequence')
@@ -61,6 +65,8 @@ function Activities({emoji, pattern, setPattern} : ActivitiesProps){
             </button>
         </div>
     )
+    //Le problème d'affichage est du car pattern n'est pas modifié mais l'activité oui, donc si la durée de l'activité est de 42
+    //Dans le pattern cette durée est toujours de 30
 }
 
 export default Activities
