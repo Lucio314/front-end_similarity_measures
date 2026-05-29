@@ -3,7 +3,7 @@ import StatsGlobales from "./StatsGlobales";
 import StatsDurees from "./StatsDurees";
 import IconInfo from "../component/Icons/IconInfo";
 import StatsTrous from "./StatsTrous";
-import BarChatDiv from "./BarChartDiv";
+import BarChartDiv from "./BarChartDiv";
 import PieChartDiv from "./PieChartDiv";
 import StatsDetails from "./StatsDetails";
 import { useEffect } from "react";
@@ -108,7 +108,7 @@ function StatistiquesDataset(){
                 </div>
             </div>
             <div className="stats-dataset-graphes">
-                <BarChatDiv/>
+                <BarChartDiv/>
                 <PieChartDiv/>
             </div>
             <div className="stats-dataset-details">
@@ -119,7 +119,7 @@ function StatistiquesDataset(){
             </div>
         </div>
     )
-    //BarChatDiv et PieChartDiv recoivent normalement le dataset en paramètre
+    //BarChartDiv et PieChartDiv recoivent normalement le dataset en paramètre
 }
 
 export default StatistiquesDataset
