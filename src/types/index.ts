@@ -19,4 +19,6 @@ export interface AppContextType {
   setCurrentStep: (step: number) => void;
   uploadedFiles: File[];
   setUploadedFiles: React.Dispatch<React.SetStateAction<File[]>>;
+  datasetId: string | null;
+  setDatasetId: (id: string | null) => void;
 }

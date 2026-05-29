@@ -2,12 +2,14 @@ import { useState } from "react";
 import FileUploader from "./donnees/FileUploader";
 import ExampleData from "./donnees/ExampleData";
 import FormatInfo from "./donnees/FormaInfo";
+import { useAppContext } from "../context/AppContext";
 
 interface DataPageProps {
   onNext: () => void;
 }
 
 function DataPage({ onNext }: DataPageProps) {
+  const { setDatasetId } = useAppContext();
   const [files, setFiles] = useState<File[]>([]);
   const [exampleLoaded, setExampleLoaded] = useState<boolean>(false);
 
@@ -25,10 +27,17 @@ function DataPage({ onNext }: DataPageProps) {
 
         <div className="row g-3">
           <div className="col-md-6">
-            <FileUploader files={files} onFilesChange={setFiles} />
+            <FileUploader
+              files={files}
+              onFilesChange={setFiles}
+              onDatasetReady={setDatasetId}
+            />
           </div>
           <div className="col-md-6">
-            <ExampleData onLoad={() => setExampleLoaded(true)} />
+            <ExampleData
+              onLoad={() => setExampleLoaded(true)}
+              onDatasetReady={setDatasetId}
+            />
           </div>
         </div>
 

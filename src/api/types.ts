@@ -25,7 +25,7 @@ export interface Sequence {
 export interface DatasetStats {
   global: { num_sequences: number; num_activities: number; avg_length: number };
   duration: { min: number; avg: number; max: number };
-  activities: { distribution: Record<string, number> };
+  activities: { distribution: { name: string; value: number }[] };
   missing: {
     total_gaps: number;
     sequences_with_gaps: number;

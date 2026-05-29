@@ -37,6 +37,6 @@ export async function getSequences(
 }
 
 export async function getWuPalmerMatrix(datasetId: string): Promise<WuPalmerMatrix> {
-  const { data } = await apiClient.get<WuPalmerMatrix>(`/api/datasets/${datasetId}/wupalmer`);
+  const { data } = await apiClient.get<WuPalmerMatrix>(`/api/datasets/${datasetId}/wupalmer-matrix`);
   return data;
 }

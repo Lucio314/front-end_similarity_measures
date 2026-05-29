@@ -1,21 +1,28 @@
 import { useState } from 'react';
+import { loadDefaultDataset } from '../../api';
 
 interface ExampleDataProps {
   onLoad: () => void;
+  onDatasetReady: (id: string) => void;
 }
 
-function ExampleData({ onLoad }: ExampleDataProps) {
+function ExampleData({ onLoad, onDatasetReady }: ExampleDataProps) {
   const [loading, setLoading] = useState<boolean>(false);
   const [loaded, setLoaded] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleLoad = async () => {
     setLoading(true);
+    setError(null);
     try {
-      // TODO: brancher quand l'API est prête
-      // await fetch('/api/example-data');
-      await new Promise((r) => setTimeout(r, 800)); // simulation
+      const res = await loadDefaultDataset();
+      if (res.dataset_id) {
+        onDatasetReady(res.dataset_id);
+      }
       setLoaded(true);
       onLoad();
+    } catch {
+      setError("Impossible de charger les données. Le backend est-il démarré ?");
     } finally {
       setLoading(false);
     }
@@ -58,6 +65,10 @@ function ExampleData({ onLoad }: ExampleDataProps) {
         {loading && <span className="spinner-border spinner-border-sm me-2" role="status" />}
         {loaded ? '✓ Données chargées' : "Charger les données d'exemple"}
       </button>
+
+      {error && (
+        <p className="text-danger mt-2 mb-0" style={{ fontSize: 12 }}>{error}</p>
+      )}
     </div>
   );
 }

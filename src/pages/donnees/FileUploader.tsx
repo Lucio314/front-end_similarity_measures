@@ -1,13 +1,17 @@
 import { useState, useRef } from "react";
+import { uploadDataset } from "../../api";
 
 interface FileUploaderProps {
   files: File[];
   onFilesChange: (files: File[]) => void;
+  onDatasetReady: (id: string) => void;
 }
 
 
-function FileUploader({ files, onFilesChange }: FileUploaderProps) {
+function FileUploader({ files, onFilesChange, onDatasetReady }: FileUploaderProps) {
   const [isDragging, setIsDragging] = useState<boolean>(false);
+  const [uploading, setUploading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const addFiles = (incoming: FileList | null) => {
@@ -23,6 +27,21 @@ function FileUploader({ files, onFilesChange }: FileUploaderProps) {
 
   const removeFile = (fileName: string) => {
     onFilesChange(files.filter((f) => f.name !== fileName));
+  };
+
+  const handleUpload = async () => {
+    if (files.length === 0) return;
+    setUploading(true);
+    setError(null);
+    try {
+      // On envoie le premier fichier ; le backend crée un dataset par fichier
+      const res = await uploadDataset(files[0]);
+      onDatasetReady(res.dataset_id);
+    } catch {
+      setError("Upload échoué. Vérifiez le format du fichier et que le backend est démarré.");
+    } finally {
+      setUploading(false);
+    }
   };
 
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
@@ -97,23 +116,38 @@ function FileUploader({ files, onFilesChange }: FileUploaderProps) {
       </button>
 
       {files.length > 0 && (
-        <ul className="list-unstyled mt-3 mb-0 w-100 text-start">
-          {files.map((file) => (
-            <li
-              key={file.name}
-              className="d-flex justify-content-between align-items-center border rounded px-2 py-1 mb-1"
-              style={{ fontSize: 13 }}
-            >
-              <span className="text-truncate me-2">📄 {file.name}</span>
-              <button
-                className="btn btn-sm btn-link text-danger p-0"
-                onClick={() => removeFile(file.name)}
+        <>
+          <ul className="list-unstyled mt-3 mb-0 w-100 text-start">
+            {files.map((file) => (
+              <li
+                key={file.name}
+                className="d-flex justify-content-between align-items-center border rounded px-2 py-1 mb-1"
+                style={{ fontSize: 13 }}
               >
-                ✕
-              </button>
-            </li>
-          ))}
-        </ul>
+                <span className="text-truncate me-2">📄 {file.name}</span>
+                <button
+                  className="btn btn-sm btn-link text-danger p-0"
+                  onClick={() => removeFile(file.name)}
+                >
+                  ✕
+                </button>
+              </li>
+            ))}
+          </ul>
+          <button
+            className="btn text-white mt-3 px-4"
+            style={{ backgroundColor: "#4f46e5", borderColor: "#4f46e5" }}
+            onClick={handleUpload}
+            disabled={uploading}
+          >
+            {uploading && <span className="spinner-border spinner-border-sm me-2" role="status" />}
+            {uploading ? "Envoi en cours…" : "Envoyer au backend"}
+          </button>
+        </>
+      )}
+
+      {error && (
+        <p className="text-danger mt-2 mb-0" style={{ fontSize: 12 }}>{error}</p>
       )}
     </div>
   );
