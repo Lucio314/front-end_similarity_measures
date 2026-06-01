@@ -1,11 +1,10 @@
 //npm i recharts
-import React from 'react';
 import {PieChart, Pie, Tooltip, Sector} from 'recharts'
 import type { PieSectorShapeProps, TooltipIndex } from 'recharts'
 import type { DataStatsProps } from '../../types';
 
 const COLORS =[
-    '#ff2828', /* Mettre couleur rouge pour */
+    '#ff2828', 
     '#fe00e9',
     '#ff4281',
     '#a36f0e',

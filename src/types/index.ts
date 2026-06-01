@@ -4,14 +4,14 @@ export interface Step {
 }
 
 export const STEPS: Step[] = [
-  { id: 1, label: 'Données' },
-  { id: 2, label: 'Statistiques' },
-  { id: 3, label: 'Ontologie' },
-  { id: 4, label: 'Trous' },
-  { id: 5, label: 'Motif' },
-  { id: 6, label: 'Méthode' },
-  { id: 7, label: 'Paramètres' },
-  { id: 8, label: 'Résultats' },
+  { id: 1, label: 'Datas' },
+  { id: 2, label: 'Ontology' },
+  { id: 3, label: 'Statistics' },
+  { id: 4, label: 'Temporal_Gaps' },
+  { id: 5, label: 'Pattern' },
+  { id: 6, label: 'Methods' },
+  { id: 7, label: 'Parameters' },
+  { id: 8, label: 'Results' },
 ];
 
 export interface AppContextType {
@@ -93,7 +93,12 @@ export interface OntologyProps{
     children: OntologyProps[]
 }
 
-export const ONTOLOGY_COLORS : Array<string> = ["#c226ff", "#5046e6", "#839ef8", "#62cdee"]
+export const DEPTH_COLORS = [
+  { color: "#4f46e5", label: "Racine" },
+  { color: "#7c3aed", label: "Niveau 1" },
+  { color: "#0891b2", label: "Niveau 2" },
+  { color: "#059669", label: "Feuilles (activités)" },
+];
 
 //============================================================
 // Types utilisés dans la page MissingsPage

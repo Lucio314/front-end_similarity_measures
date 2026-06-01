@@ -107,18 +107,13 @@ const DATASET : DatasetProps = {
 
 //Exemple de dataset
 
-const LISTDATASETS : Array<string> = [DATASET.dataset_id]
-
-//Exemple de liste de tous les datasets pour le MenuSelect
-
-
 interface DataPageProps {
   onNext: () => void;
   onBack: () => void;
 }
 
 function StatsPage({ onNext, onBack }: DataPageProps){
-    const [isMultiChecked, setIsMultiChecked] = useState<boolean>(false);
+    //const [isMultiChecked, setIsMultiChecked] = useState<boolean>(false);
 
     const handleShowSequencesClick = () => {
         const divSequences = document.getElementById("div-part-body-sequences");
@@ -137,17 +132,17 @@ function StatsPage({ onNext, onBack }: DataPageProps){
 
     const handleNextPage = () => {
         const divStatsPage = document.getElementById("stats-card")
-        const divOntologyPage = document.getElementById("ontology-card")
+        const divMissingsPage = document.getElementById("missings-card")
         divStatsPage.hidden = true
-        divOntologyPage.hidden = false
+        divMissingsPage.hidden = false
         onNext()
     }
 
     const handlePreviousPage = () => {
-        const divDataPage = document.getElementById("data-card")
         const divStatsPage = document.getElementById("stats-card")
+        const divOntologyPage = document.getElementById("ontology-card")
         divStatsPage.hidden = true
-        divDataPage.hidden = false
+        divOntologyPage.hidden = false
         onBack()
     }
 
@@ -170,29 +165,12 @@ function StatsPage({ onNext, onBack }: DataPageProps){
                     <div className="col-md-12">
                         <div className="">
                             <h2 className="fw-bold mb-1 text-center">Statistiques du Dataset</h2>
-                            <div className="div-checkbox-multi">
-                                <Checkbox 
-                                    id="checkbox-multi"
-                                    checked={isMultiChecked}
-                                    onChange={setIsMultiChecked}
-                                    label="Activer la recherche multidimensionnelle (Activités Humaines + Données Météo)"
-                                />
-                            </div>
-                            <label className="text-muted mb-0">
-                                Sélectionner le dataset :
-                                <MenuSelect 
-                                    options={LISTDATASETS}
-                                    value={-1}
-                                    onValueChange={() => null}
-                                />
-                            </label>
                         </div>
                         <DatasetStatistics datasetInfo={DATASETINFO}/>
                     </div>
                 </div>
                 <SequencesStatistics 
                     dataset = {DATASET}
-                    listeDatasets={LISTDATASETS} 
                     nombreSequences={DATASETINFO.global.num_activities}
                     moyActivitesSequence={DATASETINFO.global.avg_length}
                     dureeMoy={DATASETINFO.duration.avg}
@@ -220,7 +198,7 @@ function StatsPage({ onNext, onBack }: DataPageProps){
                         cursor: "pointer",
                     }}
                 >
-                    Construire l'ontologie →
+                    Choisir la stratégie de gestion des gaps →
                 </button>
             </div>
         </div>

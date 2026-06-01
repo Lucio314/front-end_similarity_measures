@@ -1,8 +1,7 @@
-import React from 'react';
 import MagnifyingGlassIcon from './icons/MagnifyingGlassIcon';
 
 interface SearchBarProps{
-    placeholder : String;
+    placeholder : string;
 }
 
 function SearchBar({placeholder} : SearchBarProps){

@@ -1,5 +1,5 @@
 import type { JSX } from "react";
-import { ONTOLOGY_COLORS, type OntologyProps } from "../../types";
+import { DEPTH_COLORS, type OntologyProps } from "../../types";
 
 interface OntologyTreeProps{
     ontology: OntologyProps;
@@ -18,7 +18,7 @@ function OntologyTree({ ontology, layer }: OntologyTreeProps){
     <div className="">
       <div 
         className="border rounded" 
-        style={{backgroundColor: ONTOLOGY_COLORS[layer]}}
+        style={{backgroundColor: DEPTH_COLORS[layer]?.color}}
       >
         {ontology.name}
       </div>

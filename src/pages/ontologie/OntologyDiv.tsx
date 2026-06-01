@@ -3,7 +3,7 @@ import Checkbox from '../../components/Checkbox';
 import { useState } from 'react';
 import type { OntologyProps } from '../../types';
 import OntologyIcon from '../../components/icons/OntologyIcon';
-import { ONTOLOGY_COLORS } from '../../types';
+import { DEPTH_COLORS } from '../../types';
 
 interface OntologyDivProps{
   ontology: OntologyProps;
@@ -33,34 +33,34 @@ function OntologyDiv({ontology}: OntologyDivProps){
               <span>
                 <div 
                   className="border rounded" 
-                  style={{backgroundColor: ONTOLOGY_COLORS[0]}}
+                  style={{backgroundColor: DEPTH_COLORS[0]?.color}}
                 >
                 </div>
-                Niveau 0 (Racine)
+                {DEPTH_COLORS[0]?.label}
               </span>
               <span>
                 <div 
                   className="border rounded" 
-                  style={{backgroundColor: ONTOLOGY_COLORS[1]}}
+                  style={{backgroundColor: DEPTH_COLORS[1]?.color}}
                 >
                 </div>
-                Niveau 1 (Catégorie)
+                {DEPTH_COLORS[1]?.label}
               </span>
               <span>
                 <div 
                   className="border rounded" 
-                  style={{backgroundColor: ONTOLOGY_COLORS[2]}}
+                  style={{backgroundColor: DEPTH_COLORS[2]?.color}}
                 >
                 </div>
-                Niveau 2 (Sous-catégorie)
+                {DEPTH_COLORS[2]?.label}
               </span>
               <span>
                 <div 
                   className="border rounded" 
-                  style={{backgroundColor: ONTOLOGY_COLORS[3]}}
+                  style={{backgroundColor: DEPTH_COLORS[3]?.color}}
                 >
                 </div>
-                Niveau 3 (Activité)
+                {DEPTH_COLORS[3]?.label}
               </span>
             </div>
           </div>

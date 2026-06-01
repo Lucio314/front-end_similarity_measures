@@ -28,8 +28,8 @@ function App() {
           </div>
         </div>
           <DataPage onNext={() => setCurrentStep(2)} />
-          <StatsPage onNext={() => setCurrentStep(3)} onBack={() => setCurrentStep(1)}/>
-          <OntologyPage onNext={() => setCurrentStep(4)} onBack={() => setCurrentStep(2)}/>
+          <OntologyPage onNext={() => setCurrentStep(3)} onBack={() => setCurrentStep(1)}/>
+          <StatsPage onNext={() => setCurrentStep(4)} onBack={() => setCurrentStep(2)}/>
           <MissingsPage onNext={() => setCurrentStep(5)} onBack={() => setCurrentStep(3)}/>
           <PatternPage onNext={() => setCurrentStep(6)} onBack={() => setCurrentStep(4)}/>
           <MethodPage onNext={() => setCurrentStep(7)} onBack={() => setCurrentStep(5)}/>

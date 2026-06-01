@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import CheckedIcon from '../../components/icons/CheckedIcon';
 import ProsNCons from '../../components/ProsNCons';
 
@@ -12,11 +13,25 @@ interface MissingsStratProps{
 }
 
 function MissingsStrat({id, emoji, strategie, descriptionStrategie, avantages, inconvenients, onClick} : MissingsStratProps){
-  
+  const [buttonText, setButtonText] = useState("Voir les détails")
+  const idDivProsNCons = id + "-pros-n-cons"
+
+  const handleClickShowInfo = (e) => {
+        e.preventDefault()
+        const divMethodInfo = document.getElementById(idDivProsNCons)
+        if(divMethodInfo.hidden){
+            setButtonText("Masquer les détails")
+            divMethodInfo.hidden=false
+        }else{
+            setButtonText("Voir les détails")
+            divMethodInfo.hidden=true
+        }
+    }
+
   if(id === "strat1"){
     return (
-      <div className="border rounded" onClick={onClick}>
-        <div className="d-flex align-items-left gap-3">
+      <div className="border rounded  d-flex flex-column gap-3">
+        <div className="d-flex align-items-left gap-3" onClick={onClick}>
           <span className="strategy-emoji">{emoji}</span>
           <div className="div-header-strategy">
             <h4 className="strategy-name">{strategie}</h4>
@@ -26,15 +41,21 @@ function MissingsStrat({id, emoji, strategie, descriptionStrategie, avantages, i
             <CheckedIcon/>
           </div>
         </div>
-        <div className="mt-3">
+        <div id={idDivProsNCons} className="mt-3" hidden>
           <ProsNCons avantages={avantages} inconvenients={inconvenients}/>
         </div>
+        <button 
+          className="mt-3 btn btn-primary"
+          onClick={handleClickShowInfo}
+        >
+          {buttonText}
+        </button>
       </div>
     )
   }else{
     return (
-    <div className="border rounded d-flex flex-column gap-3" onClick={onClick}>
-      <div className="dlex d-flex align-items-left gap-3">
+    <div className="border rounded d-flex flex-column gap-3">
+      <div className="dlex d-flex align-items-left gap-3" onClick={onClick}>
         <span className="strategy-emoji">{emoji}</span>
         <div className="div-header-strategy">
           <h4 className="strategy-name">{strategie}</h4>
@@ -44,9 +65,15 @@ function MissingsStrat({id, emoji, strategie, descriptionStrategie, avantages, i
           <CheckedIcon/>
         </div>
       </div>
-      <div className="mt-3">
+      <div id={idDivProsNCons} className="mt-3" hidden>
         <ProsNCons avantages={avantages} inconvenients={inconvenients}/>
       </div>
+      <button 
+          className="mt-3 btn btn-primary"
+          onClick={handleClickShowInfo}
+        >
+          {buttonText}
+      </button>
     </div>
   )
   }

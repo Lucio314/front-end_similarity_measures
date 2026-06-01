@@ -7,14 +7,13 @@ import type { DatasetProps } from '../../types';
 
 interface SequenceStatisticsProps{
     dataset: DatasetProps;
-    listeDatasets: Array<string>;
     nombreSequences: number;
     moyActivitesSequence: number;
     dureeMoy: number;
     nombreTrous: number;
 } 
 
-function SequencesStatistics({dataset, listeDatasets, nombreSequences, moyActivitesSequence, dureeMoy, nombreTrous} : SequenceStatisticsProps){
+function SequencesStatistics({dataset, nombreSequences, moyActivitesSequence, dureeMoy, nombreTrous} : SequenceStatisticsProps){
     const listeStatsGlobales : Array<number> = [nombreSequences, moyActivitesSequence, dureeMoy, nombreTrous]
     const listeStatsGlobalesLabel : Array<string> = ["Séquences affichées", "Activités moy./séquence", "Durée moy. (min)", "Total trous"]
     const listeOverallSequencesStats : Array<JSX.Element> = []
@@ -28,10 +27,6 @@ function SequencesStatistics({dataset, listeDatasets, nombreSequences, moyActivi
         <div id="div-part-body-sequences" className="part-main-body" hidden>
             <div className="part-body">
                 <h2 className="fw-bold mb-1 text-center">Visualisation des Séquences</h2>
-                <div>
-                    <label>Dataset :</label>
-                    <MenuSelect options={listeDatasets}/>
-                </div>
                 <SearchBar placeholder="Rechercher une séquence ou une activité..."/>
                 <DisplaySequencesStats 
                     dataset={dataset}

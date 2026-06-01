@@ -16,9 +16,9 @@ function Trous({onNext, onBack} : MissingsPageProps){
 
     const handlePreviousPage = () => {
         const divMissingsPage = document.getElementById("missings-card")
-        const divOntologyPage = document.getElementById("ontology-card")
+        const divStatsPage = document.getElementById("stats-card")
         divMissingsPage.hidden = true
-        divOntologyPage.hidden = false
+        divStatsPage.hidden = false
         onBack()
     }
 

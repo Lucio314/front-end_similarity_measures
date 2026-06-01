@@ -119,17 +119,17 @@ interface OntologyPageProps {
 function OntologyPage({ onNext, onBack } : OntologyPageProps){
     const handleNextPage = () => {
         const divOntologyPage = document.getElementById("ontology-card")
-        const divMissingsPage = document.getElementById("missings-card")
+        const divStatsPage = document.getElementById("stats-card")
         divOntologyPage.hidden = true
-        divMissingsPage.hidden = false
+        divStatsPage.hidden = false
         onNext()
     }
 
     const handlePreviousPage = () => {
         const divOntologyPage = document.getElementById("ontology-card")
-        const divStatsPage = document.getElementById("stats-card")
+        const divDataPage = document.getElementById("data-card")
         divOntologyPage.hidden = true
-        divStatsPage.hidden = false
+        divDataPage.hidden = false
         onBack()
     }
 

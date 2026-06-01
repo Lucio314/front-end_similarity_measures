@@ -4,7 +4,6 @@ import DurationStats from "./DurationStats";
 import InformationIcon from "../../components/icons/InformationIcon";
 import MissingStats from "./MissingStats";
 import BarsChart from "./BarsChart";
-import PiesChart from "./PiesChart";
 import DetailsStats from "./DetailsStats";
 import type { DatasetInfoProps, DataStatsProps } from "../../types";
 interface DatasetStatisticsProps{
@@ -83,9 +82,8 @@ function DatasetStatistics({ datasetInfo } : DatasetStatisticsProps){
                     </p>
                 </div>
             </div>
-            <div className="row border rounded">
+            <div className="border rounded">
                 <BarsChart dataset={datasetInfo.activities.distribution}/>
-                <PiesChart dataset={datasetInfo.activities.distribution}/>
             </div>
             <div className="border rounded">
                 <h5 className="fw-bold mb-1">Détails des activités présentes</h5>
