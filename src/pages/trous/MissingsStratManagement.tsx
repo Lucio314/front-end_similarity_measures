@@ -67,8 +67,8 @@ function MissingsStratManagement({}){
         }
       }else{
         divHidden.hidden = true
+      }
     }
-  }
 
 
     strategiesMissings.push(

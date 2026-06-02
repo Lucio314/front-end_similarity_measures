@@ -1,5 +1,8 @@
 import SimilarityMethod from './SimilarityMethod';
-import { useState } from 'react';
+import { type JSX } from 'react';
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const SIMILARITIES = [
     {
@@ -156,70 +159,63 @@ const SIMILARITIES = [
 ]
 
 function SimilarityMethods({}){
-    const [buttonText, setButtonText] = useState("Voir plus de méthodes")
+    const settings = {
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1
+    };
 
-    const handleClickShowMethodes = (e) => {
-        e.preventDefault()
-        const divMoreMethods = document.getElementById('div-more-methods')
-        if(divMoreMethods.hidden){
-            setButtonText("Moins de méthodes")
-            divMoreMethods.hidden=false
-        }else{
-            setButtonText("Voir plus de méthodes")
-            divMoreMethods.hidden=true
-        }
-    }
 
-    const listeMethodesPrincipales = []
-    const listeMethodesSecondaires = []
+
+    const listeMethodesPrincipales : Array<JSX.Element> = []
     for(let methode of SIMILARITIES){
-        if(methode.nomMethode == "CED" || methode.nomMethode == "FTH" || methode.nomMethode == "FTH-T" || methode.nomMethode == "RFTH"){
-            listeMethodesPrincipales.push(
-            <SimilarityMethod
-                nomMethode={methode.nomMethode}
-                descMethode={methode.descMethode}
-                specification={methode.specification}
-                avantages={methode.avantages}
-                inconvenients={methode.inconvenients}
-                proprietes={methode.proprietes}
-                parametres={methode.parametres}
-            />
-        )
-        }else{
-            listeMethodesSecondaires.push(
-            <SimilarityMethod
-                nomMethode={methode.nomMethode}
-                descMethode={methode.descMethode}
-                specification={methode.specification}
-                avantages={methode.avantages}
-                inconvenients={methode.inconvenients}
-                proprietes={methode.proprietes}
-                parametres={methode.parametres}
-            />
-        )
+        let handleClick = () => {
+            const divHidden = document.getElementById(methode.nomMethode)
+            if(divHidden.hidden){
+                divHidden.hidden = false
+                for(let i=0; i<SIMILARITIES.length; i++){
+                if(SIMILARITIES[i].nomMethode !== methode.nomMethode){
+                    document.getElementById(SIMILARITIES[i].nomMethode).hidden = true
+                }
+                }
+            }else{
+                divHidden.hidden = true
+            }
         }
+
+
+        listeMethodesPrincipales.push(
+        <SimilarityMethod
+            nomMethode={methode.nomMethode}
+            descMethode={methode.descMethode}
+            specification={methode.specification}
+            avantages={methode.avantages}
+            inconvenients={methode.inconvenients}
+            proprietes={methode.proprietes}
+            parametres={methode.parametres}
+            onClick={handleClick}
+        />
+        )
     }
+
+    // @ts-ignore
+    const SliderComponent = !!Slider.default ? Slider.default : Slider
+    //Un peu la galère ça, mais ça évite une erreur
+
     return (
-        <div className="methods-list">
-            <div id="div-main-methods" className="d-flex border rounded">
+        <div className="slider-container">
+            <SliderComponent {...settings}>
                 {listeMethodesPrincipales}
-            </div>
-            <div id="div-more-methods" className="methods border rounded" hidden>
-                {listeMethodesSecondaires}
-            </div>
-            <button 
-                className="show-button"
-                onClick={handleClickShowMethodes}
-            >
-                {buttonText}
-            </button>
+            </SliderComponent>
         </div>
     )
-    // Doit afficher CED, FTH, FTH-T, RFTH
-    // Les autres méthodes et le bouton "Moins de méthodes" doivent être visibles après l'appui du button "Voir plus de méthodes"
-    // Le bouton "Voir plus de méthodes" doit devenir invisible après son appui
-    // Ces méthodes doivent devenir insivisbles après l'appui du bouton "Moins de méthodes"
-    // Ce même bouton devient invisible après son appui et le bouton "Voir plus de méthode" redevient visible
+
+    // npm install react-slick --save
+    // npm install slick-carousel --save
+    // Pour l'affichage en slider
+    // Doit afficher CED, FTH, FTH-T, RFTHz
 }
 
 export default SimilarityMethods

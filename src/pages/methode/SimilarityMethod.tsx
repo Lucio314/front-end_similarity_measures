@@ -13,9 +13,10 @@ interface SimilarityMethodProps{
     inconvenients: Array<string>;
     proprietes: Array<string>;
     parametres: Array<string>;
+    onClick: () => void;
 }
 
-function SimilarityMethod({nomMethode, descMethode, specification, avantages, inconvenients, proprietes, parametres} : SimilarityMethodProps){
+function SimilarityMethod({nomMethode, descMethode, specification, avantages, inconvenients, proprietes, parametres, onClick} : SimilarityMethodProps){
     const [buttonText, setButtonText] = useState("Voir les détails")
     const idMethodInfo = nomMethode + "-method-info"
     
@@ -52,12 +53,14 @@ function SimilarityMethod({nomMethode, descMethode, specification, avantages, in
     
     return (
         <div className="border rounded">
-            <div className="method-header">
+            <div className="method-header" onClick={onClick}>
                 <div className="method-name-desc">
                     <h3 className="h3-title">{nomMethode}</h3>
                     <p className="h3-title-p">{descMethode}</p>
                 </div>
-                <CheckedIcon/>
+                <div id={nomMethode} className="method-checked-icon" hidden>
+                    <CheckedIcon/>
+                </div>
             </div>
             <div className="method-spec">
                 {listeSpec}

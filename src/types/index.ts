@@ -7,7 +7,7 @@ export const STEPS: Step[] = [
   { id: 1, label: 'Datas' },
   { id: 2, label: 'Ontology' },
   { id: 3, label: 'Statistics' },
-  { id: 4, label: 'Temporal_Gaps' },
+  { id: 4, label: 'Temporal Gaps' },
   { id: 5, label: 'Pattern' },
   { id: 6, label: 'Methods' },
   { id: 7, label: 'Parameters' },
