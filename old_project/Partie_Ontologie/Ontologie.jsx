@@ -5,8 +5,10 @@ import WuPalmer from './WuPalmer';
 function Ontologie({}){
   return (
     <div id="ontologie-part" className="part">
-        <OntologieDiv/>
-        <WuPalmer/>
+        <div className="card-body p-5">
+          <OntologieDiv/>
+          <WuPalmer/>
+        </div>
         <button className="return-button" onClick={() => null}>← Retour</button> 
     </div>
   )

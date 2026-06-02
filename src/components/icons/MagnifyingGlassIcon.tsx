@@ -1,0 +1,24 @@
+import React from 'react';
+
+function MagnifyingGlassIcon(){
+    return(
+        <svg 
+            className="lucide lucide-search absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5"
+            xmlns="http://www.w3.org/2000/svg" 
+            width="24" 
+            height="24" 
+            viewBox="0 0 24 24" 
+            fill="none" 
+            stroke="#615e5e" 
+            stroke-width="2" 
+            stroke-linecap="round" 
+            stroke-linejoin="round" 
+            aria-hidden="true"
+        >
+            <path d="m21 21-4.34-4.34"></path>
+            <circle cx="11" cy="11" r="8"></circle>
+        </svg>
+    )
+}
+
+export default MagnifyingGlassIcon
