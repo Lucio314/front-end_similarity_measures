@@ -1,54 +1,34 @@
-import { type JSX } from 'react';
-import type { ResultsActivitiesProps } from '../../types';
+// SequenceOverview: horizontal preview of the built pattern.
+// Visibility managed by PatternPage (rendered only when pattern.length > 0).
+
+import type { PatternActivitiesProps } from '../../types';
 import PatternRepr from '../../components/PatternRepr';
 
-interface SequenceOverviewProps{
-    pattern: ResultsActivitiesProps[]
+interface SequenceOverviewProps {
+  pattern: PatternActivitiesProps[];
+  colorMap: Record<string, string>;
 }
 
-function SequenceOverview({pattern} : SequenceOverviewProps){
-    const listeMotifSequence : Array<JSX.Element> = []
-    for(let i=0; i<pattern.length; i++){
-        listeMotifSequence.push(
-            <PatternRepr name={pattern[i].name} duration={pattern[i].duration}/>
-        )
-        if(i !== pattern.length-1){ //Pour créer les flèches entre chaque activités
-            listeMotifSequence.push(
-                <div 
-                    className="text-secondary fs-4 p-1 align-self-center"
-                >
-                    →
-                </div>
-            )
-        }
-    }
+function SequenceOverview({ pattern, colorMap }: SequenceOverviewProps) {
+  return (
+    <div className="border rounded p-3" style={{ borderColor: '#9c86ec', backgroundColor: '#fafafa' }}>
+      <h5 style={{ color: '#272727', fontSize: 14 }}>Pattern Preview</h5>
+      <div className="d-flex flex-wrap align-items-center gap-1 p-2">
+        {pattern.map((activity, i) => (
+          <div key={activity.id} className="d-flex align-items-center gap-1">
+            <PatternRepr
+              name={activity.name}
+              duration={activity.duration}
+              color={colorMap[activity.name] ?? '#f3f2fd'}
+            />
+            {i !== pattern.length - 1 && (
+              <span className="text-secondary fs-5">&#8594;</span>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
 
-
-    return (
-        <div 
-            id="pattern-show-sequence"
-            className="border rounded p-3"
-            style={{
-                borderColor: '#9c86ec',
-                backgroundColor: '#fafafa'
-            }}
-            hidden
-        >
-            <h5 
-                className="text-sm"
-                style={{
-                    color: "#272727"
-                }}
-            >
-                👁️ Aperçu de votre séquence</h5>
-            <div className="d-flex justify-content-start p-3">
-                {listeMotifSequence}
-            </div>
-        </div>
-    )
-    // Il faut ajouter une div à chaque appui sur un button de PaletteActivite
-    // En fonction également du multidimension, et de CreationMotif
-} 
-
-
-export default SequenceOverview
+export default SequenceOverview;

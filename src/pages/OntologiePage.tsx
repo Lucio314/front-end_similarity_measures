@@ -201,6 +201,7 @@ function OntologiePage({ onNext }: OntologiePageProps) {
 
   useEffect(() => {
     if (!datasetId) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setWupalmerError("Aucun dataset chargé.");
       setWupalmerLoading(false);
       return;
@@ -251,7 +252,7 @@ function OntologiePage({ onNext }: OntologiePageProps) {
 
         {/* Titre */}
         <div className="text-center mb-4">
-          <h2 className="fw-bold mb-1">🌳 Ontologie des Activités</h2>
+          <h2 className="fw-bold mb-1">Ontologie des Activités</h2>
           <p className="text-muted mb-0">Hiérarchie sémantique utilisée pour le calcul de similarité</p>
         </div>
 
@@ -289,7 +290,7 @@ function OntologiePage({ onNext }: OntologiePageProps) {
 
         {/* ── Section Wu-Palmer ─────────────────────────────────────────────── */}
         <h5 className="fw-bold mb-3 mt-2">
-          📐 Similarité sémantique{semanticMeasure ? ` — ${semanticMeasure.name}` : " Wu-Palmer"}
+          Similarité sémantique{semanticMeasure ? ` — ${semanticMeasure.name}` : " Wu-Palmer"}
         </h5>
 
         {/* Explication de la méthode */}

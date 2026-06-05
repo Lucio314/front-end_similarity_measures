@@ -2,7 +2,7 @@ import apiClient from "./client";
 import type { MissingStrategy, ApplyStrategyResponse } from "./types";
 
 export async function getMissingStrategies(): Promise<MissingStrategy[]> {
-  const { data } = await apiClient.get<{ strategies: MissingStrategy[] }>("/api/missing-strategies");
+  const { data } = await apiClient.get<{ strategies: MissingStrategy[] }>("/api/datasets/missing-strategies");
   return data.strategies;
 }
 

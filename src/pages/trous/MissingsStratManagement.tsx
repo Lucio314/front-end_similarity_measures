@@ -1,111 +1,114 @@
-import { type JSX } from 'react';
-import MissingsStrat from './MissingsStrat';
-import type { StrategiesProps } from '../../types';
+// MissingsStratManagement: displays strategies from GET /api/missing-strategies.
+// Hardcoded STRATEGIES constant replaced by API call.
+// Pros/cons hidden by default, shown on "Show details" toggle per strategy.
+// Accordion selection managed by useState, not document.getElementById.
 
-const STRATEGIES : Array<StrategiesProps> = [
-  {
-    idStrategie: "strat1",
-    strategie: "Ajouter \"missing\" à l'ontologie",
-    descriptionStrategie: "Les trous sont traités comme une activité à part entière dans l'ontologie",
-    emoji: "🌳",
-    avantages: ["Conserve l'information sur les trous", "Permet de les rechercher explicitement"],
-    inconvenients: ["Augmente la complexité de l'ontologie"]
-  },
-  {
-    idStrategie: "strat2",
-    strategie: "Remplacer par une activité spécifique",
-    descriptionStrategie: "Remplacer tous les trous par une activité choisie (ex: \"maison\")",
-    emoji: "🔄",
-    avantages: ["Simple à implémenter", "Peut refléter une hypothèse réaliste"],
-    inconvenients: ["Introduit un biais", "Peut fausser les résultats"]
-  },
-  {
-    idStrategie: "strat3",
-    strategie: "Remplacer par l'activité la plus fréquente",
-    descriptionStrategie: "Remplacer les trous par l'activité qui apparaît le plus souvent dans le dataset",
-    emoji: "📊",
-    avantages: ["Basé sur les données", "Statistiquement justifiable"],
-    inconvenients: ["Peut sur-représenter certaines activités", "Ignore le contexte"]
-  },
-  {
-    idStrategie: "strat4",
-    strategie: "Interpolation contextuelle",
-    descriptionStrategie: "Deviner l'activité manquante en fonction des activités voisines",
-    emoji: "🧩",
-    avantages: ["Prend en compte le contexte", "Plus intelligent"],
-    inconvenients: ["Plus complexe à calculer", "Peut créer des erreurs"]
-  },
-  {
-    idStrategie: "strat5",
-    strategie: "Supprimer les séquences avec trous",
-    descriptionStrategie: "Exclure complètement les séquences contenant des données manquantes",
-    emoji: "🗑️",
-    avantages: ["Garantit des données complètes", "Évite les approximations"],
-    inconvenients: ["Perte d'information", "Réduit la taille du dataset"]
-  },
-  {
-    idStrategie: "strat6",
-    strategie: "Garder tel quel (avec distance maximale)",
-    descriptionStrategie: "Les trous sont comparés avec une distance maximale (similarité = 0)",
-    emoji: "⚠️",
-    avantages: ["Honnête sur l'incertitude", "Pas de modification des données"],
-    inconvenients: ["Pénalise fortement les séquences avec trous"]
-  }
-]
+import { useEffect, useState } from 'react';
+import { getMissingStrategies } from '../../api';
+import type { MissingStrategy } from '../../api';
+import Pros from '../../components/Pros';
+import Cons from '../../components/Cons';
+import CheckedIcon from '../../components/icons/CheckedIcon';
 
-function MissingsStratManagement({}){
-  const strategiesMissings : Array<JSX.Element> = []
-  for(let strategy of STRATEGIES){
-    let handleClick = () => {
-      const divHidden = document.getElementById(strategy.idStrategie)
-      if(divHidden.hidden){
-        divHidden.hidden = false
-        for(let i=0; i<STRATEGIES.length; i++){
-          if(STRATEGIES[i].idStrategie !== strategy.idStrategie){
-            document.getElementById(STRATEGIES[i].idStrategie).hidden = true
-          }
-        }
-      }else{
-        divHidden.hidden = true
-    }
-  }
-
-
-    strategiesMissings.push(
-    <MissingsStrat
-      key={strategy.idStrategie}
-      id={strategy.idStrategie}
-      emoji={strategy.emoji}
-      strategie={strategy.strategie}
-      descriptionStrategie={strategy.descriptionStrategie}
-      avantages={strategy.avantages}
-      inconvenients={strategy.inconvenients}
-      onClick={handleClick}
-    />
-    )
-  }
-
-  return (
-    <div className="border rounded p-3 mb-4">
-      <div className="border rounded mb-4 p-3">
-        <p className="text-muted mb-0">
-          <strong>⚠️ Données manquantes détectées !</strong>
-          <br/>
-          Votre dataset contient des trous (activités manquantes).
-          Choisissez comment vous souhaitez les gérer pour la recherche.
-        </p>
-      </div>
-      <div className="d-flex flex-column">
-        <div className="row g-3">
-          {strategiesMissings.map((strategy) => (
-            <div className="col-md-6" key={strategy.key}>
-              {strategy}
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  )
+interface StrategyCardProps {
+  strategy: MissingStrategy;
+  selected: boolean;
+  onSelect: () => void;
 }
 
-export default MissingsStratManagement
+function StrategyCard({ strategy, selected, onSelect }: StrategyCardProps) {
+  const [showDetails, setShowDetails] = useState(false);
+
+  return (
+    <div
+      className="border rounded p-3 h-100"
+      style={{
+        cursor: 'pointer',
+        borderColor: selected ? '#4f46e5' : '#dee2e6',
+        backgroundColor: selected ? '#eef2ff' : '#fff',
+        transition: 'border-color 0.15s, background 0.15s',
+      }}
+      onClick={onSelect}
+    >
+      <div className="d-flex align-items-start gap-3">
+        <div className="flex-grow-1">
+          <div className="d-flex justify-content-between align-items-start">
+            <h6 className="fw-semibold mb-1" style={{ fontSize: 14 }}>{strategy.label}</h6>
+            {selected && <CheckedIcon />}
+          </div>
+          <p className="text-muted mb-2" style={{ fontSize: 12 }}>{strategy.description}</p>
+          <button
+            className="btn btn-sm btn-outline-secondary"
+            style={{ fontSize: 11, padding: '1px 8px' }}
+            onClick={e => { e.stopPropagation(); setShowDetails(v => !v); }}
+          >
+            {showDetails ? 'Hide details' : 'Show details'}
+          </button>
+        </div>
+      </div>
+
+      {showDetails && (
+        <div className="mt-3 pt-2" style={{ borderTop: '1px solid #e2e8f0' }} onClick={e => e.stopPropagation()}>
+          <div className="row g-2">
+            <div className="col-6">
+              <Pros avantages={strategy.advantages} />
+            </div>
+            <div className="col-6">
+              <Cons inconvenients={strategy.disadvantages} />
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function MissingsStratManagement() {
+  const [strategies, setStrategies] = useState<MissingStrategy[]>([]);
+  const [loading, setLoading]       = useState(true);
+  const [error, setError]           = useState<string | null>(null);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+
+  useEffect(() => {
+    getMissingStrategies()
+      .then(data => {
+        setStrategies(data);
+        if (data.length > 0) setSelectedId(data[0].id);
+      })
+      .catch(() => setError('Failed to load strategies.'))
+      .finally(() => setLoading(false));
+  }, []);
+
+  if (loading) return (
+    <div className="text-center py-3">
+      <div className="spinner-border spinner-border-sm text-primary" role="status" />
+      <span className="ms-2 text-muted" style={{ fontSize: 13 }}>Loading strategies...</span>
+    </div>
+  );
+
+  if (error) return <p className="text-danger">{error}</p>;
+
+  return (
+    <div className="mb-4">
+      <div className="border rounded p-3 mb-4" style={{ backgroundColor: '#fffbeb', borderColor: '#fcd34d' }}>
+        <p className="mb-0" style={{ fontSize: 13 }}>
+          <strong>Temporal gaps detected in your dataset.</strong>
+          {' '}Choose how to handle missing activities before running the search.
+        </p>
+      </div>
+      <div className="row g-3">
+        {strategies.map(strategy => (
+          <div className="col-md-6" key={strategy.id}>
+            <StrategyCard
+              strategy={strategy}
+              selected={selectedId === strategy.id}
+              onSelect={() => setSelectedId(strategy.id)}
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export default MissingsStratManagement;

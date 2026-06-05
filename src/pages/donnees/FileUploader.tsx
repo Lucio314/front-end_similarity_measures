@@ -124,7 +124,7 @@ function FileUploader({ files, onFilesChange, onDatasetReady }: FileUploaderProp
                 className="d-flex justify-content-between align-items-center border rounded px-2 py-1 mb-1"
                 style={{ fontSize: 13 }}
               >
-                <span className="text-truncate me-2">📄 {file.name}</span>
+                <span className="text-truncate me-2">{file.name}</span>
                 <button
                   className="btn btn-sm btn-link text-danger p-0"
                   onClick={() => removeFile(file.name)}

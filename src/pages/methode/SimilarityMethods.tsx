@@ -5,7 +5,7 @@ const SIMILARITIES = [
     {
         nomMethode: "CED",
         descMethode: "Context-aware Edit Distance - Étend la distance d'édition en tenant compte du contexte sémantique. Mesure la similarité sémantique via une ontologie et l'écart de position.",
-        specification: ["🌳 Ontologie requise", "📏 Longueurs différentes OK"],
+        specification: ["Ontologie requise", "Longueurs différentes OK"],
         avantages: [
                     "Intelligente : comprend que deux activités différentes peuvent être proches sémantiquement",
                     "Gère bien les inversions d'activités et la redondance",
@@ -28,7 +28,7 @@ const SIMILARITIES = [
     {
         nomMethode: "FTH",
         descMethode: "Fuzzy Temporal Hamming - Extension floue de la distance de Hamming pour les séquences sémantiques-temporelles. Gère les distorsions temporelles via une fenêtre floue.",
-        specification: ["🌳 Ontologie requise"],
+        specification: ["Ontologie requise"],
         avantages: [
                     "Tolérante : ne pénalise pas les petits décalages (ex: café décalé de 5 minutes)",
                     "Combine intelligemment le sens (sémantique) et le moment (temporel)",
@@ -49,7 +49,7 @@ const SIMILARITIES = [
     {
         nomMethode: "FTH-T",
         descMethode: "FTH avec Troncature - On tronque la séquence la plus longue pour avoir la même longueur que la plus courte. On aligne et glisse les séquences pour trouver le meilleur match.",
-        specification: ["🌳 Ontologie requise", "📏 Longueurs différentes OK"],
+        specification: ["Ontologie requise", "Longueurs différentes OK"],
         avantages: [
                     "Gère les séquences de longueurs différentes",
                     "Combine FTH avec recherche d'alignement optimal",
@@ -70,7 +70,7 @@ const SIMILARITIES = [
     {
         nomMethode: "RFTH",
         descMethode: "Relative Fuzzy Temporal Hamming - L'évolution ultime de la FTH. Permet de comparer deux séquences de durées différentes (ex: journée de 8h avec une de 10h).",
-        specification: ["🌳 Ontologie requise", "📏 Longueurs différentes OK"],
+        specification: ["Ontologie requise", "Longueurs différentes OK"],
         avantages: [
                     "La plus complète : gère les durées différentes, les décalages dans le temps et le sens des activités",
                     "Très robuste pour comparer des profils de vie variés",
@@ -113,7 +113,7 @@ const SIMILARITIES = [
     {
         nomMethode: "HD",
         descMethode: "Hamming Distance - La méthode la plus basique : compare les éléments deux à deux à la même position. Si différent, compte un point de distance.",
-        specification: ["📏 Longueurs différentes OK"],
+        specification: ["Longueurs différentes OK"],
         avantages: [
                     "Très simple à comprendre",
                     "Calcul ultra-rapide (efficace informatiquement)",

@@ -1,45 +1,34 @@
-import React, { type Dispatch, type JSX, type SetStateAction } from 'react';
+import React, { type Dispatch, type SetStateAction } from 'react';
 import ActivitiesDragNDrop from './ActivitiesDragNDrop';
 import type { PatternActivitiesProps } from '../../types';
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 
-interface PatternCreationProps{
-    dureeMotif: number;
-    setDureeMotif: React.Dispatch<React.SetStateAction<number>>;
-    pattern: PatternActivitiesProps[];
-    setPattern: Dispatch<SetStateAction<PatternActivitiesProps[]>>;
+interface PatternCreationProps {
+  dureeMotif: number;
+  setDureeMotif: React.Dispatch<React.SetStateAction<number>>;
+  pattern: PatternActivitiesProps[];
+  setPattern: Dispatch<SetStateAction<PatternActivitiesProps[]>>;
+  colorMap: Record<string, string>;
 }
 
-function PatternCreation({dureeMotif, setDureeMotif, pattern, setPattern} : PatternCreationProps){
-    //Pour pouvoir supprimer une div de PatternCreation
-
-    const listeActivitiesDragNDrop : Array<JSX.Element> = []
-        for(let i=0; i<pattern.length; i++){
-            listeActivitiesDragNDrop.push(
-                <ActivitiesDragNDrop 
-                    key={pattern[i].id}
-                    dureeMotif={dureeMotif}
-                    setDureeMotif={setDureeMotif}
-                    motif={pattern[i]}
-                    pattern={pattern}
-                    setPattern={setPattern}
-                />
-            )
-        }
- 
-
-    return (
-        <div className="">
-            <SortableContext 
-                items={pattern} 
-                strategy={verticalListSortingStrategy}
-            >
-                {listeActivitiesDragNDrop}
-            </SortableContext>
-        </div>
-    )
-    // A faire plus tard avec drag n drop
-    // Il faut ajouter une div à chaque appui sur un button de PaletteActivite
+function PatternCreation({ dureeMotif, setDureeMotif, pattern, setPattern, colorMap }: PatternCreationProps) {
+  return (
+    <div>
+      <SortableContext items={pattern} strategy={verticalListSortingStrategy}>
+        {pattern.map(motif => (
+          <ActivitiesDragNDrop
+            key={motif.id}
+            dureeMotif={dureeMotif}
+            setDureeMotif={setDureeMotif}
+            motif={motif}
+            pattern={pattern}
+            setPattern={setPattern}
+            color={colorMap[motif.name]}
+          />
+        ))}
+      </SortableContext>
+    </div>
+  );
 }
 
-export default PatternCreation
+export default PatternCreation;

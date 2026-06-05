@@ -3,22 +3,22 @@ import RFTHComparedSequences from './RFTHComparedSequences';
 import type { ActivitiesProps } from '../../types';
 
 const ACTIVITIESTRONQUEES : Array<ActivitiesProps> = [
-    {actiId: "acti-1", icon: "🏠", nomActi:"maison", temps: 30},
-    {actiId: "acti-2", icon: "🚶", nomActi:"marcher", temps: 20},
-    {actiId: "acti-3", icon: "🚌", nomActi:"bus", temps: 40},
-    {actiId: "acti-4", icon: "💼", nomActi:"travail", temps: 120},
-    {actiId: "acti-5", icon: "🍽️", nomActi:"restaurant", temps: 45},
-    {actiId: "acti-6", icon: "🛍️", nomActi:"shopping", temps: 30},
-    {actiId: "acti-7", icon: "🚶", nomActi:"marcher", temps: 15},
-    {actiId: "acti-8", icon: "🏠", nomActi:"maison", temps: 60}
+    {actiId: "acti-1", icon: "M", nomActi:"maison", temps: 30},
+    {actiId: "acti-2", icon: "M", nomActi:"marcher", temps: 20},
+    {actiId: "acti-3", icon: "B", nomActi:"bus", temps: 40},
+    {actiId: "acti-4", icon: "T", nomActi:"travail", temps: 120},
+    {actiId: "acti-5", icon: "R", nomActi:"restaurant", temps: 45},
+    {actiId: "acti-6", icon: "S", nomActi:"shopping", temps: 30},
+    {actiId: "acti-7", icon: "M", nomActi:"marcher", temps: 15},
+    {actiId: "acti-8", icon: "M", nomActi:"maison", temps: 60}
 ]
 
 const ACTIVITIES : Array<ActivitiesProps> = [
-    {actiId: "acti-9", icon: "🏠", nomActi: "maison", temps: 25},
-    {actiId: "acti-10", icon: "🚴", nomActi: "vélo", temps: 25},
-    {actiId: "acti-11", icon: "💼", nomActi: "travail", temps: 90},
-    {actiId: "acti-12", icon: "⚽", nomActi: "sport", temps: 50},
-    {actiId: "acti-13", icon: "🏠", nomActi: "maison", temps: 40}
+    {actiId: "acti-9", icon: "M", nomActi: "maison", temps: 25},
+    {actiId: "acti-10", icon: "V", nomActi: "vélo", temps: 25},
+    {actiId: "acti-11", icon: "T", nomActi: "travail", temps: 90},
+    {actiId: "acti-12", icon: "S", nomActi: "sport", temps: 50},
+    {actiId: "acti-13", icon: "M", nomActi: "maison", temps: 40}
 ]
 
 
@@ -41,7 +41,7 @@ function RFTHDemo({}){
 
     return (
         <div id="demo-rfth" className="demo" hidden>
-            <h4 className="text-center mb-4">🎯 Démonstration : RFTH</h4>
+            <h4 className="text-center mb-4">Démonstration : RFTH</h4>
             <div className="tenet-demo">
                 <p className="paragraph">
                     <strong>Principe : </strong>

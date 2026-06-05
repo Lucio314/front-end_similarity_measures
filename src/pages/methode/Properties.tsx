@@ -10,7 +10,7 @@ function Properties({proprietes} : PropertiesProps){
 
     return (
         <div className="div-property">
-            <p className="pros">🔧 Propriétés :</p>
+            <p className="pros">Propriétés :</p>
             <ul className="list-properties">
                 {ligne}
             </ul>

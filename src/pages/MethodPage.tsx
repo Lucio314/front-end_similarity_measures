@@ -1,209 +1,257 @@
-import ComparativeTable from './methode/ComparativeTable';
-import FTHTDemo from './methode/FTHTDemo';
-import RFTHDemo from './methode/RFTHDemo';
-import SimilarityMethods from './methode/SimilarityMethods';
-import BookIcon from '../components/icons/BookIcon';
-import { useState } from 'react';
-import type { MethodProps } from '../types';
+// MethodPage (step 6): horizontal carousel of similarity methods loaded from GET /api/methods/.
+// Hardcoded METHODS constant removed, replaced by API call.
+// Navigation via onNext/onBack props — no DOM manipulation.
+// Bootstrap carousel implemented with React state (no Bootstrap JS needed).
 
-const METHODS : Array<MethodProps> = [
-    {
-        "name": "RFTH",
-        "label": "Relative Fuzzy Temporal Hamming",
-        "description": "Extension de FTH pour sequences de t-lengths differentes. Combine comparabilite temporelle et similarite semantique via une T-norme.",
-        "principle": "Normalise les durees a 1000, applique FTH sur les versions normalisees, puis pondere par l'indice de comparabilite des t-lengths.",
-        "advantages": [
-            "Gere des sequences de longueurs temporelles differentes",
-            "Integre la similarite semantique via l'ontologie",
-            "Robuste aux permutations et repetitions"
-        ],
-        "limitations": [
-            "Necessite une ontologie",
-            "Cout de calcul eleve"
-        ],
-        "properties": {
-            "symmetry": true,
-            "normalized": true,
-            "metric": false,
-            "requires_ontology": true,
-            "supports_different_lengths": true
-        },
-        "params": ["interval_step", "time_window", "agg", "duration_threshold"],
-        "semantic_measure": {
-            "name": "Wu-Palmer",
-            "description": "Mesure la proximite semantique entre deux activites basee sur leur profondeur dans l'ontologie et celle de leur ancetre commun le plus profond (LCS).",
-            "formula": "2 * depth(LCS) / (depth(a1) + depth(a2))",
-            "range": [0, 1]
-        }
-    },
-    {
-        "name": "FTH",
-        "label": "Fuzzy Temporal Hamming",
-        "description": "Generalisation floue de la distance de Hamming. Utilise une fenetre temporelle floue et la similarite Wu-Palmer pour comparer les elements semantiquement et temporellement.",
-        "principle": "Attribue un cout aux operations de substitution base sur l'alignement temporel et la similarite semantique entre les elements.",
-        "advantages": [
-            "Robuste aux decalages temporels",
-            "Integre la similarite semantique",
-            "Plus rapide que RFTH"
-        ],
-        "limitations": [
-            "Limitee aux sequences de t-lengths comparables",
-            "Necessite une ontologie"
-        ],
-        "properties": {
-            "symmetry": true,
-            "normalized": false,
-            "metric": false,
-            "requires_ontology": true,
-            "supports_different_lengths": false
-        },
-        "params": ["interval_step", "time_window", "agg"],
-        "semantic_measure": {
-            "name": "Wu-Palmer",
-            "description": "Mesure la proximite semantique entre deux activites basee sur leur profondeur dans l'ontologie et celle de leur ancetre commun le plus profond (LCS).",
-            "formula": "2 * depth(LCS) / (depth(a1) + depth(a2))",
-            "range": [0, 1]
-        }
-    },
-    {
-        "name": "CED",
-        "label": "Contextual Edit Distance",
-        "description": "Extension de la distance d'edition qui prend en compte la proximite semantique entre activites via une ontologie et la position relative des elements.",
-        "principle": "Mesure le cout de transformation d'une sequence en une autre, en penalisant moins les substitutions d'activites semantiquement proches.",
-        "advantages": [
-            "Simple et interpretable",
-            "Sensible au contexte semantique",
-            "Gere les inversions et repetitions"
-        ],
-        "limitations": [
-            "Ignore la structure temporelle",
-            "Necessite une ontologie"
-        ],
-        "properties": {
-            "symmetry": true,
-            "normalized": false,
-            "metric": true,
-            "requires_ontology": true,
-            "supports_different_lengths": true
-        },
-        "params": ["beta"]
-    }
-]
-//Element METHODS de l'api
+import { useEffect, useState } from 'react';
+import { getMethods } from '../api';
+import type { Method } from '../api';
 
 interface MethodPageProps {
   onNext: () => void;
   onBack: () => void;
 }
 
-function MethodPage({onNext, onBack} : MethodPageProps){
-    const [textTabButton, setTextTabButton] = useState<String>("Voir")
-    const [textDemoFTHTButton, setTextDemoFTHTButton] = useState<String>("Voir")
-    const [textDemoRFTHButton, setTextDemoRFTHButton] = useState<String>("Voir")
-
-    const handleClickTabButton = (e) => {
-        const divTabComparatif = document.getElementById('comparative-tab')
-        if(divTabComparatif.hidden){
-            setTextTabButton("Masquer")
-            divTabComparatif.hidden=false
-        }else{
-            setTextTabButton("Voir")
-            divTabComparatif.hidden=true
-        }
-
-    }
-
-    const handleClickDemoFTHTButton = (e) => {
-        const divDemoFTHT = document.getElementById('demo-ftht')
-        if(divDemoFTHT.hidden){
-            setTextDemoFTHTButton("Masquer")
-            divDemoFTHT.hidden=false
-        }else{
-            setTextDemoFTHTButton("Voir")
-            divDemoFTHT.hidden=true
-        }
-    }
-
-    const handleClickDemoRFTHButton = (e) => {
-        const divDemoRFTH = document.getElementById('demo-rfth')
-        if(divDemoRFTH.hidden){
-            setTextDemoRFTHButton("Masquer")
-            divDemoRFTH.hidden=false
-        }else{
-            setTextDemoRFTHButton("Voir")
-            divDemoRFTH.hidden=true
-        }
-    }
-
-    const handleNextPage = () => {
-        const divMethodPage = document.getElementById("method-card")
-        const divParameterPage = document.getElementById("parameter-card")
-        divMethodPage.hidden = true
-        divParameterPage.hidden = false
-        onNext()
-    }
-
-    const handlePreviousPage = () => {
-        const divMethodPage = document.getElementById("method-card")
-        const divPatternPage = document.getElementById("pattern-card")
-        divMethodPage.hidden = true
-        divPatternPage.hidden = false
-        onBack()
-    }
-
-    return (
-        <div id="method-card" className="card border-0 shadow-sm" style={{ borderRadius: 12 }} hidden>
-            <div className="card-body p-5">
-                <div className="text-center mb-4">
-                    <h2 className="text-center mb-4">🎯 Méthode de Similarité</h2>
-                    <p className="text-muted mb-0">Choisissez l'algorithme pour mesurer la similarité entre les séquences</p>
-                    <div className="method-body">
-                        <button className="tab-button" onClick={handleClickTabButton}>
-                            <BookIcon/>
-                            {textTabButton} le tableau comparatif
-                        </button>
-                        <button className="demo-button" onClick={handleClickDemoFTHTButton}>
-                            {textDemoFTHTButton} la démo FTH Troncature
-                        </button>
-                        <button className="demo-button" onClick={handleClickDemoRFTHButton}>
-                            {textDemoRFTHButton} la démo RFTH
-                        </button>
-                    </div>
-                    <ComparativeTable/>
-                    <FTHTDemo/>
-                    <RFTHDemo/>
-                    <SimilarityMethods/>
-                </div>
-            </div>
-            <div className="d-flex justify-content-end mt-4">
-                <button 
-                    className="btn-return px-5 py-2 text-black"
-                    onClick={handlePreviousPage}
-                    style={{
-                        backgroundColor: "#858494",
-                        borderColor: "#858494",
-                        cursor: "pointer",
-                    }}
-                >
-                    ← Retour
-                </button>
-                <button 
-                    className="btn-next px-5 py-2 text-white"
-                    onClick={handleNextPage}
-                    style={{
-                        backgroundColor: "#4f46e5",
-                        borderColor: "#4f46e5",
-                        cursor: "pointer",
-                    }}
-                >
-                    Configurer les paramètres →
-                </button>
-            </div>
-        </div>
-    )
-    //Le button next doit être disabled tant qu'il n'y a pas de sélection de méthode
-    //Faire un isChecked pour MethodesSimilarite pour permettre la communication avec Parametres.jsx (envoie des paramètres et nom méthode)
+// Property badge
+function PropBadge({ label, value }: { label: string; value: boolean }) {
+  return (
+    <span
+      className="badge me-1"
+      style={{
+        backgroundColor: value ? '#dcfce7' : '#fee2e2',
+        color: value ? '#166534' : '#991b1b',
+        fontSize: 11,
+      }}
+    >
+      {value ? 'Yes' : 'No'} {label}
+    </span>
+  );
 }
 
+// Single method slide
+function MethodSlide({ method, selected, onSelect }: { method: Method; selected: boolean; onSelect: () => void }) {
+  const [showDetails, setShowDetails] = useState(false);
 
-export default MethodPage
+  return (
+    <div
+      className="border rounded p-4 h-100"
+      style={{
+        borderColor: selected ? '#4f46e5' : '#dee2e6',
+        backgroundColor: selected ? '#eef2ff' : '#fff',
+        cursor: 'pointer',
+        transition: 'border-color 0.15s, background 0.15s',
+        minHeight: 320,
+      }}
+      onClick={onSelect}
+    >
+      {/* Header */}
+      <div className="d-flex justify-content-between align-items-start mb-2">
+        <div>
+          <span
+            className="badge mb-1"
+            style={{ backgroundColor: '#4f46e5', color: '#fff', fontSize: 12 }}
+          >
+            {method.name}
+          </span>
+          <h5 className="fw-bold mb-0" style={{ fontSize: 16 }}>{method.label}</h5>
+        </div>
+        {selected && (
+          <span className="badge" style={{ backgroundColor: '#4f46e5', color: '#fff', fontSize: 11 }}>
+            Selected
+          </span>
+        )}
+      </div>
+
+      {/* Description */}
+      <p className="text-muted mb-3" style={{ fontSize: 13 }}>{method.description}</p>
+
+      {/* Properties */}
+      <div className="mb-3">
+        <PropBadge label="Symmetric"           value={method.properties.symmetry} />
+        <PropBadge label="Normalized"          value={method.properties.normalized} />
+        <PropBadge label="Metric"              value={method.properties.metric} />
+        <PropBadge label="Needs ontology"      value={method.properties.requires_ontology} />
+        <PropBadge label="Variable lengths"    value={method.properties.supports_different_lengths} />
+      </div>
+
+      {/* Wu-Palmer badge */}
+      {method.semantic_measure && (
+        <div className="mb-3">
+          <span className="badge" style={{ backgroundColor: '#e0e7ff', color: '#4f46e5', fontSize: 11 }}>
+            Semantic: {method.semantic_measure.name}
+          </span>
+        </div>
+      )}
+
+      {/* Show details toggle */}
+      <button
+        className="btn btn-sm btn-outline-secondary"
+        style={{ fontSize: 12 }}
+        onClick={e => { e.stopPropagation(); setShowDetails(v => !v); }}
+      >
+        {showDetails ? 'Hide details' : 'Show details'}
+      </button>
+
+      {showDetails && (
+        <div className="mt-3 pt-2" style={{ borderTop: '1px solid #e2e8f0', fontSize: 13 }}
+          onClick={e => e.stopPropagation()}>
+          <div className="mb-2">
+            <strong>Principle:</strong>
+            <p className="text-muted mb-1" style={{ fontSize: 12 }}>{method.principle}</p>
+          </div>
+          <div className="row g-2">
+            <div className="col-6">
+              <strong style={{ fontSize: 12 }}>Advantages</strong>
+              <ul className="mb-0" style={{ fontSize: 12, paddingLeft: 16 }}>
+                {method.advantages.map((a, i) => <li key={i}>{a}</li>)}
+              </ul>
+            </div>
+            <div className="col-6">
+              <strong style={{ fontSize: 12 }}>Limitations</strong>
+              <ul className="mb-0" style={{ fontSize: 12, paddingLeft: 16 }}>
+                {method.limitations.map((l, i) => <li key={i}>{l}</li>)}
+              </ul>
+            </div>
+          </div>
+          {method.semantic_measure && (
+            <div className="mt-2 p-2 rounded" style={{ backgroundColor: '#eff6ff', fontSize: 12 }}>
+              <strong>Formula: </strong>
+              <code>{method.semantic_measure.formula}</code>
+              <span className="ms-2 text-muted">range [{method.semantic_measure.range[0]}, {method.semantic_measure.range[1]}]</span>
+            </div>
+          )}
+          <div className="mt-2">
+            <strong style={{ fontSize: 12 }}>Parameters: </strong>
+            {method.params.length > 0
+              ? method.params.map((p, i) => (
+                  <code key={i} className="me-1" style={{ fontSize: 11 }}>{p}</code>
+                ))
+              : <span className="text-muted" style={{ fontSize: 12 }}>none</span>
+            }
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function MethodPage({ onNext, onBack }: MethodPageProps) {
+  const [methods, setMethods]       = useState<Method[]>([]);
+  const [loading, setLoading]       = useState(true);
+  const [error, setError]           = useState<string | null>(null);
+  const [activeIdx, setActiveIdx]   = useState(0);
+  const [selectedMethod, setSelectedMethod] = useState<string | null>(null);
+
+  useEffect(() => {
+    getMethods()
+      .then(data => {
+        setMethods(data);
+        if (data.length > 0) setSelectedMethod(data[0].name);
+      })
+      .catch(() => setError('Failed to load methods.'))
+      .finally(() => setLoading(false));
+  }, []);
+
+  const prev = () => setActiveIdx(i => (i - 1 + methods.length) % methods.length);
+  const next = () => setActiveIdx(i => (i + 1) % methods.length);
+
+  return (
+    <div className="card border-0 shadow-sm" style={{ borderRadius: 12 }}>
+      <div className="card-body p-5">
+        <div className="text-center mb-4">
+          <h2 className="fw-bold mb-1">Similarity Method</h2>
+          <p className="text-muted mb-0">Choose the algorithm to measure sequence similarity</p>
+        </div>
+
+        {loading && (
+          <div className="text-center py-4">
+            <div className="spinner-border text-primary" role="status" />
+            <p className="mt-2 text-muted">Loading methods...</p>
+          </div>
+        )}
+
+        {error && <p className="text-danger text-center">{error}</p>}
+
+        {!loading && !error && methods.length > 0 && (
+          <>
+            {/* Carousel */}
+            <div className="d-flex align-items-center gap-3 mb-3">
+              <button
+                className="btn btn-outline-secondary"
+                onClick={prev}
+                style={{ minWidth: 40, minHeight: 40 }}
+              >
+                &#8592;
+              </button>
+
+              <div className="flex-grow-1">
+                <MethodSlide
+                  key={methods[activeIdx].name}
+                  method={methods[activeIdx]}
+                  selected={selectedMethod === methods[activeIdx].name}
+                  onSelect={() => setSelectedMethod(methods[activeIdx].name)}
+                />
+              </div>
+
+              <button
+                className="btn btn-outline-secondary"
+                onClick={next}
+                style={{ minWidth: 40, minHeight: 40 }}
+              >
+                &#8594;
+              </button>
+            </div>
+
+            {/* Dot indicators */}
+            <div className="d-flex justify-content-center gap-2 mb-4">
+              {methods.map((m, i) => (
+                <button
+                  key={m.name}
+                  onClick={() => setActiveIdx(i)}
+                  style={{
+                    width: 10, height: 10, borderRadius: '50%', border: 'none', padding: 0,
+                    backgroundColor: i === activeIdx ? '#4f46e5' : '#c7d2fe',
+                    cursor: 'pointer',
+                  }}
+                />
+              ))}
+            </div>
+
+            {/* Selected method summary */}
+            {selectedMethod && (
+              <div className="border rounded p-3 mb-4" style={{ backgroundColor: '#f8faff', borderColor: '#c7d2fe' }}>
+                <span className="text-muted" style={{ fontSize: 13 }}>
+                  Selected method: <strong style={{ color: '#4f46e5' }}>{selectedMethod}</strong>
+                </span>
+              </div>
+            )}
+          </>
+        )}
+
+        <div className="d-flex justify-content-end gap-2 mt-2">
+          <button
+            className="btn-return px-5 py-2 text-black"
+            onClick={onBack}
+            style={{ backgroundColor: '#858494', borderColor: '#858494', cursor: 'pointer' }}
+          >
+            Back
+          </button>
+          <button
+            className="btn-next px-5 py-2 text-white"
+            onClick={onNext}
+            disabled={!selectedMethod}
+            style={{
+              backgroundColor: !selectedMethod ? '#a5b4fc' : '#4f46e5',
+              borderColor: '#4f46e5',
+              cursor: !selectedMethod ? 'not-allowed' : 'pointer',
+            }}
+          >
+            Configure Parameters
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default MethodPage;
