@@ -1,29 +1,116 @@
-import type { JSX } from "react";
+import { useState, type JSX } from "react";
 import { DEPTH_COLORS, type OntologyProps } from "../../types";
 
 interface OntologyTreeProps{
     ontology: OntologyProps;
-    layer: number;
+    color: {color: string, r: number, g: number, b: number};
 }
 
-function OntologyTree({ ontology, layer }: OntologyTreeProps){
-  const litsteOntology : Array<JSX.Element> = []
-  for(let onto of ontology.children){
-    litsteOntology.push(
-      <OntologyTree ontology={onto} layer={layer+1}/>
-    )
+function OntologyTree({ ontology, color }: OntologyTreeProps){
+  //let hex = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'];
+  //let newColor = '#';
+  let newColor = color;
+  if(color.color === "rgb(79, 70, 229)"){
+    //for (let i = 0; i < 6; i++) {
+    //  newColor += hex[Math.floor(Math.random() * 16)];
+    //}
+    newColor = {
+      color: 
+        `rgb(
+          ${Math.floor(Math.random() * 256)}, 
+          ${Math.floor(Math.random() * 256)}, 
+          ${Math.floor(Math.random() * 256)}
+        )`, 
+      r: Math.floor(Math.random() * 256), 
+      g: Math.floor(Math.random() * 256), 
+      b: Math.floor(Math.random() * 256)
+    };
+  }else{
+    //for (let i = 0; i < 6; i++) {
+    //  newColor += hex[Math.floor(Math.random() * 16)];
+    //}
+    if(Math.random() < 0.33){
+      newColor = {
+        color: 
+          `rgb(
+            ${color.r}, 
+            ${color.g}, 
+            ${color.b ? color.b + Math.floor(Math.random() * 100) : color.b - Math.floor(Math.random() * 100)}
+          )`, 
+        r: color.r, 
+        g: color.g, 
+        b: color.b ? color.b + Math.floor(Math.random() * 100) : color.b - Math.floor(Math.random() * 100)
+      };
+    }else{
+      if(Math.random() < 0.66){
+        newColor = {
+          color: 
+            `rgb(
+              ${color.r}, 
+              ${color.g ? color.g + Math.floor(Math.random() * 100) : color.g - Math.floor(Math.random() * 100)}, 
+              ${color.b}
+            )`, 
+          r: color.r, 
+          g: color.g ? color.g + Math.floor(Math.random() * 100) : color.g - Math.floor(Math.random() * 100), 
+          b: color.b
+        };
+      }else{
+        newColor = {
+          color: 
+            `rgb(
+              ${color.r ? color.r + Math.floor(Math.random() * 100) : color.r - Math.floor(Math.random() * 100)}, 
+              ${color.g}, 
+              ${color.b}
+            )`, 
+          r: color.r ? color.r + Math.floor(Math.random() * 100) : color.r - Math.floor(Math.random() * 100), 
+          g: color.g, 
+          b: color.b
+        };
+      }
+    }
   }
+  
+
+  const listeOntology : Array<JSX.Element> = []
+  //for(let onto of ontology.children){
+  //  listeOntology.push(
+  //    <OntologyTree ontology={onto} color={newColor}/>
+  //  )
+  //}
+  if(ontology.children.length === 0){
+      return (
+        <div className="">
+        <div 
+          className="border rounded" 
+          style={{backgroundColor: color.color}}
+        >
+          {ontology.name}
+        </div>
+      </div>
+      )
+  }else{
+    for(let i = 0; i<ontology.children.length; i++){
+      listeOntology.push(
+        <OntologyTree ontology={ontology.children[i]} color={newColor}/>
+      )
+    }
+  }
+
+
+
+
+
 
   return (
     <div className="">
       <div 
         className="border rounded" 
-        style={{backgroundColor: DEPTH_COLORS[layer]?.color}}
+        style={{backgroundColor: color.color}}
       >
         {ontology.name}
       </div>
       <div className="">
-        {litsteOntology}
+        {listeOntology}
       </div>
     </div>
   )

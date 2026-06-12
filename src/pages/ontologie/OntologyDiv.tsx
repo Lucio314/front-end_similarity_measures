@@ -11,6 +11,13 @@ interface OntologyDivProps{
 
 function OntologyDiv({ontology}: OntologyDivProps){
   const [isChecked, setIsChecked] = useState(true)
+
+  const color = {
+    color: 'rgb(79, 70, 229)',
+    r: 79,
+    g: 70,
+    b: 229
+  }
   
   return (
     <div className="">
@@ -26,7 +33,7 @@ function OntologyDiv({ontology}: OntologyDivProps){
             <OntologyIcon/>
             Structure de l'ontologie
           </h4>
-          <OntologyTree ontology={ontology} layer={0}/>
+          <OntologyTree ontology={ontology} color={color}/>
           <div className="border rounded">
             <p className="">Légende :</p>
             <div>

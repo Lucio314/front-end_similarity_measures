@@ -9,16 +9,16 @@ interface BarsChartProps {
 }
 
 const COLORS =[
-    '#ff2828', 
-    '#fe00e9',
-    '#ff4281',
-    '#a36f0e',
-    '#ddce48',
-    '#bfff28',
-    '#6eff42',
-    '#00C49F',
-    '#0d7494',
-    '#2f1cdf'
+    'rgb(255, 0, 0)', 
+    'rgb(254, 0, 233)',
+    'rgb(255, 66, 129)',
+    'rgb(163, 111, 14)',
+    'rgb(221, 206, 72)',
+    'rgb(191, 255, 40)',
+    'rgb(110, 255, 66)',
+    'rgb(0, 196, 159)',
+    'rgb(13, 116, 148)',
+    'rgb(47, 28, 223)'
 ]
 
 const getPath = (x: number, y: number, width: number, height: number) => {
@@ -29,7 +29,7 @@ const getPath = (x: number, y: number, width: number, height: number) => {
   Z`;
 };
 
-const TriangleBar = (props: BarShapeProps) => {
+const RectBar = (props: BarShapeProps) => {
   const {x, y, width, height, index} = props;
 
   const color = COLORS[index % COLORS.length];
@@ -63,7 +63,7 @@ function BarsChart({dataset, defaultIndex = undefined} : BarsChartProps){
           <XAxis dataKey="name"/>
           <YAxis dataKey="value"/>
           <Tooltip defaultIndex={defaultIndex}/>
-          <Bar dataKey="value" fill="#8884d8" shape={TriangleBar}/>
+          <Bar dataKey="value" fill="#8884d8" shape={RectBar}/>
         </BarChart>
     </div>
     )

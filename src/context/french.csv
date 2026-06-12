@@ -23,3 +23,6 @@ datapage,10.2,Chaque fichier doit contenir une liste de séquences.
 datapage,11,[{"activities": [{"type": "marcher", "duration": 30, "isMissing": false}]}]
 datapage,12,Vous pouvez charger plusieurs fichiers (ex: mobilité + météo) pour créer des datasets croisés.
 datapage,13,Construire l'ontologie →
+
+//id,text_en
+//header_p_1,Search for Semantic Temporal Sequences
