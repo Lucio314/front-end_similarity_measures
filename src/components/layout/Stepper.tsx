@@ -1,3 +1,4 @@
+import React from 'react';
 import { STEPS } from '../../types';
 
 interface StepperProps {
@@ -8,8 +9,8 @@ function Stepper({ currentStep }: StepperProps) {
   return (
     <div className="d-flex align-items-start w-100">
       {STEPS.map((step, index) => (
-        <>
-          <div key={step.id} className="d-flex flex-column align-items-center flex-shrink-0">
+        <React.Fragment key={step.id}>
+          <div className="d-flex flex-column align-items-center flex-shrink-0">
             <div
               className="d-flex align-items-center justify-content-center rounded-circle fw-semibold"
               style={{
@@ -47,7 +48,7 @@ function Stepper({ currentStep }: StepperProps) {
               }}
             />
           )}
-        </>
+        </React.Fragment>
       ))}
     </div>
   );

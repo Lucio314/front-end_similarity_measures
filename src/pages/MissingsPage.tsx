@@ -6,6 +6,7 @@ interface MissingsPageProps {
 }
 
 function Trous({onNext, onBack} : MissingsPageProps){
+<<<<<<< HEAD
     const handleNextPage = () => {
         const divMissingsPage = document.getElementById("missings-card")
         const divPatternPage = document.getElementById("pattern-card")
@@ -22,15 +23,17 @@ function Trous({onNext, onBack} : MissingsPageProps){
         onBack()
     }
 
+=======
+>>>>>>> 6aa9fe3f32b22ce48e3d636566bcab17893dc74a
     return (
-        <div id="missings-card" className="card border-0 shadow-sm" style={{ borderRadius: 12 }} hidden>
+        <div className="card border-0 shadow-sm" style={{ borderRadius: 12 }}>
             <div className="card-body p-5">
                 <div className="text-center mb-4">
-                    <h2 className="text-center mb-4">🔧 Gestion des données manquantes</h2>
+                    <h2 className="text-center mb-4">Gestion des données manquantes</h2>
                     <MissingsStratManagement/>
                     <div className="border rounded mt-4 p-3">
                         <p className="text-muted mb-0">
-                            <strong>💡 Recommandation :</strong>
+                            <strong>Recommandation :</strong>
                             Pour une recherche sémantique, l'option "Ajouter missing à l'ontologie"
                             est généralement la plus appropriée car elle permet de traiter les trous
                             de manière cohérente avec votre modèle de données.
@@ -40,7 +43,7 @@ function Trous({onNext, onBack} : MissingsPageProps){
                 <div className="d-flex justify-content-end mt-4">
                     <button 
                         className="btn-return px-5 py-2 text-black"
-                        onClick={handlePreviousPage}
+                        onClick={onBack}
                         style={{
                             backgroundColor: "#858494",
                             borderColor: "#858494",
@@ -51,7 +54,7 @@ function Trous({onNext, onBack} : MissingsPageProps){
                     </button>
                     <button 
                         className="btn-next px-5 py-2 text-white"
-                        onClick={handleNextPage}
+                        onClick={onNext}
                         style={{
                             backgroundColor: "#4f46e5",
                             borderColor: "#4f46e5",

@@ -2,17 +2,20 @@ import { useState } from "react";
 import FileUploader from "./donnees/FileUploader";
 import ExampleData from "./donnees/ExampleData";
 import FormatInfo from "./donnees/FormaInfo";
+import { useAppContext } from "../context/AppContext";
 
 interface DataPageProps {
   onNext: () => void;
 }
 
 function DataPage({ onNext }: DataPageProps) {
+  const { setDatasetId } = useAppContext();
   const [files, setFiles] = useState<File[]>([]);
   const [exampleLoaded, setExampleLoaded] = useState<boolean>(false);
 
   const canProceed = files.length > 0 || exampleLoaded;
 
+<<<<<<< HEAD
   const handleNextPage = () => {
     const divDataPage = document.getElementById("data-card")
     const divOntologyPage = document.getElementById("ontology-card")
@@ -33,8 +36,10 @@ function DataPage({ onNext }: DataPageProps) {
     onNext()
   }
 
+=======
+>>>>>>> 6aa9fe3f32b22ce48e3d636566bcab17893dc74a
   return (
-    <div id="data-card" className="card border-0 shadow-sm" style={{ borderRadius: 12 }}>
+    <div className="card border-0 shadow-sm" style={{ borderRadius: 12 }}>
       <div className="card-body p-5">
         <div className="text-center mb-4">
           <h2 className="fw-bold mb-1">Chargement des Données</h2>
@@ -45,10 +50,17 @@ function DataPage({ onNext }: DataPageProps) {
 
         <div className="row g-3">
           <div className="col-md-6">
-            <FileUploader files={files} onFilesChange={setFiles} />
+            <FileUploader
+              files={files}
+              onFilesChange={setFiles}
+              onDatasetReady={setDatasetId}
+            />
           </div>
           <div className="col-md-6">
-            <ExampleData onLoad={() => setExampleLoaded(true)} />
+            <ExampleData
+              onLoad={() => setExampleLoaded(true)}
+              onDatasetReady={setDatasetId}
+            />
           </div>
         </div>
 
@@ -56,14 +68,14 @@ function DataPage({ onNext }: DataPageProps) {
 
         <div className="d-flex justify-content-end mt-4">
           <button
-            className="btn-next px-5 py-2 text-white"
+            className="btn px-5 py-2 text-white"
             style={{
               backgroundColor: canProceed ? "#4f46e5" : "#a5b4fc",
               borderColor: canProceed ? "#4f46e5" : "#a5b4fc",
               cursor: canProceed ? "pointer" : "not-allowed",
             }}
             disabled={!canProceed}
-            onClick={handleNextPage}
+            onClick={onNext}
           >
             Construire l'ontologie →
           </button>

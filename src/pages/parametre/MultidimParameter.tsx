@@ -39,7 +39,7 @@ function MultidimParameter({valueSliderMobilite, valueSliderMeteo, onValueSlider
             </div>
             <div className="param-multidim-conseil">
                 <p className="paragraph">
-                    💡 La somme des poids n'a pas besoin d'être 1.0. Le système normalisera
+                    La somme des poids n'a pas besoin d'être 1.0. Le système normalisera
                     automatiquement les scores en fonction des poids relatifs.
                 </p>
             </div>

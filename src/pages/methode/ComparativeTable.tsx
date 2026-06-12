@@ -24,7 +24,7 @@ function ComparativeTable({}){
 
     return (
         <div id="comparative-tab" className="tab-methods" hidden>
-            <h3 className="text-center mb-4">📊 Tableau Comparatif des Méthodes</h3>
+            <h3 className="text-center mb-4">Tableau Comparatif des Méthodes</h3>
             <div className="comparative-table">
                 <MethodsTable/>
             </div>
@@ -42,7 +42,7 @@ function ComparativeTable({}){
                 </div>
             </div>
             <div className="advices">
-                <h4 className="text-center mb-4">💡 Recommandations de choix</h4>
+                <h4 className="text-center mb-4">Recommandations de choix</h4>
                 <div className="advice">
                     {listeAdvices}
                 </div>

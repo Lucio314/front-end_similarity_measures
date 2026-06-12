@@ -75,7 +75,7 @@ function OntologyDiv({ontology}: OntologyDivProps){
       </div>
       <div className="border rounded mt-4 p-3">
         <p className="text-muted mb-0">
-          <strong>💡 À quoi sert l'ontologie ?</strong>
+          <strong>À quoi sert l'ontologie ?</strong>
           <br/>
           Elle permet aux algorithmes de comprendre que "marcher" et "vélo"
           sont plus similaires entre eux (tous deux sous "human_power") qu'avec "bus"

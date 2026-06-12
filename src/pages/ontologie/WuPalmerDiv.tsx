@@ -8,7 +8,7 @@ interface WuPalmerDivProps{
 function WuPalmerDiv({matrice, activites} : WuPalmerDivProps){
   return (
     <div className="border rounded mt-4 p-3">
-      <h2 className="fw-bold mb-1">📐 Mesure de Similarité Sémantique</h2>
+      <h2 className="fw-bold mb-1">Mesure de Similarité Sémantique</h2>
       <div id="methode-wupalmer">
         <h3 className="fw-bold mb-1">Méthode : Wu-Palmer (par défaut)</h3>
         <p className="text-muted mb-0">
@@ -27,7 +27,7 @@ function WuPalmerDiv({matrice, activites} : WuPalmerDivProps){
           <p className="text-muted mb-0">Où LCA (Lowest Common Ancestor) est l'ancêtre commun le plus profond dans l'arbre de l'ontologie.</p>
         </div>
         <div id="principe-fonctionnement" className="border rounded mt-2 p-3">
-          <h4 className="fw-bold mb-1">🔍 Principe de fonctionnement :</h4>
+          <h4 className="fw-bold mb-1">Principe de fonctionnement :</h4>
           <ul className="">
             <li className="">
               <span className="">1.</span>
@@ -44,7 +44,7 @@ function WuPalmerDiv({matrice, activites} : WuPalmerDivProps){
           </ul>
         </div>
         <div className="border rounded mt-4 p-3">
-          <h5 className="fw-bold mb-1">📊 Matrice de similarité entre toutes les activités :</h5>
+          <h5 className="fw-bold mb-1">Matrice de similarité entre toutes les activités :</h5>
           <WuPalmerMatrix matrice={matrice} activites={activites}/>
         </div>
       </div>

@@ -121,27 +121,11 @@ const RESULTS : ResultsProps = {
 
 function ResultsPage({onBackParameter, onBackPattern} : ResultsPageProps ){
 
-    const handleBackParameterPage = () => {
-        const divParameterPage = document.getElementById("parameter-card")
-        const divResultsPage = document.getElementById("results-card")
-        divParameterPage.hidden = false
-        divResultsPage.hidden = true
-        onBackParameter()
-    }
-
-    const handleBackPatternPage = () => {
-        const divResultsPage = document.getElementById("results-card")
-        const divPatternPage = document.getElementById("pattern-card")
-        divResultsPage.hidden = true
-        divPatternPage.hidden = false
-        onBackPattern()
-    }
-
     return(
-        <div id="results-card" className="card border-0 shadow-sm" style={{ borderRadius: 12 }} hidden>
+        <div className="card border-0 shadow-sm" style={{ borderRadius: 12 }}>
             <div className="card-body p-5">
                 <div className="text-center mb-4">
-                    <h2 className="fw-bold mb-1">🎯 Résultats de la recherche</h2>
+                    <h2 className="fw-bold mb-1">Résultats de la recherche</h2>
                     <p className="text-muted mb-0">
                         Top {RESULTS.meta.count} séquences les plus similaires à votre motif
                     </p>
@@ -153,7 +137,7 @@ function ResultsPage({onBackParameter, onBackPattern} : ResultsPageProps ){
             <div className="d-flex justify-content-end mt-4">
                 <button 
                     className="btn-return px-5 py-2 text-black"
-                    onClick={handleBackPatternPage}
+                    onClick={onBackPattern}
                     style={{
                         backgroundColor: "#858494",
                         borderColor: "#858494",
@@ -164,7 +148,7 @@ function ResultsPage({onBackParameter, onBackPattern} : ResultsPageProps ){
                 </button>
                 <button 
                     className="btn-next px-5 py-2 text-white"
-                    onClick={handleBackParameterPage}
+                    onClick={onBackParameter}
                     style={{
                         backgroundColor: "#4f46e5",
                         borderColor: "#4f46e5",

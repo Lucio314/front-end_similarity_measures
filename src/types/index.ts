@@ -1,98 +1,116 @@
+// ── Navigation ────────────────────────────────────────────────────────────────
+
 export interface Step {
   id: number;
   label: string;
 }
 
 export const STEPS: Step[] = [
+<<<<<<< HEAD
   { id: 1, label: 'Datas' },
   { id: 2, label: 'Ontology' },
   { id: 3, label: 'Statistics' },
   { id: 4, label: 'Temporal Gaps' },
   { id: 5, label: 'Pattern' },
   { id: 6, label: 'Methods' },
+=======
+  { id: 1, label: 'Data' },
+  { id: 2, label: 'Statistics' },
+  { id: 3, label: 'Ontology' },
+  { id: 4, label: 'Temporal Gaps' }, //Trou -> Temporal Gaps
+  { id: 5, label: 'Pattern' },
+  { id: 6, label: 'Method' },
+>>>>>>> 6aa9fe3f32b22ce48e3d636566bcab17893dc74a
   { id: 7, label: 'Parameters' },
   { id: 8, label: 'Results' },
 ];
+
+// ── App context ───────────────────────────────────────────────────────────────
 
 export interface AppContextType {
   currentStep: number;
   setCurrentStep: (step: number) => void;
   uploadedFiles: File[];
   setUploadedFiles: React.Dispatch<React.SetStateAction<File[]>>;
+  datasetId: string | null;
+  setDatasetId: (id: string | null) => void;
 }
 
-export interface ActivitiesProps{
-    actiId: string;
-    icon: string;
-    nomActi: string;
-    temps: number;
-} //Type pour les json des séquence de méthodes
+// ── Ontology ──────────────────────────────────────────────────────────────────
 
-//============================================================
-// Types utilisés dans la page StatsPage
-//============================================================
-
-export interface DataStatsProps{
-    name : string;
-    value : number;
+export interface OntologyProps {
+  name: string;
+  children: OntologyProps[];
 }
 
-export interface DatasetInfoGlobalProps{
-    num_sequences: number;
-    num_activities: number;
-    avg_length: number;
+export const ONTOLOGY_COLORS: string[] = [
+  '#4f46e5',
+  '#7c3aed',
+  '#0891b2',
+  '#059669',
+];
+
+// Build a flat color map from ontology: name -> hsl color
+// Each subtree rooted at a level-1 node gets its own hue, children get lighter shades
+export function buildOntologyColorMap(
+  root: OntologyProps
+): Record<string, string> {
+  const map: Record<string, string> = {};
+  const topLevelHues = [220, 270, 180, 140, 30, 0, 310, 60];
+
+  root.children.forEach((child, idx) => {
+    const hue = topLevelHues[idx % topLevelHues.length];
+    assignColors(child, hue, 40, 60, map);
+  });
+
+  return map;
 }
 
-export interface DatasetInfoDurationProps{
-    min: number;
-    avg: number;
-    max: number;
+function assignColors(
+  node: OntologyProps,
+  hue: number,
+  saturation: number,
+  lightness: number,
+  map: Record<string, string>
+): void {
+  map[node.name] = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+  const step = (90 - lightness) / Math.max(node.children.length, 1);
+  node.children.forEach((child, i) => {
+    assignColors(child, hue, saturation + 10, lightness + step * (i + 1), map);
+  });
 }
 
-export interface DatasetInfoActivitiesProps{
-    distribution: Array<DataStatsProps>;
+// DFS traversal returning leaf names in order
+export function dfsLeaves(node: OntologyProps): string[] {
+  if (!node.children || node.children.length === 0) return [node.name];
+  return node.children.flatMap(dfsLeaves);
 }
 
-export interface DatasetInfoMissingProps{
-    total_gaps: number;
-    sequences_with_gaps: number;
-    percentage_sequences_with_gaps: number;
-    avg_gaps_per_sequence: number;
-    percentage_missing_activities: number;
+// ── Pattern (PatternPage) ─────────────────────────────────────────────────────
+
+export interface PatternActivitiesProps {
+  id: string;
+  name: string;
+  emoji: string;
+  duration: number;
 }
 
-export interface DatasetInfoProps{
-    global: DatasetInfoGlobalProps;
-    duration: DatasetInfoDurationProps;
-    activities: DatasetInfoActivitiesProps;
-    missing: DatasetInfoMissingProps;
+export interface EmojisProps {
+  emoji: string;
+  emojiName: string;
+  emojiColor?: string;
 }
 
-export interface DatasetSequenceProps{
-    id: number;
-    label: string;
-    length: number;
-    total_duration: number;
-    activities: Array<ResultsActivitiesProps>;
-    avg_duration: number
-}
-export interface DatasetProps{
-    dataset_id: string;
-    count: number;
-    limit: number;
-    offset: number; 
-    sequence: Array<DatasetSequenceProps>;
-}
+// EMOJIS was a hardcoded constant. Activities now come from the backend.
+// Kept as empty array so legacy imports still compile.
+export const EMOJIS: EmojisProps[] = [];
 
-//============================================================
-// Types utilisés dans la page OntologyPage
-//============================================================
+// Activity labels use the first letter of the activity name as fallback (see PatternRepr, SeqRepr, etc.)
+export const ACTIVITY_EMOJI_MAP: Record<string, string> = {};
 
-export interface OntologyProps{
-    name: string;
-    children: OntologyProps[]
-}
+// ── Methods ───────────────────────────────────────────────────────────────────
 
+<<<<<<< HEAD
 export const DEPTH_COLORS = [
   { color: "#4f46e5", label: "Racine" },
   { color: "#7c3aed", label: "Niveau 1" },
@@ -125,123 +143,133 @@ export interface SemanticMeasureProps{
 }
 
 export interface MethodPropertiesProps{
+=======
+export interface MethodProps {
+  name: string;
+  label: string;
+  description: string;
+  principle: string;
+  advantages: string[];
+  limitations: string[];
+  properties: {
+>>>>>>> 6aa9fe3f32b22ce48e3d636566bcab17893dc74a
     symmetry: boolean;
     normalized: boolean;
     metric: boolean;
     requires_ontology: boolean;
     supports_different_lengths: boolean;
-}
-
-export interface MethodProps{
+  };
+  params: string[];
+  semantic_measure?: {
     name: string;
-    label: string;
     description: string;
-    principle: string;
-    advantages: Array<string>;
-    limitations: Array<string>;
-    properties: MethodPropertiesProps;
-    params: Array<string>;
-    semantic_measure? : SemanticMeasureProps
+    formula: string;
+    range: [number, number];
+  };
 }
 
-//============================================================
-// Types utilisés dans la page PatternPage
-//============================================================
+// ── Parameters ────────────────────────────────────────────────────────────────
 
-export interface PatternActivitiesProps{
+export interface ListParametersProps {
+  nomParam: string;
+  getter: number;
+  setter: React.Dispatch<React.SetStateAction<number>>;
+}
+
+// ── Statistics sub-components (binome) ───────────────────────────────────────
+
+export interface DataStatsProps {
+  name: string;
+  value: number;
+}
+
+export interface DatasetInfoProps {
+  global: {
+    num_sequences: number;
+    num_activities: number;
+    avg_length: number;
+  };
+  duration: {
+    min: number;
+    avg: number;
+    max: number;
+  };
+  activities: {
+    distribution: DataStatsProps[];
+  };
+  missing: {
+    total_gaps: number;
+    sequences_with_gaps: number;
+    percentage_sequences_with_gaps: number;
+    avg_gaps_per_sequence: number;
+    percentage_missing_activities: number;
+  };
+}
+
+export interface DatasetSequenceActivityProps {
+  name: string;
+  duration: number;
+}
+
+export interface DatasetSequenceItemProps {
+  id: number;
+  label: string;
+  length: number;
+  total_duration: number;
+  activities: DatasetSequenceActivityProps[];
+}
+
+// Alias kept for backward compat with SeqStats
+export type DatasetSequenceProps = DatasetSequenceItemProps;
+
+export interface DatasetProps {
+  dataset_id: string;
+  count: number;
+  limit: number;
+  offset: number;
+  sequence: DatasetSequenceItemProps[];
+}
+
+// ── Results ───────────────────────────────────────────────────────────────────
+
+export interface ResultsActivitiesProps {
+  name: string;
+  duration: number;
+}
+
+export interface ResultsPatternProps {
+  label: string;
+  length: number;
+  total_durations: number;
+  activities: ResultsActivitiesProps[];
+}
+
+export interface ResultsSummaryProps {
+  total_results: number;
+  best_score: number;
+  avg_duration: number;
+}
+
+export interface ResultsOneResultProps {
+  rank: number;
+  score: number;
+  sequence: {
     id: string;
-    name: string;
-    emoji: string;
-    duration: number;
-}
-
-//============================================================
-// Types utilisés dans la page ParameterPage
-//============================================================
-
-export interface ParamsProps{
-    param: string;
-    nomClasse: string;
-    paramTitre: string;
-    paramValue: Array<string>;
-    paramValueMax: number;
-    paramValueMin: number;
-    paramValuePas: number;
-    paramLegend: Array<string>;
-    paramInfo: string;
-}
-
-export interface ListParametersProps{
-    nomParam: string;
-    getter: number;
-    setter: React.Dispatch<React.SetStateAction<number>>;
-} //Type pour ListeParametres dans ParameterPage
-
-//============================================================
-// Types utilisés dans la page ResultsPage
-//============================================================
-
-
-export interface ResultsActivitiesProps{
-    name: string;
-    duration: number;
-}
-export interface ResultsPatternProps{
     label: string;
     length: number;
     total_durations: number;
-    activities: Array<ResultsActivitiesProps>;
-}
-export interface ResultsSummaryProps{
-    total_results: number;
-    best_score: number;
-    avg_duration: number;
+    activities: ResultsActivitiesProps[];
+  };
 }
 
-export interface ResutlsMetaProps{
+export interface ResultsProps {
+  pattern: ResultsPatternProps;
+  summary: ResultsSummaryProps;
+  meta: {
     dataset_id: string;
     method: string;
     top_k: number;
     count: number;
+  };
+  results: ResultsOneResultProps[];
 }
-
-export interface ResultsSequenceProps{
-    id: string;
-    label: string;
-    length: number;
-    total_durations: number;
-    activities: Array<ResultsActivitiesProps>;
-}
-
-export interface ResultsOneResultProps{
-    rank: number;
-    score: number;
-    sequence: ResultsSequenceProps
-}
-
-export interface ResultsProps{
-    pattern: ResultsPatternProps;
-    summary: ResultsSummaryProps;
-    meta: ResutlsMetaProps;
-    results: Array<ResultsOneResultProps>
-}
-
-export interface EmojisProps{
-    emoji: string;
-    emojiName: string;
-    emojiColor: string;
-}
-
-export const EMOJIS : Array<EmojisProps> = [
-    { emoji: "❓", emojiName: "missing", emojiColor: "#ff2828" },
-    { emoji: "🚌", emojiName: "bus", emojiColor: "#fe00e9" },
-    { emoji: "🚴", emojiName: "vélo", emojiColor: "#ff4281" },
-    { emoji: "🚗", emojiName: "voiture", emojiColor:"#ee670d"},
-    { emoji: "💼", emojiName: "travail", emojiColor: "#a36f0e" },
-    { emoji: "🚶", emojiName: "marcher", emojiColor: "#ddce48" },
-    { emoji: "🏠", emojiName: "maison", emojiColor: "#6eff42" },
-    { emoji: "🍽️", emojiName: "restaurant", emojiColor: "#00C49F" },
-    { emoji: "⚽", emojiName: "sport", emojiColor: "#0d7494" },
-    { emoji: "🛍️", emojiName: "shopping", emojiColor: "#2f1cdf" },
-    { emoji: "📚", emojiName: "étude", emojiColor: "#9e28ff" }
-]
