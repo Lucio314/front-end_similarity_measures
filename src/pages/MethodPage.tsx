@@ -10,6 +10,7 @@ import type { Method } from '../api';
 interface MethodPageProps {
   onNext: () => void;
   onBack: () => void;
+  onMethodSelect: (method: Method) => void;
 }
 
 // Property badge
@@ -135,7 +136,7 @@ function MethodSlide({ method, selected, onSelect }: { method: Method; selected:
   );
 }
 
-function MethodPage({ onNext, onBack }: MethodPageProps) {
+function MethodPage({ onNext, onBack, onMethodSelect }: MethodPageProps) {
   const [methods, setMethods]       = useState<Method[]>([]);
   const [loading, setLoading]       = useState(true);
   const [error, setError]           = useState<string | null>(null);
@@ -146,7 +147,10 @@ function MethodPage({ onNext, onBack }: MethodPageProps) {
     getMethods()
       .then(data => {
         setMethods(data);
-        if (data.length > 0) setSelectedMethod(data[0].name);
+        if (data.length > 0) {
+          setSelectedMethod(data[0].name);
+          onMethodSelect(data[0]);
+        }
       })
       .catch(() => setError('Failed to load methods.'))
       .finally(() => setLoading(false));
@@ -189,7 +193,10 @@ function MethodPage({ onNext, onBack }: MethodPageProps) {
                   key={methods[activeIdx].name}
                   method={methods[activeIdx]}
                   selected={selectedMethod === methods[activeIdx].name}
-                  onSelect={() => setSelectedMethod(methods[activeIdx].name)}
+                  onSelect={() => {
+                    setSelectedMethod(methods[activeIdx].name);
+                    onMethodSelect(methods[activeIdx]);
+                  }}
                 />
               </div>
 

@@ -9,11 +9,10 @@ export const STEPS: Step[] = [
   { id: 1, label: 'Data' },
   { id: 2, label: 'Statistics' },
   { id: 3, label: 'Ontology' },
-  { id: 4, label: 'Temporal Gaps' }, //Trou -> Temporal Gaps
-  { id: 5, label: 'Pattern' },
-  { id: 6, label: 'Method' },
-  { id: 7, label: 'Parameters' },
-  { id: 8, label: 'Results' },
+  { id: 4, label: 'Temporal Gaps' },
+  { id: 5, label: 'Method' },
+  { id: 6, label: 'Parameters' },
+  { id: 7, label: 'Results' },
 ];
 
 // ── App context ───────────────────────────────────────────────────────────────
@@ -97,7 +96,25 @@ export interface EmojisProps {
 export const EMOJIS: EmojisProps[] = [];
 
 // Activity labels use the first letter of the activity name as fallback (see PatternRepr, SeqRepr, etc.)
-export const ACTIVITY_EMOJI_MAP: Record<string, string> = {};
+export const ACTIVITY_EMOJI_MAP: Record<string, string> = {
+  // feuilles ontologie SIDOS
+  walk:         '🚶',
+  bike:         '🚴',
+  car:          '🚗',
+  pts:          '🚌',
+  leisure:      '🎉',
+  shopping:     '🛒',
+  work:         '💼',
+  studying:     '📚',
+  home:         '🏠',
+  // nœuds intermédiaires pouvant apparaître comme activité
+  moving:       '➡️',
+  stop:         '⏸️',
+  human_power:  '💪',
+  motorized:    '⚙️',
+  fun:          '😄',
+  serious:      '🎯',
+};
 
 // ── Methods ───────────────────────────────────────────────────────────────────
 
@@ -130,6 +147,24 @@ export interface ListParametersProps {
   nomParam: string;
   getter: number;
   setter: React.Dispatch<React.SetStateAction<number>>;
+}
+
+export interface ParamsProps {
+  param: string;
+  nomClasse: string;
+  paramTitre: string;
+  paramValue: string[];
+  paramValueMax: number;
+  paramValueMin: number;
+  paramValuePas: number;
+  paramLegend: string[];
+  paramInfo: string;
+}
+
+export interface SearchConfig {
+  params: Record<string, number | string>;
+  top_k: number;
+  threshold: number;
 }
 
 // ── Statistics sub-components (binome) ───────────────────────────────────────
