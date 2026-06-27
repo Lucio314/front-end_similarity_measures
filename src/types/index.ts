@@ -6,21 +6,12 @@ export interface Step {
 }
 
 export const STEPS: Step[] = [
-<<<<<<< HEAD
-  { id: 1, label: 'Datas' },
-  { id: 2, label: 'Ontology' },
-  { id: 3, label: 'Statistics' },
-  { id: 4, label: 'Temporal Gaps' },
-  { id: 5, label: 'Pattern' },
-  { id: 6, label: 'Methods' },
-=======
   { id: 1, label: 'Data' },
   { id: 2, label: 'Statistics' },
   { id: 3, label: 'Ontology' },
   { id: 4, label: 'Temporal Gaps' }, //Trou -> Temporal Gaps
   { id: 5, label: 'Pattern' },
   { id: 6, label: 'Method' },
->>>>>>> 6aa9fe3f32b22ce48e3d636566bcab17893dc74a
   { id: 7, label: 'Parameters' },
   { id: 8, label: 'Results' },
 ];
@@ -110,40 +101,6 @@ export const ACTIVITY_EMOJI_MAP: Record<string, string> = {};
 
 // ── Methods ───────────────────────────────────────────────────────────────────
 
-<<<<<<< HEAD
-export const DEPTH_COLORS = [
-  { color: "#4f46e5", label: "Racine" },
-  { color: "#7c3aed", label: "Niveau 1" },
-  { color: "#0891b2", label: "Niveau 2" },
-  { color: "#059669", label: "Feuilles (activités)" },
-];
-
-//============================================================
-// Types utilisés dans la page MissingsPage
-//============================================================
-
-export interface StrategiesProps{
-    idStrategie: string;
-    strategie: string;
-    descriptionStrategie: string;
-    emoji: string;
-    avantages: Array<string>;
-    inconvenients: Array<string>
-}
-
-//============================================================
-// Types utilisés dans la page MethodPage
-//============================================================
-
-export interface SemanticMeasureProps{
-    name: string;
-    description: string;
-    formula: string;
-    range: Array<number>
-}
-
-export interface MethodPropertiesProps{
-=======
 export interface MethodProps {
   name: string;
   label: string;
@@ -152,7 +109,6 @@ export interface MethodProps {
   advantages: string[];
   limitations: string[];
   properties: {
->>>>>>> 6aa9fe3f32b22ce48e3d636566bcab17893dc74a
     symmetry: boolean;
     normalized: boolean;
     metric: boolean;

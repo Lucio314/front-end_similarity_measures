@@ -10,66 +10,10 @@ import Pros from '../../components/Pros';
 import Cons from '../../components/Cons';
 import CheckedIcon from '../../components/icons/CheckedIcon';
 
-<<<<<<< HEAD
-function MissingsStratManagement({}){
-  const strategiesMissings : Array<JSX.Element> = []
-  for(let strategy of STRATEGIES){
-    let handleClick = () => {
-      const divHidden = document.getElementById(strategy.idStrategie)
-      if(divHidden.hidden){
-        divHidden.hidden = false
-        for(let i=0; i<STRATEGIES.length; i++){
-          if(STRATEGIES[i].idStrategie !== strategy.idStrategie){
-            document.getElementById(STRATEGIES[i].idStrategie).hidden = true
-          }
-        }
-      }else{
-        divHidden.hidden = true
-      }
-    }
-
-
-    strategiesMissings.push(
-    <MissingsStrat
-      key={strategy.idStrategie}
-      id={strategy.idStrategie}
-      emoji={strategy.emoji}
-      strategie={strategy.strategie}
-      descriptionStrategie={strategy.descriptionStrategie}
-      avantages={strategy.avantages}
-      inconvenients={strategy.inconvenients}
-      onClick={handleClick}
-    />
-    )
-  }
-
-  return (
-    <div className="border rounded p-3 mb-4">
-      <div className="border rounded mb-4 p-3">
-        <p className="text-muted mb-0">
-          <strong>⚠️ Données manquantes détectées !</strong>
-          <br/>
-          Votre dataset contient des trous (activités manquantes).
-          Choisissez comment vous souhaitez les gérer pour la recherche.
-        </p>
-      </div>
-      <div className="d-flex flex-column">
-        <div className="row g-3">
-          {strategiesMissings.map((strategy) => (
-            <div className="col-md-6" key={strategy.key}>
-              {strategy}
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  )
-=======
 interface StrategyCardProps {
   strategy: MissingStrategy;
   selected: boolean;
   onSelect: () => void;
->>>>>>> 6aa9fe3f32b22ce48e3d636566bcab17893dc74a
 }
 
 function StrategyCard({ strategy, selected, onSelect }: StrategyCardProps) {

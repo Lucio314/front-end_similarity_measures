@@ -1,9 +1,3 @@
-<<<<<<< HEAD
-//npm i recharts
-import {BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip} from 'recharts'
-import type { DataStatsProps } from '../../types';
-import type { BarShapeProps, TooltipIndex } from 'recharts';
-=======
 // BarsChart: activity distribution bar chart ordered by DFS ontology traversal.
 // Colors derived from ontology hierarchy.
 // Interactive ontology filter: click any node to show only its leaf activities.
@@ -17,86 +11,12 @@ import { getOntology } from '../../api';
 import type { OntologyNode } from '../../api';
 import type { DataStatsProps } from '../../types';
 import { buildOntologyColorMap, dfsLeaves } from '../../types';
->>>>>>> 6aa9fe3f32b22ce48e3d636566bcab17893dc74a
 
 interface BarsChartProps {
   dataset: DataStatsProps[];
 }
 
-<<<<<<< HEAD
-const COLORS =[
-    'rgb(255, 0, 0)', 
-    'rgb(254, 0, 233)',
-    'rgb(255, 66, 129)',
-    'rgb(163, 111, 14)',
-    'rgb(221, 206, 72)',
-    'rgb(191, 255, 40)',
-    'rgb(110, 255, 66)',
-    'rgb(0, 196, 159)',
-    'rgb(13, 116, 148)',
-    'rgb(47, 28, 223)'
-]
 
-const getPath = (x: number, y: number, width: number, height: number) => {
-  return `M${x},${y + height}
-  L${x + width},${y + height}
-  L${x + width},${y}
-  L${x},${y}
-  Z`;
-};
-
-const RectBar = (props: BarShapeProps) => {
-  const {x, y, width, height, index} = props;
-
-  const color = COLORS[index % COLORS.length];
-
-  return (
-    <path
-      strokeWidth={props.isActive ? 5 : 0}
-      d={getPath(Number(x), Number(y), Number(width), Number(height))}
-      stroke={color}
-      fill={color}
-      style={{
-        transition: 'stroke-width 0.3s ease-out',
-      }}
-    />
-  );
-};
-
-function BarsChart({dataset, defaultIndex = undefined} : BarsChartProps){
-  return (
-    <div className="border rounded d-flex flex-column align-items-center">
-      <h5 className="fw-bold mb-1">Répartition des activités</h5>
-        <BarChart 
-          width={900}
-          height={300}
-          data={dataset}
-          margin={{
-            right: 30,
-          }}
-        >
-          <CartesianGrid strokeDasharray="3 3"/>
-          <XAxis dataKey="name"/>
-          <YAxis dataKey="value"/>
-          <Tooltip defaultIndex={defaultIndex}/>
-          <Bar dataKey="value" fill="#8884d8" shape={RectBar}/>
-        </BarChart>
-    </div>
-    )
-}
-
-/*function CustomToolTip({active, payload, label} : TooltipContentProps){
-  if(active && payload && payload.length){
-    return (
-      <div className="p-4 bg-slate-900 flex flex-col gap-4 rounded-md">
-        <p className="text-medium text-lg">{label}</p>
-        <p className="text-sm text-blue-400">
-          Nombre : 
-          <span className="ml-2">{payload[0].value}</span>
-        </p>
-      </div>
-      )
-=======
 // Returns all non-leaf nodes in DFS order (for the filter panel)
 function dfsInternalNodes(node: OntologyNode, depth = 0): { node: OntologyNode; depth: number }[] {
   const hasChildren = node.children && node.children.length > 0;
@@ -106,7 +26,6 @@ function dfsInternalNodes(node: OntologyNode, depth = 0): { node: OntologyNode; 
     for (const child of node.children!) {
       result.push(...dfsInternalNodes(child, depth + 1));
     }
->>>>>>> 6aa9fe3f32b22ce48e3d636566bcab17893dc74a
   }
   return result;
 }

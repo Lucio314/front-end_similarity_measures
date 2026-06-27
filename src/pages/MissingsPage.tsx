@@ -6,25 +6,6 @@ interface MissingsPageProps {
 }
 
 function Trous({onNext, onBack} : MissingsPageProps){
-<<<<<<< HEAD
-    const handleNextPage = () => {
-        const divMissingsPage = document.getElementById("missings-card")
-        const divPatternPage = document.getElementById("pattern-card")
-        divMissingsPage.hidden = true
-        divPatternPage.hidden = false
-        onNext()
-    }
-
-    const handlePreviousPage = () => {
-        const divMissingsPage = document.getElementById("missings-card")
-        const divStatsPage = document.getElementById("stats-card")
-        divMissingsPage.hidden = true
-        divStatsPage.hidden = false
-        onBack()
-    }
-
-=======
->>>>>>> 6aa9fe3f32b22ce48e3d636566bcab17893dc74a
     return (
         <div className="card border-0 shadow-sm" style={{ borderRadius: 12 }}>
             <div className="card-body p-5">

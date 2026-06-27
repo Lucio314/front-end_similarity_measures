@@ -14,36 +14,14 @@ function StatsPage({ onNext }: StatsPageProps) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-<<<<<<< HEAD
-interface DataPageProps {
-  onNext: () => void;
-  onBack: () => void;
-}
 
-function StatsPage({ onNext, onBack }: DataPageProps){
-    //const [isMultiChecked, setIsMultiChecked] = useState<boolean>(false);
-
-    const handleShowSequencesClick = () => {
-        const divSequences = document.getElementById("div-part-body-sequences");
-        const divStats = document.getElementById("div-part-body-stats");
-        const button = document.getElementById("btn-show-seq")
-        if(divSequences.hidden) {
-            button.textContent = "Voir les statistiques"
-            divSequences.hidden = false
-            divStats.hidden = true
-        }else{
-            button.textContent = "Visualiser toutes les séquences"
-            divSequences.hidden = true
-            divStats.hidden = false
-        }
-=======
   useEffect(() => {
     if (!datasetId) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setError("No dataset loaded.");
       setLoading(false);
       return;
->>>>>>> 6aa9fe3f32b22ce48e3d636566bcab17893dc74a
+
     }
     getDatasetStats(datasetId)
       .then(setStats)
@@ -51,86 +29,13 @@ function StatsPage({ onNext, onBack }: DataPageProps){
       .finally(() => setLoading(false));
   }, [datasetId]);
 
-<<<<<<< HEAD
-    const handleNextPage = () => {
-        const divStatsPage = document.getElementById("stats-card")
-        const divMissingsPage = document.getElementById("missings-card")
-        divStatsPage.hidden = true
-        divMissingsPage.hidden = false
-        onNext()
-    }
 
-    const handlePreviousPage = () => {
-        const divStatsPage = document.getElementById("stats-card")
-        const divOntologyPage = document.getElementById("ontology-card")
-        divStatsPage.hidden = true
-        divOntologyPage.hidden = false
-        onBack()
-    }
-
-    return(
-        <div id="stats-card" className="card border-0 shadow-sm" style={{ borderRadius: 12 }} hidden>
-            <div className="card-body p-5">
-                <button 
-                    id="btn-show-seq"
-                    className="btn-show-seq px-5 py-2 text-white"
-                    onClick={handleShowSequencesClick}
-                    style={{
-                        backgroundColor: "#662fcc",
-                        borderColor: "#662fcc",
-                        cursor: "pointer",
-                    }}
-                >
-                    Visualiser toutes les séquences
-                </button>
-                <div id="div-part-body-stats" className="border rounded p-3 mt-4 row">
-                    <div className="col-md-12">
-                        <div className="">
-                            <h2 className="fw-bold mb-1 text-center">Statistiques du Dataset</h2>
-                        </div>
-                        <DatasetStatistics datasetInfo={DATASETINFO}/>
-                    </div>
-                </div>
-                <SequencesStatistics 
-                    dataset = {DATASET}
-                    nombreSequences={DATASETINFO.global.num_activities}
-                    moyActivitesSequence={DATASETINFO.global.avg_length}
-                    dureeMoy={DATASETINFO.duration.avg}
-                    nombreTrous={DATASETINFO.missing.total_gaps}
-                />
-            </div>
-            <div className="d-flex justify-content-end mt-4">
-                <button 
-                    className="btn-return px-5 py-2 text-black"
-                    onClick={handlePreviousPage}
-                    style={{
-                        backgroundColor: "#858494",
-                        borderColor: "#858494",
-                        cursor: "pointer",
-                    }}
-                >
-                    ← Retour
-                </button>
-                <button 
-                    className="btn-next px-5 py-2 text-white"
-                    onClick={handleNextPage}
-                    style={{
-                        backgroundColor: "#4f46e5",
-                        borderColor: "#4f46e5",
-                        cursor: "pointer",
-                    }}
-                >
-                    Choisir la stratégie de gestion des gaps →
-                </button>
-            </div>
-=======
   if (loading) {
     return (
       <div className="card border-0 shadow-sm" style={{ borderRadius: 12 }}>
         <div className="card-body p-5 text-center">
           <div className="spinner-border text-primary" role="status" />
           <p className="mt-3 text-muted">Loading statistics...</p>
->>>>>>> 6aa9fe3f32b22ce48e3d636566bcab17893dc74a
         </div>
       </div>
     );

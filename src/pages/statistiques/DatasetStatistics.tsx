@@ -35,51 +35,6 @@ function DatasetStatistics({ datasetInfo }: DatasetStatisticsProps) {
     <DurationStats key={durationLabels[i]} duree={durationLabels[i]} tempsDuree={v} />
   ));
 
-<<<<<<< HEAD
-    return(
-        <div className="part-body-stats">
-            <div className="row">
-                {listeOverallStats}
-            </div>
-            <div className="border rounded">
-                <h5 className="fw-bold mb-1">Durées des séquences</h5>
-                <div className="d-flex justify-content-between">
-                    {listeDurationStats}
-                </div>
-            </div>
-            <div 
-                id="div-stats-dataset-trous" 
-                className="border rounded" 
-                style={{
-                    backgroundColor: "#f8d3d3",
-                    borderColor: "#f8c3c3"
-                }}
-            >
-                <h5 className="fw-bold mb-1">
-                    <InformationIcon/>
-                    Données Manquantes (Trous)
-                </h5>
-                <div className="d-flex justify-content-between">
-                    {listeMissingStats}
-                </div>
-                <div className="stats-dataset-trous-impact">
-                    <p>
-                        <strong>Impact :</strong>
-                        Les données manquantes représentent {datasetInfo.missing.percentage_missing_activities}% de toutes les activités.
-                        Il est recommandé de définir une stratégie de gestion des trous.
-                    </p>
-                </div>
-            </div>
-            <div className="border rounded">
-                <BarsChart dataset={datasetInfo.activities.distribution}/>
-            </div>
-            <div className="border rounded">
-                <h5 className="fw-bold mb-1">Détails des activités présentes</h5>
-                <div className="row">
-                    {listeDetailsStats}
-                </div>
-            </div>
-=======
   const gapValues = [
     datasetInfo.missing.total_gaps,
     datasetInfo.missing.sequences_with_gaps,
@@ -127,7 +82,6 @@ function DatasetStatistics({ datasetInfo }: DatasetStatisticsProps) {
             <strong>{datasetInfo.missing.percentage_missing_activities.toFixed(2)}%</strong>{' '}
             of all activities. Consider defining a gap handling strategy.
           </p>
->>>>>>> 6aa9fe3f32b22ce48e3d636566bcab17893dc74a
         </div>
       )}
 

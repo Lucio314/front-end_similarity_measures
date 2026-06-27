@@ -15,29 +15,6 @@ function DataPage({ onNext }: DataPageProps) {
 
   const canProceed = files.length > 0 || exampleLoaded;
 
-<<<<<<< HEAD
-  const handleNextPage = () => {
-    const divDataPage = document.getElementById("data-card")
-    const divOntologyPage = document.getElementById("ontology-card")
-    /*const divStatsPage = document.getElementById("stats-card")*/
-    /*const divMissingsPage = document.getElementById("missings-card")*/
-    /*const divPatternPage = document.getElementById("pattern-card")*/
-    /*const divMethodPage = document.getElementById("method-card")*/
-    /*const divParameterPage = document.getElementById("parameter-card")*/
-    /*const divResultsPage = document.getElementById("results-card")*/
-    divDataPage.hidden = true
-    divOntologyPage.hidden = false
-    /*divStatsPage.hidden = false*/
-    /*divMissingsPage.hidden = false*/
-    /*divPatternPage.hidden = false*/
-    /*divMethodPage.hidden = false*/
-    /*divParameterPage.hidden = false*/
-    /*divResultsPage.hidden = false*/
-    onNext()
-  }
-
-=======
->>>>>>> 6aa9fe3f32b22ce48e3d636566bcab17893dc74a
   return (
     <div className="card border-0 shadow-sm" style={{ borderRadius: 12 }}>
       <div className="card-body p-5">
