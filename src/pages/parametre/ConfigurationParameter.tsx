@@ -18,80 +18,53 @@ const PARAMS : Array<ParamsProps> = [
         paramValue: [""],
     },
     {
-        nomParam: "position_weight",
-        paramTitre: "Poids de la position (CED)",
+        nomParam: "time_window",
+        paramTitre: "Fenêtre temporelle (FTH, RFTH)",
+        paramValue: [" min"],
+    },
+    {
+        nomParam: "duration_threshold",
+        paramTitre: "λ - Seuil de comparabilité (RFTH)",
+        paramValue: [" min"],
+    },
+    {
+        nomParam: "agg",
+        paramTitre: "Agrégation (FTH, RFTH)",
         paramValue: [""],
     },
     {
-        nomParam: "semantic_weight",
-        paramTitre: "Poids sémantique (CED)",
+        nomParam: "beta",
+        paramTitre: "β - Poids sémantique (CED)",
         paramValue: [""],
     },
-    {
-        nomParam: "fuzzy_window",
-        paramTitre: "Fenêtre floue (FTH, FTH-T, RFTH)",
-        paramValue: ["%"],
-    },
-    {
-        nomParam: "alignment_strategy",
-        paramTitre: "Stratégie d'alignement (FTH-T)",
-        paramValue: [""],
-    },
-    {
-        nomParam: "lambda",
-        paramTitre: "λ (Lambda) - Seuil de comparabilité (RFTH)",
-        paramValue: [""]
-    },
-    {
-        nomParam: "warping_window",
-        paramTitre: "Fenêtre de warping (DTW)",
-        paramValue: ["positions"]
-    },
-    {
-        nomParam: "transition_threshold",
-        paramTitre: "Seuil de transition (DHD)",
-        paramValue: [""]
-    }
 ]
-//nomParam dans PARAMS est simplement un repère visuel pour nous, va sans dpute être modif plus tard
+
 interface ConfigurationParameterProps{
     nomParam: string;
     listeParametres: Array<ListParametersProps>;
 }
 
 function ConfigurationParameter({nomParam, listeParametres} : ConfigurationParameterProps){
-    let index = 0
-    for(let i=0; i<listeParametres.length; i++){
-        if(nomParam === listeParametres[i].nomParam){
-            index = i
-            break
-        }
+    const param = PARAMS.find(p => p.nomParam === nomParam)
+    const lp = listeParametres.find(l => l.nomParam === nomParam)
+    if (!param || !lp) return null;
+
+    if (nomParam === "agg") {
+        const aggOptions = ["max", "min"]
+        return (
+            <div className="param-config-item">
+                <p>{param.paramTitre}</p>
+                <p>{aggOptions[lp.getter]}</p>
+            </div>
+        )
     }
 
-    if(nomParam === "alignment_strategy"){
-        const paramMenuSelect : Array<string> = ["exhaustive", "centered", "greedy"]
-        return(
-            <div className="">
-                <p className="">
-                    {PARAMS[index].paramTitre}
-                </p> {/* Pas de problème ici, PARAMS et param ont le même nombre d'éléments dans le même ordre */}
-                <p className="">
-                    {paramMenuSelect[listeParametres[index].getter]} {PARAMS[index].paramValue}
-                </p>
-            </div>
-        )
-    }else{
-        return(
-            <div className="">
-                <p className="">
-                    {PARAMS[index].paramTitre}
-                </p> {/* Pas de problème ici, PARAMS et param ont le même nombre d'éléments dans le même ordre */}
-                <p className="">
-                    {listeParametres[index].getter} {PARAMS[index].paramValue}
-                </p>
-            </div>
-        )
-    }
+    return(
+        <div className="param-config-item">
+            <p>{param.paramTitre}</p>
+            <p>{lp.getter}{param.paramValue[0]}</p>
+        </div>
+    )
 }
 
 export default ConfigurationParameter

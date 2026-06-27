@@ -5,31 +5,15 @@ import ConfigurationParameter from './ConfigurationParameter';
 const PARAMETRES = [
     {
         nomMethode: "CED",
-        parametres: ["position_weight", "semantic_weight"]
+        parametres: ["beta"]
     },
     {
         nomMethode: "FTH",
-        parametres: ["fuzzy_window"]
-    },
-    {
-        nomMethode: "FTH-T",
-        parametres: ["fuzzy_window", "alignment_strategy"]
+        parametres: ["time_window", "agg"]
     },
     {
         nomMethode: "RFTH",
-        parametres: ["lambda",  "fuzzy_window"]
-    },
-    {
-        nomMethode: "DTW",
-        parametres: ["warping_window"]
-    },
-    {
-        nomMethode: "HD",
-        parametres: []
-    },
-    {
-        nomMethode: "DHD",
-        parametres: ["transition_threshold"]
+        parametres: ["time_window", "duration_threshold", "agg"]
     }
 ]
 
@@ -54,7 +38,7 @@ function ConfigurationsParameter({listeParametres, nomMethode} : ConfigurationPa
                 <GreenCheckIcon/>
                 Configuration actuelle
             </h4>
-            <div className="d-flex justify-content-between">
+            <div className="d-flex flex-wrap gap-4 mt-2">
                 <ConfigurationParameter nomParam="K" listeParametres={listeParametres}/>
                 <ConfigurationParameter nomParam="Similarite" listeParametres={listeParametres}/>
                 {listConfigParam}

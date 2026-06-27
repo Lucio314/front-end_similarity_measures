@@ -5,31 +5,15 @@ import MenuSelectParameter from './MenuSelectParameter';
 const PARAMETRES = [
     {
         nomMethode: "CED",
-        parametres: ["position_weight", "semantic_weight"]
+        parametres: ["beta"]
     },
     {
         nomMethode: "FTH",
-        parametres: ["fuzzy_window"]
-    },
-    {
-        nomMethode: "FTH-T",
-        parametres: ["fuzzy_window", "alignment_strategy"]
+        parametres: ["time_window", "agg"]
     },
     {
         nomMethode: "RFTH",
-        parametres: ["lambda",  "fuzzy_window",  "semantic_measure"]
-    },
-    {
-        nomMethode: "DTW",
-        parametres: ["warping_window"]
-    },
-    {
-        nomMethode: "HD",
-        parametres: []
-    },
-    {
-        nomMethode: "DHD",
-        parametres: ["transition_threshold"]
+        parametres: ["time_window", "duration_threshold", "agg"]
     }
 ]
 
@@ -46,7 +30,7 @@ function ParametreSliders({listeParametres, nomMethode} : ParametreSlidersProps)
         if(methode.nomMethode === nomMethode && methode.parametres.length !== 0){
             for(let i = 0; i < methode.parametres.length; i++){
                 for(let j = 0; j<listeParametres.length; j++){
-                    if(methode.parametres[i] === listeParametres[j].nomParam && methode.parametres[i] === "alignment_strategy"){
+                    if(methode.parametres[i] === listeParametres[j].nomParam && methode.parametres[i] === "agg"){
                         parametre.push(
                             <MenuSelectParameter
                                 value={listeParametres[j].getter}

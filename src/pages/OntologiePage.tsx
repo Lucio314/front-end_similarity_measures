@@ -84,16 +84,24 @@ function TreeLegend() {
 // ── Heatmap de la matrice Wu-Palmer ───────────────────────────────────────────
 
 function heatmapColor(value: number): string {
-  // 0 = blanc, 1 = indigo foncé
-  const r = Math.round(255 - value * (255 - 79));
-  const g = Math.round(255 - value * (255 - 70));
-  const b = Math.round(255 - value * (255 - 229));
-  return `rgb(${r},${g},${b})`;
+  if (value >= 1)    return "#16a34a"; // vert foncé — Identique
+  if (value >= 0.67) return "#4ade80"; // vert clair — Forte
+  if (value >= 0.50) return "#facc15"; // jaune — Bonne
+  if (value >= 0.33) return "#fb923c"; // orange — Modérée
+  return "#f87171";                    // rouge — Faible
 }
 
 function textColor(value: number): string {
-  return value > 0.55 ? "#fff" : "#1e293b";
+  return value >= 0.67 || value < 0.1 ? "#fff" : "#1e293b";
 }
+
+const MATRIX_LEGEND = [
+  { label: "Faible (<0.33)",    color: "#f87171" },
+  { label: "Modérée (0.33-0.5)", color: "#fb923c" },
+  { label: "Bonne (0.5-0.67)",  color: "#facc15" },
+  { label: "Forte (0.67-1)",    color: "#4ade80" },
+  { label: "Identique (1)",     color: "#16a34a" },
+];
 
 interface WuPalmerMatrixViewProps {
   matrix: WuPalmerMatrix;
@@ -149,12 +157,14 @@ function WuPalmerMatrixView({ matrix }: WuPalmerMatrixViewProps) {
         </tbody>
       </table>
 
-      {/* Légende dégradé */}
-      <div className="d-flex align-items-center gap-2 mt-2">
-        <span style={{ fontSize: 11, color: "#94a3b8" }}>0</span>
-        <div style={{ flex: 1, height: 8, borderRadius: 4, background: "linear-gradient(to right, #ffffff, #4f46e5)", border: "1px solid #e2e8f0" }} />
-        <span style={{ fontSize: 11, color: "#94a3b8" }}>1</span>
-        <span style={{ fontSize: 11, color: "#64748b", marginLeft: 8 }}>Similarité Wu-Palmer</span>
+      {/* Légende discrète */}
+      <div className="d-flex flex-wrap gap-3 mt-2">
+        {MATRIX_LEGEND.map(({ label, color }) => (
+          <div key={label} className="d-flex align-items-center gap-1">
+            <span style={{ display: "inline-block", width: 12, height: 12, borderRadius: 2, backgroundColor: color, flexShrink: 0 }} />
+            <span style={{ fontSize: 11, color: "#64748b" }}>{label}</span>
+          </div>
+        ))}
       </div>
     </div>
   );
@@ -256,6 +266,16 @@ function OntologiePage({ onNext }: OntologiePageProps) {
           <p className="text-muted mb-0">Hiérarchie sémantique utilisée pour le calcul de similarité</p>
         </div>
 
+        {/* À quoi sert l'ontologie ? */}
+        <div className="rounded p-3 mb-4" style={{ backgroundColor: "#eff6ff", border: "1px solid #bfdbfe" }}>
+          <p className="fw-semibold mb-1" style={{ fontSize: 13, color: "#1d4ed8" }}>À quoi sert l'ontologie ?</p>
+          <p className="mb-0" style={{ fontSize: 13, color: "#1e40af" }}>
+            Elle permet aux algorithmes de comprendre que "marcher" et "vélo" sont plus similaires
+            entre eux (tous deux sous "human_power") qu'avec "bus" (qui est sous "motorized").
+            Cela améliore considérablement la qualité de la recherche sémantique.
+          </p>
+        </div>
+
         {/* KPI */}
         <div className="row g-3 mb-4">
           <div className="col-4">
@@ -314,34 +334,14 @@ function OntologiePage({ onNext }: OntologiePageProps) {
             )}
           </div>
 
-          <div className="row g-3">
-            <div className="col-md-4">
-              <div className="border rounded p-3 h-100">
-                <div className="fw-semibold mb-1" style={{ fontSize: 13, color: "#4f46e5" }}>depth(LCS)</div>
-                <div style={{ fontSize: 12, color: "#64748b" }}>
-                  Profondeur de l'ancêtre commun le plus proche (Least Common Subsumer).
-                  Plus il est profond dans l'arbre, plus les activités sont sémantiquement proches.
-                </div>
-              </div>
-            </div>
-            <div className="col-md-4">
-              <div className="border rounded p-3 h-100">
-                <div className="fw-semibold mb-1" style={{ fontSize: 13, color: "#0891b2" }}>depth(a₁), depth(a₂)</div>
-                <div style={{ fontSize: 12, color: "#64748b" }}>
-                  Profondeurs individuelles de chaque activité dans la hiérarchie, mesurées depuis la racine.
-                </div>
-              </div>
-            </div>
-            <div className="col-md-4">
-              <div className="border rounded p-3 h-100">
-                <div className="fw-semibold mb-1" style={{ fontSize: 13, color: "#059669" }}>
-                  Plage : [{semanticMeasure ? semanticMeasure.range[0] : 0}, {semanticMeasure ? semanticMeasure.range[1] : 1}]
-                </div>
-                <div style={{ fontSize: 12, color: "#64748b" }}>
-                  Valeur minimale = aucun lien sémantique. Valeur maximale = activité identique (diagonale).
-                </div>
-              </div>
-            </div>
+          {/* Principe de fonctionnement */}
+          <div className="rounded p-3" style={{ backgroundColor: "#f5f3ff", border: "1px solid #ddd6fe" }}>
+            <p className="fw-semibold mb-2" style={{ fontSize: 13, color: "#6d28d9" }}>Principe de fonctionnement :</p>
+            <ol className="mb-0 ps-3" style={{ fontSize: 13, color: "#334155" }}>
+              <li className="mb-1">On cherche l'ancêtre commun le plus proche de deux activités dans l'arbre</li>
+              <li className="mb-1">Plus cet ancêtre est profond dans l'arbre, plus les activités sont similaires</li>
+              <li>La similarité est normalisée entre 0 (très différent) et 1 (identique)</li>
+            </ol>
           </div>
         </div>
 
@@ -363,6 +363,16 @@ function OntologiePage({ onNext }: OntologiePageProps) {
           {!wupalmerLoading && wupalmer && (
             <WuPalmerMatrixView matrix={wupalmer} />
           )}
+        </div>
+
+        {/* Exemple d'interprétation */}
+        <div className="rounded p-3 mb-4" style={{ backgroundColor: "#f0fdf4", border: "1px solid #bbf7d0" }}>
+          <p className="fw-semibold mb-2" style={{ fontSize: 13, color: "#15803d" }}>Exemple d'interprétation :</p>
+          <ul className="mb-0 ps-3" style={{ fontSize: 13, color: "#166534" }}>
+            <li className="mb-1">"marcher" et "vélo" ont une similarité élevée (~0.67) car ils partagent "human_power"</li>
+            <li className="mb-1">"marcher" et "bus" ont une similarité plus faible (~0.5) car ils sont sous "moving" mais dans des branches différentes</li>
+            <li>"travail" et "sport" ont une faible similarité car ils sont sous "stop" mais dans des branches différentes</li>
+          </ul>
         </div>
 
         {/* Bouton suivant */}

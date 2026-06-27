@@ -5,15 +5,15 @@ import type { ParamsProps } from "../../types"
 
 const PARAM : ParamsProps =
     {
-        param: "alignment_strategy",
-        nomClasse: "param-slider-alignment-strategy",
-        paramTitre: "Stratégie d'alignement (FTH-T)",
-        paramValue: ["exhaustive", "centered", "greedy"],
+        param: "agg",
+        nomClasse: "param-slider-agg",
+        paramTitre: "Agrégation (FTH, RFTH)",
+        paramValue: ["max", "min"],
         paramValueMax: -1,
         paramValueMin: -1,
         paramValuePas: -1,
-        paramLegend: ["Comment aligner les séquences lors de la troncature"],
-        paramInfo: "Pour FTH-T. \"exhaustive\" teste tous les alignements possibles, \"centered\" aligne au centre, \"greedy\" utilise une heuristique rapide."
+        paramLegend: ["Fonction pour symétriser FTH : max retient la plus grande similarité, min la plus petite"],
+        paramInfo: "Pour FTH et RFTH. \"max\" retient la similarité maximale (plus permissif), \"min\" retient la minimale (plus strict). Recommandé: max."
     }
 
 interface MenuSelectParameterProps{

@@ -8,7 +8,7 @@ interface RFTHParameterProps{
 function RFTHParameter({RFTHIsSelected} : RFTHParameterProps){
     if(RFTHIsSelected){
         return (
-            <div id="id-param-rfth" className="param-rfth" hidden>
+            <div className="param-rfth">
                 <h3 className="h3-title">
                     <InformationIcon/>
                     Paramètres spécifiques RFTH

@@ -8,7 +8,7 @@ const PARAMS : Array<ParamsProps> = [
         param: "K",
         nomClasse: "param-slider-k", 
         paramTitre: "K - Nombre de résultats",
-        paramValue: ["résultats"],
+        paramValue: [" résultats"],
         paramValueMax: 50,
         paramValueMin: 1,
         paramValuePas: 1,
@@ -27,70 +27,37 @@ const PARAMS : Array<ParamsProps> = [
         paramInfo: "Une valeur de 0.5 signifie que seules les séquences avec au moins 50% de similarité seront retournées. Plus le seuil est élevé, plus les résultats seront stricts."
     },
     {
-        param: "position_weight",
-        nomClasse: "param-slider-position-weight",
-        paramTitre: "Poids de la position (CED)",
-        paramValue: [""],
-        paramValueMax: 1,
-        paramValueMin: 0,
-        paramValuePas: 0.05,
-        paramLegend: ["0", "Importance de l'écart de position entre les activités", "1"],
-        paramInfo: "Pour CED. Contrôle l'impact de la différence de position. 0 = ignore la position, 1 = position très importante."
-    },
-    {
-        param: "semantic_weight",
-        nomClasse: "param-slider-semantic-weight",
-        paramTitre: "Poids sémantique (CED)",
-        paramValue: [""],
-        paramValueMax: 1,
-        paramValueMin: 0,
-        paramValuePas: 0.05,
-        paramLegend: ["0", "Importance de la similarité sémantique", "1"],
-        paramInfo: "Pour CED. Contrôle l'importance de la similarité sémantique via l'ontologie. 0 = ignore la sémantique, 1 = sémantique très importante."
-    },
-    {
-        param: "fuzzy_window",
-        nomClasse: "param-slider-fuzzy-window",
-        paramTitre: "Fenêtre floue (FTH, FTH-T, RFTH)",
-        paramValue: ["%"],
-        paramValueMax: 100,
-        paramValueMin: 10,
+        param: "time_window",
+        nomClasse: "param-slider-time-window",
+        paramTitre: "Fenêtre temporelle (FTH, RFTH)",
+        paramValue: [" min"],
+        paramValueMax: 240,
+        paramValueMin: 5,
         paramValuePas: 5,
-        paramLegend: ["10 %", "Pourcentage de la longueur de séquence pour la fenêtre floue", "100 %"],
-        paramInfo: "Pour FTH et RFTH. Définit la fenêtre dans laquelle on considère les activités pour la similarité temporelle. 50% = on considère les activités dans la moitié de la séquence normalisée."
+        paramLegend: ["5 min", "Tolérance temporelle pour comparer les activités", "240 min"],
+        paramInfo: "Pour FTH et RFTH. Largeur de la fenêtre floue en minutes (unités originales du dataset). Ex: 60 min = les activités dans une fenêtre de 1h sont comparées."
     },
     {
-        param: "lambda",
-        nomClasse: "param-slider-lambda",
-        paramTitre: "λ (Lambda) - Seuil de comparabilité (RFTH)",
-        paramValue: [""],
+        param: "duration_threshold",
+        nomClasse: "param-slider-duration-threshold",
+        paramTitre: "λ - Seuil de comparabilité (RFTH)",
+        paramValue: [" min"],
         paramValueMax: 240,
         paramValueMin: 10,
         paramValuePas: 10,
-        paramLegend: ["10 min", "Différence maximale de durée totale pour comparer deux séquences", "240 min"],
-        paramInfo: "Pour RFTH uniquement. Si la différence de durée totale entre deux séquences dépasse λ minutes, elles sont considérées non comparables. Recommandé: 60 minutes."
+        paramLegend: ["10 min", "Différence max de durée totale pour comparer deux séquences", "240 min"],
+        paramInfo: "Pour RFTH uniquement. Si la différence de durée totale entre deux séquences dépasse ce seuil, elles sont considérées non comparables. Recommandé: 60 min."
     },
     {
-        param: "warping_window",
-        nomClasse: "param-slider-warping-window",
-        paramTitre: "Fenêtre de warping (DTW)",
-        paramValue: ["positions"],
-        paramValueMax: 50,
-        paramValueMin: 1,
-        paramValuePas: 1,
-        paramLegend: ["1 positions", "Quelle flexibilité permettre dans l'alignement temporel ?", "50 positions"],
-        paramInfo: "Pour DTW uniquement. Une valeur plus élevée permet plus de flexibilité dans l'alignement des séquences, mais augmente le temps de calcul. Recommandé: 10-20% de la longueur moyenne."
-    },
-    {
-        param: "transition_threshold",
-        nomClasse: "param-slider-transition-threshold",
-        paramTitre: "Seuil de transition (DHD)",
+        param: "beta",
+        nomClasse: "param-slider-beta",
+        paramTitre: "β - Poids sémantique (CED)",
         paramValue: [""],
         paramValueMax: 1,
         paramValueMin: 0,
         paramValuePas: 0.05,
-        paramLegend: ["0", "Probabilité minimale pour considérer une transition normale", "1"],
-        paramInfo: "Pour DHD. Seuil en dessous duquel une transition est considérée comme anormale. Plus bas = plus de détection d'anomalies."
+        paramLegend: ["0", "Importance de la similarité sémantique via l'ontologie", "1"],
+        paramInfo: "Pour CED. Contrôle l'importance de la similarité sémantique. 0 = ignore la sémantique, 1 = sémantique très importante."
     }
 ]
 

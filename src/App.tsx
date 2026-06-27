@@ -7,15 +7,16 @@ import DataPage from './pages/DataPage';
 import StatsPage from './pages/StatsPage';
 import OntologiePage from './pages/OntologiePage';
 import MissingsPage from './pages/MissingsPage';
-import PatternPage from './pages/PatternPage';
 import MethodPage from './pages/MethodPage';
 import ParameterPage from './pages/ParameterPage';
 import ResultsPage from './pages/ResultsPage';
 import { useAppContext } from './context/AppContext';
+import type { Method } from './api';
+import type { SearchConfig } from './types';
 
 function App() {
   const [currentStep, setCurrentStep] = useState<number>(1);
-  const { datasetId } = useAppContext();
+  useAppContext(); // contexte global (datasetId accede via useAppContext() dans chaque page)
 
   const next = () => setCurrentStep(s => s + 1);
   const back = () => setCurrentStep(s => s - 1);
@@ -23,6 +24,12 @@ function App() {
 
   // Step 3 (Ontology) passes hasGaps so App can skip step 4 if no gaps
   const [hasGaps, setHasGaps] = useState<boolean>(true);
+
+  // Méthode sélectionnée à MethodPage, transmise à ParameterPage et ResultsPage
+  const [selectedMethod, setSelectedMethod] = useState<Method | null>(null);
+
+  // Config de recherche (params + top_k + threshold) transmise par ParameterPage à ResultsPage
+  const [searchConfig, setSearchConfig] = useState<SearchConfig | null>(null);
 
   const handleStatsNext = (gaps: boolean) => {
     setHasGaps(gaps);
@@ -40,10 +47,9 @@ function App() {
       case 2: return <StatsPage onNext={handleStatsNext} />;
       case 3: return <OntologiePage onNext={handleOntologyNext} />;
       case 4: return <MissingsPage onNext={next} onBack={back} />;
-      case 5: return <PatternPage onNext={next} onBack={() => goTo(hasGaps ? 4 : 3)} />;
-      case 6: return <MethodPage onNext={next} onBack={back} />;
-      case 7: return <ParameterPage onNext={next} onBack={back} />;
-      case 8: return <ResultsPage onBackParameter={() => goTo(7)} onBackPattern={() => goTo(5)} />;
+      case 5: return <MethodPage onNext={next} onBack={back} onMethodSelect={setSelectedMethod} />;
+      case 6: return <ParameterPage onNext={next} onBack={back} selectedMethod={selectedMethod} onParamsChange={setSearchConfig} />;
+      case 7: return <ResultsPage onBackParameter={() => goTo(6)} onBackPattern={() => goTo(6)} selectedMethod={selectedMethod} searchConfig={searchConfig} />;
       default: return (
         <div className="card border-0 shadow-sm p-5 text-center" style={{ borderRadius: 12 }}>
           <p className="text-muted">Step {currentStep} — coming soon</p>

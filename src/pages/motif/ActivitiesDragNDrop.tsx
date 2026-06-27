@@ -29,6 +29,14 @@ function ActivitiesDragNDrop({
   const [dureeActivite, setDureeActivite] = useState<PatternActivitiesProps>(motif);
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable(motif);
 
+  // Synchronise la durée modifiée dans le tableau pattern du parent
+  // (sans ça, SequenceOverview lit toujours la durée initiale)
+  const setDureeActiviteAndSync: React.Dispatch<React.SetStateAction<PatternActivitiesProps>> = (val) => {
+    const next = typeof val === 'function' ? val(dureeActivite) : val;
+    setDureeActivite(next);
+    setPattern(prev => prev.map(a => a.id === motif.id ? next : a));
+  };
+
   const handleDelete = () => {
     setDureeMotif(Math.max(0, dureeMotif - dureeActivite.duration));
     setPattern(pattern.filter(a => a.id !== motif.id));
@@ -55,7 +63,7 @@ function ActivitiesDragNDrop({
               dureeMotif={dureeMotif}
               setDureeMotif={setDureeMotif}
               dureeActivite={dureeActivite}
-              setDureeActivite={setDureeActivite}
+              setDureeActivite={setDureeActiviteAndSync}
             />
             <span style={{ fontSize: 12 }}>min</span>
           </div>
