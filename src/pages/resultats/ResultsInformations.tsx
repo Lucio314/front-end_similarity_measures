@@ -1,84 +1,71 @@
-import ClockIcon from "../../components/icons/ClockIcon"
-import LengthIcon from "../../components/icons/LengthIcon"
-import TrophyIcon from "../../components/icons/TrophyIcon"
-import type { ResultsSummaryProps } from "../../types";
+import { useTranslation } from 'react-i18next';
+import type { ResultsSummaryProps } from '../../types';
 
-interface ResultsInformationsProps{
-    summary: ResultsSummaryProps;
+interface ResultsInformationsProps {
+  summary: ResultsSummaryProps;
 }
 
-function ResultsInformations({summary} : ResultsInformationsProps){
-    return ( 
-        <div className="container">
-            <div className="row">
-                <div 
-                    className="col border rounded"
-                    style={{
-                        borderColor: '#9c86ec',
-                        backgroundColor: '#fafafa'
-                    }}
-                >
-                    <div className="d-flex">
-                        <div className="align-self-center">
-                            <TrophyIcon/>
-                        </div>
-                        <div className="">
-                            <p className="">
-                                {summary.total_results}
-                            </p>
-                            <p className="">
-                                Résultats trouvés
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div 
-                    className="col border rounded"
-                    style={{
-                        borderColor: '#9c86ec',
-                        backgroundColor: '#fafafa'
-                    }}
-                >
-                    <div className="d-flex">
-                        <div className="align-self-center">
-                            <LengthIcon/>
-                        </div>
-                        <div className="">
-                            <p className="">
-                                {summary.best_score}%
-                            </p>
-                            <p className="">
-                                Meilleure similarité
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div 
-                    className="col border rounded"
-                    style={{
-                        borderColor: '#9c86ec',
-                        backgroundColor: '#fafafa'
-                    }}
-                >
-                    <div className="d-flex">
-                        <div className="align-self-center">
-                            <ClockIcon/>
-                        </div>
-                        <div className="">
-                            <p className="">
-                                {summary.avg_duration} min
-                            </p>
-                            <p className="">
-                                Durée moyenne
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+function scoreColor(s: number): string {
+  if (s >= 0.8) return '#198754';
+  if (s >= 0.5) return '#fd7e14';
+  return '#dc3545';
+}
+
+function ResultsInformations({ summary }: ResultsInformationsProps) {
+  const { t } = useTranslation();
+  const pct = (summary.best_score * 100).toFixed(0);
+  const color = scoreColor(summary.best_score);
+
+  return (
+    <div className="row g-3 mb-4">
+
+      {/* Nb résultats */}
+      <div className="col-md-4">
+        <div
+          className="border rounded p-3 text-center h-100"
+          style={{ borderColor: '#9c86ec', backgroundColor: '#f8f7ff' }}
+        >
+          <div style={{ fontSize: 36, fontWeight: 700, color: '#4f46e5', lineHeight: 1.1 }}>
+            {summary.total_results}
+          </div>
+          <div className="mt-1" style={{ fontSize: 13, color: '#555' }}>
+            {t('results.results_found')}
+          </div>
         </div>
-    )
+      </div>
+
+      {/* Meilleure similarité */}
+      <div className="col-md-4">
+        <div
+          className="border rounded p-3 text-center h-100"
+          style={{ borderColor: color, backgroundColor: color + '11' }}
+        >
+          <div style={{ fontSize: 36, fontWeight: 700, color, lineHeight: 1.1 }}>
+            {pct}%
+          </div>
+          <div className="mt-1" style={{ fontSize: 13, color: '#555' }}>
+            {t('results.best_score')}
+          </div>
+        </div>
+      </div>
+
+      {/* Durée moyenne */}
+      <div className="col-md-4">
+        <div
+          className="border rounded p-3 text-center h-100"
+          style={{ borderColor: '#9c86ec', backgroundColor: '#f8f7ff' }}
+        >
+          <div style={{ fontSize: 36, fontWeight: 700, color: '#4f46e5', lineHeight: 1.1 }}>
+            {summary.avg_duration}
+          </div>
+          <div className="mt-1" style={{ fontSize: 13, color: '#555' }}>
+            {t('results.avg_duration')}
+          </div>
+        </div>
+      </div>
+
+    </div>
+  );
 }
 
-//Faire le css
-
-export default ResultsInformations
+export default ResultsInformations;

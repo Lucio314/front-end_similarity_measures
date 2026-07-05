@@ -16,7 +16,6 @@ function InputNumber({dureeMotif, setDureeMotif, dureeActivite, setDureeActivite
 
     const handleOnChange = (e : React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => {
         if(isNaN(e.target.valueAsNumber) || e.target.valueAsNumber < 0){
-            console.log('bonjour')
             e.target.valueAsNumber = 0
         }
         setDureeActivite(
@@ -27,7 +26,6 @@ function InputNumber({dureeMotif, setDureeMotif, dureeActivite, setDureeActivite
                 duration: e.target.valueAsNumber
             }
         )
-        console.log(dureeActivite)
         newValue = dureeMotif - oldValue + e.target.valueAsNumber
         setDureeMotif(newValue)
         oldValue = e.target.valueAsNumber

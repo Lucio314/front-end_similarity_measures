@@ -48,7 +48,7 @@ export function buildOntologyColorMap(
   const map: Record<string, string> = {};
   const topLevelHues = [220, 270, 180, 140, 30, 0, 310, 60];
 
-  root.children.forEach((child, idx) => {
+  (root.children ?? []).forEach((child, idx) => {
     const hue = topLevelHues[idx % topLevelHues.length];
     assignColors(child, hue, 40, 60, map);
   });
@@ -64,8 +64,9 @@ function assignColors(
   map: Record<string, string>
 ): void {
   map[node.name] = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
-  const step = (90 - lightness) / Math.max(node.children.length, 1);
-  node.children.forEach((child, i) => {
+  const children = node.children ?? [];
+  const step = (90 - lightness) / Math.max(children.length, 1);
+  children.forEach((child, i) => {
     assignColors(child, hue, saturation + 10, lightness + step * (i + 1), map);
   });
 }
@@ -96,25 +97,7 @@ export interface EmojisProps {
 export const EMOJIS: EmojisProps[] = [];
 
 // Activity labels use the first letter of the activity name as fallback (see PatternRepr, SeqRepr, etc.)
-export const ACTIVITY_EMOJI_MAP: Record<string, string> = {
-  // feuilles ontologie SIDOS
-  walk:         '🚶',
-  bike:         '🚴',
-  car:          '🚗',
-  pts:          '🚌',
-  leisure:      '🎉',
-  shopping:     '🛒',
-  work:         '💼',
-  studying:     '📚',
-  home:         '🏠',
-  // nœuds intermédiaires pouvant apparaître comme activité
-  moving:       '➡️',
-  stop:         '⏸️',
-  human_power:  '💪',
-  motorized:    '⚙️',
-  fun:          '😄',
-  serious:      '🎯',
-};
+export const ACTIVITY_EMOJI_MAP: Record<string, string> = {};
 
 // ── Methods ───────────────────────────────────────────────────────────────────
 

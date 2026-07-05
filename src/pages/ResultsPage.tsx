@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { closestCorners, DndContext } from '@dnd-kit/core';
 import { arrayMove } from '@dnd-kit/sortable';
 import { computeSimilarity, getOntology, getDatasetStats } from '../api';
@@ -62,6 +63,7 @@ function adaptResponse(r: SimilarityResponse): { pattern: ResultsPatternProps; r
 }
 
 function ResultsPage({ onBackParameter, onBackPattern, selectedMethod, searchConfig }: ResultsPageProps) {
+    const { t } = useTranslation();
     const { datasetId } = useAppContext();
 
     // Pattern builder state (same as old PatternPage)
@@ -80,21 +82,21 @@ function ResultsPage({ onBackParameter, onBackPattern, selectedMethod, searchCon
     useEffect(() => {
         if (!datasetId) { setLoadingActivities(false); return; }
 
-        Promise.all([getDatasetStats(datasetId), getOntology()])
+        Promise.all([getDatasetStats(datasetId), getOntology(datasetId)])
             .then(([stats, ontology]) => {
                 const datasetNames = new Set(stats.activities.distribution.map((a: {name: string}) => a.name));
                 const dfsOrder = dfsLeaves(ontology as unknown as OntologyProps)
-                    .filter(n => datasetNames.has(n) && n !== 'missing');
+                    .filter(n => datasetNames.has(n));
                 const extra = stats.activities.distribution
                     .map((a: {name: string}) => a.name)
-                    .filter((n: string) => n !== 'missing' && !dfsOrder.includes(n));
+                    .filter((n: string) => !dfsOrder.includes(n));
                 setActivityNames([...dfsOrder, ...extra]);
                 setColorMap(buildOntologyColorMap(ontology as unknown as OntologyProps));
             })
             .catch(() => {
                 if (datasetId) {
                     getDatasetStats(datasetId).then((stats: { activities: { distribution: { name: string }[] } }) => {
-                        setActivityNames(stats.activities.distribution.map((a: {name: string}) => a.name).filter((n: string) => n !== 'missing'));
+                        setActivityNames(stats.activities.distribution.map((a: {name: string}) => a.name));
                     }).catch(() => {});
                 }
             })
@@ -145,10 +147,10 @@ function ResultsPage({ onBackParameter, onBackPattern, selectedMethod, searchCon
         <div className="card border-0 shadow-sm" style={{ borderRadius: 12 }}>
             <div className="card-body p-5">
                 <div className="text-center mb-4">
-                    <h2 className="fw-bold mb-1">Resultats de la recherche</h2>
+                    <h2 className="fw-bold mb-1">{t('results.title')}</h2>
                     <p className="text-muted mb-0">
-                        Construisez votre motif puis lancez la recherche
-                        {selectedMethod && <> — methode <strong>{selectedMethod.label}</strong></>}
+                        {t('results.launch')}
+                        {selectedMethod && <> — {selectedMethod.label}</>}
                     </p>
                 </div>
 
@@ -157,7 +159,7 @@ function ResultsPage({ onBackParameter, onBackPattern, selectedMethod, searchCon
                     {loadingActivities ? (
                         <div className="text-center py-3">
                             <div className="spinner-border spinner-border-sm text-primary" role="status" />
-                            <span className="ms-2 text-muted" style={{ fontSize: 13 }}>Chargement des activites...</span>
+                            <span className="ms-2 text-muted" style={{ fontSize: 13 }}>{t('results.loading_activities')}</span>
                         </div>
                     ) : (
                         <RangeActivities
@@ -172,10 +174,10 @@ function ResultsPage({ onBackParameter, onBackPattern, selectedMethod, searchCon
 
                     <div className="border rounded p-3" style={{ borderColor: '#e9eaee', backgroundColor: '#e9eaee' }}>
                         <div className="d-flex justify-content-between align-items-center mb-2">
-                            <h5 className="mb-0" style={{ fontSize: 15, color: '#272727' }}>Votre motif</h5>
+                            <h5 className="mb-0" style={{ fontSize: 15, color: '#272727' }}>{t('results.your_pattern')}</h5>
                             {pattern.length > 0 && (
                                 <span className="text-muted" style={{ fontSize: 13 }}>
-                                    Duree totale : <strong>{totalDuration} min</strong>
+                                    {t('results.total_duration')} : <strong>{totalDuration} {t('results.min')}</strong>
                                 </span>
                             )}
                         </div>
@@ -183,8 +185,8 @@ function ResultsPage({ onBackParameter, onBackPattern, selectedMethod, searchCon
                         {pattern.length === 0 && (
                             <div className="text-center py-3 text-muted">
                                 <PlusIcon />
-                                <p className="mb-0">Aucune activite ajoutee</p>
-                                <p style={{ fontSize: 13 }}>Cliquez sur les activites ci-dessus pour construire votre motif</p>
+                                <p className="mb-0">{t('results.no_activities')}</p>
+                                <p style={{ fontSize: 13 }}>{t('results.click_hint')}</p>
                             </div>
                         )}
 
@@ -207,7 +209,7 @@ function ResultsPage({ onBackParameter, onBackPattern, selectedMethod, searchCon
                 {/* Avertissement config manquante */}
                 {(!datasetId || !selectedMethod || !searchConfig) && (
                     <p className="text-warning mb-2" style={{ fontSize: 12 }}>
-                        Dataset ou configuration manquante — revenez aux etapes precedentes.
+                        {t('results.config_missing')}
                     </p>
                 )}
 
@@ -223,7 +225,7 @@ function ResultsPage({ onBackParameter, onBackPattern, selectedMethod, searchCon
                         disabled={!canLaunch || loading}
                         onClick={handleLaunch}
                     >
-                        {loading ? 'Calcul en cours...' : 'Lancer la recherche TOP-K'}
+                        {loading ? t('results.launching') : t('results.launch')}
                     </button>
                 </div>
 
@@ -231,7 +233,7 @@ function ResultsPage({ onBackParameter, onBackPattern, selectedMethod, searchCon
                 {loading && (
                     <div className="text-center py-4">
                         <div className="spinner-border text-primary" role="status" />
-                        <p className="mt-2 text-muted">Calcul des similarites...</p>
+                        <p className="mt-2 text-muted">{t('results.computing')}</p>
                     </div>
                 )}
 
@@ -242,19 +244,26 @@ function ResultsPage({ onBackParameter, onBackPattern, selectedMethod, searchCon
                 {adapted && !loading && (
                     <>
                         <hr className="my-4" />
-                        <div className="text-center mb-3">
-                            <h5 className="fw-bold">
-                                Top {response!.meta.count} sequences les plus similaires
+                        <div className="mb-3">
+                            <h5 className="fw-bold mb-0">
+                                {t('results.top_k_title', { k: response!.meta.count })}
                             </h5>
+                            <p className="text-muted mb-0" style={{ fontSize: 13 }}>
+                                {t('results.top_k_subtitle')}
+                            </p>
                         </div>
-                        <SearchedPattern pattern={adapted.pattern} method={response!.meta.method} />
+                        <SearchedPattern
+                            pattern={adapted.pattern}
+                            method={response!.meta.method}
+                            colorMap={colorMap}
+                        />
                         <ResultsInformations summary={response!.summary} />
-                        <ResultsSequences results={adapted.results} />
+                        <ResultsSequences results={adapted.results} colorMap={colorMap} />
                     </>
                 )}
 
                 {launched && !loading && !adapted && !error && (
-                    <div className="text-center text-muted py-3">Aucun resultat avec ces parametres.</div>
+                    <div className="text-center text-muted py-3">{t('results.no_results')}</div>
                 )}
 
                 {/* Navigation */}
@@ -264,14 +273,14 @@ function ResultsPage({ onBackParameter, onBackPattern, selectedMethod, searchCon
                         onClick={onBackPattern}
                         style={{ backgroundColor: "#858494", cursor: "pointer" }}
                     >
-                        Nouvelle recherche
+                        {t('results.new_search')}
                     </button>
                     <button
                         className="btn-next px-5 py-2 text-white"
                         onClick={onBackParameter}
                         style={{ backgroundColor: "#4f46e5", cursor: "pointer" }}
                     >
-                        Ajuster les parametres
+                        {t('results.adjust_params')}
                     </button>
                 </div>
             </div>

@@ -1,41 +1,11 @@
-// BarsChart: activity distribution bar chart ordered by DFS ontology traversal.
-// Colors derived from ontology hierarchy.
-// Interactive ontology filter: click any node to show only its leaf activities.
-// Pie chart removed per supervisor feedback.
-
-import { useEffect, useState } from 'react';
-import {
-  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Cell, ResponsiveContainer
-} from 'recharts';
-import { getOntology } from '../../api';
-import type { OntologyNode } from '../../api';
+import { useTranslation } from 'react-i18next';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Cell, ResponsiveContainer } from 'recharts';
 import type { DataStatsProps } from '../../types';
-import { buildOntologyColorMap, dfsLeaves } from '../../types';
 
-interface BarsChartProps {
-  dataset: DataStatsProps[];
-}
+interface BarsChartProps { dataset: DataStatsProps[]; }
 
-// Returns all non-leaf nodes in DFS order (for the filter panel)
-function dfsInternalNodes(node: OntologyNode, depth = 0): { node: OntologyNode; depth: number }[] {
-  const hasChildren = node.children && node.children.length > 0;
-  const result: { node: OntologyNode; depth: number }[] = [];
-  if (hasChildren) {
-    result.push({ node, depth });
-    for (const child of node.children!) {
-      result.push(...dfsInternalNodes(child, depth + 1));
-    }
-  }
-  return result;
-}
+const PALETTE = ['#6366f1','#8b5cf6','#ec4899','#10b981','#f97316','#3b82f6','#14b8a6','#f59e0b','#ef4444','#84cc16'];
 
-// Returns leaf names under a given node
-function leavesUnder(node: OntologyNode): string[] {
-  if (!node.children || node.children.length === 0) return [node.name];
-  return node.children.flatMap(leavesUnder);
-}
-
-// Custom tooltip for the bar chart
 function CustomTooltip({ active, payload, label }: any) {
   if (!active || !payload?.length) return null;
   return (
@@ -47,155 +17,26 @@ function CustomTooltip({ active, payload, label }: any) {
 }
 
 function BarsChart({ dataset }: BarsChartProps) {
-  const [ontology, setOntology]           = useState<OntologyNode | null>(null);
-  const [colorMap, setColorMap]           = useState<Record<string, string>>({});
-  const [dfsOrder, setDfsOrder]           = useState<string[]>([]);
-  const [selectedNode, setSelectedNode]   = useState<OntologyNode | null>(null);
-  const [loading, setLoading]             = useState(true);
-
-  useEffect(() => {
-    getOntology()
-      .then(tree => {
-        setOntology(tree);
-        setColorMap(buildOntologyColorMap(tree));
-        setDfsOrder(dfsLeaves(tree));
-      })
-      .catch(() => {
-        // Fallback: use distribution order, no colors
-        setDfsOrder(dataset.map(d => d.name));
-      })
-      .finally(() => setLoading(false));
-  }, []);
-
-  // Build a lookup from name -> count
-  const countByName: Record<string, number> = {};
-  for (const d of dataset) countByName[d.name] = d.value;
-
-  // Which leaves to show: all or just those under selectedNode
-  const activeLeaves = selectedNode ? leavesUnder(selectedNode) : dfsOrder;
-
-  // Build sorted, filtered chart data
-  const chartData = activeLeaves
-    .filter(name => countByName[name] !== undefined)
-    .map(name => ({ name, value: countByName[name] }));
-
-  // All internal nodes for the filter panel
-  const filterNodes = ontology ? dfsInternalNodes(ontology) : [];
+  const { t } = useTranslation();
+  const chartData = [...dataset].sort((a, b) => b.value - a.value);
 
   return (
     <div className="border rounded p-4">
       <div className="d-flex justify-content-between align-items-center mb-3">
-        <h6 className="fw-semibold mb-0">Activity Distribution</h6>
-        <span className="text-muted" style={{ fontSize: 12 }}>
-          Ordered by ontology DFS &bull; colored by hierarchy
-        </span>
+        <h6 className="fw-semibold mb-0">{t('stats.activity_dist')}</h6>
+        <span className="text-muted" style={{ fontSize: 12 }}>{t('stats.ordered_by')}</span>
       </div>
-
-      {loading ? (
-        <div className="text-center py-3">
-          <div className="spinner-border spinner-border-sm text-primary" role="status" />
-        </div>
-      ) : (
-        <div className="row g-3">
-          {/* Ontology filter panel */}
-          {filterNodes.length > 0 && (
-            <div className="col-md-3">
-              <div className="border rounded p-2" style={{ backgroundColor: '#fafafa' }}>
-                <p className="text-muted mb-2" style={{ fontSize: 11 }}>Filter by concept:</p>
-
-                {/* "All" reset button */}
-                <button
-                  className="btn btn-sm w-100 mb-1 text-start"
-                  style={{
-                    fontSize: 12,
-                    backgroundColor: !selectedNode ? '#4f46e5' : 'transparent',
-                    color: !selectedNode ? '#fff' : '#334155',
-                    border: '1px solid',
-                    borderColor: !selectedNode ? '#4f46e5' : '#e2e8f0',
-                  }}
-                  onClick={() => setSelectedNode(null)}
-                >
-                  All activities
-                </button>
-
-                {filterNodes.map(({ node, depth }) => {
-                  const isSelected = selectedNode?.name === node.name;
-                  const bg = colorMap[node.name] ?? '#e0e7ff';
-                  return (
-                    <button
-                      key={node.name}
-                      className="btn btn-sm w-100 mb-1 text-start text-capitalize"
-                      style={{
-                        fontSize: 12,
-                        paddingLeft: 8 + depth * 12,
-                        backgroundColor: isSelected ? bg : 'transparent',
-                        color: isSelected ? '#1e293b' : '#475569',
-                        border: '1px solid',
-                        borderColor: isSelected ? bg : '#e2e8f0',
-                        fontWeight: isSelected ? 600 : 400,
-                      }}
-                      onClick={() => setSelectedNode(isSelected ? null : node)}
-                    >
-                      {depth > 0 && (
-                        <span style={{ color: '#94a3b8', marginRight: 4 }}>{'└'.padStart(depth * 2)}</span>
-                      )}
-                      {node.name}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-          )}
-
-          {/* Bar chart */}
-          <div className={filterNodes.length > 0 ? 'col-md-9' : 'col-12'}>
-            {chartData.length === 0 ? (
-              <p className="text-muted text-center py-4" style={{ fontSize: 13 }}>
-                No activities in this dataset match the selected concept.
-              </p>
-            ) : (
-              <>
-                <ResponsiveContainer width="100%" height={280}>
-                  <BarChart data={chartData} margin={{ top: 4, right: 8, left: 0, bottom: 40 }}>
-                    <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                    <XAxis
-                      dataKey="name"
-                      tick={{ fontSize: 11 }}
-                      angle={-35}
-                      textAnchor="end"
-                      interval={0}
-                    />
-                    <YAxis tick={{ fontSize: 11 }} width={35} />
-                    <Tooltip content={<CustomTooltip />} />
-                    <Bar dataKey="value" radius={[4, 4, 0, 0]}>
-                      {chartData.map((entry) => (
-                        <Cell
-                          key={entry.name}
-                          fill={colorMap[entry.name] ?? '#818cf8'}
-                        />
-                      ))}
-                    </Bar>
-                  </BarChart>
-                </ResponsiveContainer>
-
-                {/* Color legend */}
-                {selectedNode && (
-                  <p className="text-muted mt-1 text-center" style={{ fontSize: 11 }}>
-                    Showing {chartData.length} activit{chartData.length > 1 ? 'ies' : 'y'} under &quot;{selectedNode.name}&quot;
-                    {' '}&mdash;{' '}
-                    <button
-                      className="btn btn-link p-0 font-weight-medium "
-                      onClick={() => setSelectedNode(null)}
-                    >
-                      show all
-                    </button>
-                  </p>
-                )}
-              </>
-            )}
-          </div>
-        </div>
-      )}
+      <ResponsiveContainer width="100%" height={280}>
+        <BarChart data={chartData} margin={{ top: 4, right: 8, left: 0, bottom: 40 }}>
+          <CartesianGrid strokeDasharray="3 3" vertical={false} />
+          <XAxis dataKey="name" tick={{ fontSize: 11 }} angle={-35} textAnchor="end" interval={0} />
+          <YAxis tick={{ fontSize: 11 }} width={35} />
+          <Tooltip content={<CustomTooltip />} />
+          <Bar dataKey="value" radius={[4, 4, 0, 0]}>
+            {chartData.map((entry, i) => <Cell key={entry.name} fill={PALETTE[i % PALETTE.length]} />)}
+          </Bar>
+        </BarChart>
+      </ResponsiveContainer>
     </div>
   );
 }

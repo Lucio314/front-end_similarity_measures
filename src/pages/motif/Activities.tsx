@@ -31,10 +31,9 @@ function Activities({ emoji, pattern, setPattern, dureeMotif, setDureeMotif, col
       <button
         className="btn-activities btn rounded btn-lg btn-outline-primary w-100"
         onClick={handleClick}
-        style={{ backgroundColor: color ? color + '33' : undefined }}
+        style={{ backgroundColor: color ? color + '33' : undefined, borderColor: color ?? undefined }}
       >
-        <div className="text-center" style={{ fontSize: 28 }}>{emoji.emoji}</div>
-        <div className="text-center text-capitalize" style={{ fontSize: 12, color: '#5e5c5c' }}>
+        <div className="text-center text-capitalize fw-semibold" style={{ fontSize: 12, color: '#272727' }}>
           {emoji.emojiName}
         </div>
       </button>

@@ -55,7 +55,10 @@ function ActivitiesDragNDrop({
         <button className="btn btn-drag p-1" {...attributes} {...listeners}>
           <DragNDropIcon />
         </button>
-        <div className="text-center" style={{ fontSize: 26 }}>{motif.emoji}</div>
+        <div
+          className="rounded d-flex align-items-center justify-content-center flex-shrink-0"
+          style={{ width: 32, height: 32, backgroundColor: color ?? '#e9eaee' }}
+        />
         <div className="flex-grow-1">
           <div className="text-capitalize fw-semibold" style={{ fontSize: 13 }}>{motif.name}</div>
           <div className="d-flex align-items-center gap-1">
@@ -68,7 +71,7 @@ function ActivitiesDragNDrop({
             <span style={{ fontSize: 12 }}>min</span>
           </div>
         </div>
-        <button className="btn-trash btn p-1" onClick={handleDelete}>
+        <button className="btn-trash btn p-1" onClick={handleDelete} name="Supprimer" >
           <TrashBinIcon />
         </button>
       </div>

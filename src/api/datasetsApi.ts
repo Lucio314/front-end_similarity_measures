@@ -9,10 +9,17 @@ export async function getDatasets(): Promise<Dataset[]> {
 export async function uploadDataset(file: File): Promise<{ dataset_id: string; name: string; size: number }> {
   const formData = new FormData();
   formData.append("file", file);
-  const { data } = await apiClient.post("/api/datasets/upload", formData, {
-    headers: { "Content-Type": "multipart/form-data" },
-  });
-  return data;
+  try {
+    const { data } = await apiClient.post("/api/datasets/upload", formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+    return data;
+  } catch (err: unknown) {
+    // Extraire le message détaillé renvoyé par FastAPI (champ "detail")
+    const detail =
+      (err as { response?: { data?: { detail?: string } } })?.response?.data?.detail;
+    throw new Error(detail ?? "Erreur lors de l'upload du dataset.");
+  }
 }
 
 export async function loadDefaultDataset(): Promise<{ message: string }> {

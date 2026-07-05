@@ -1,9 +1,5 @@
-// MethodPage (step 6): horizontal carousel of similarity methods loaded from GET /api/methods/.
-// Hardcoded METHODS constant removed, replaced by API call.
-// Navigation via onNext/onBack props — no DOM manipulation.
-// Bootstrap carousel implemented with React state (no Bootstrap JS needed).
-
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { getMethods } from '../api';
 import type { Method } from '../api';
 
@@ -13,7 +9,6 @@ interface MethodPageProps {
   onMethodSelect: (method: Method) => void;
 }
 
-// Property badge
 function PropBadge({ label, value }: { label: string; value: boolean }) {
   return (
     <span
@@ -29,8 +24,8 @@ function PropBadge({ label, value }: { label: string; value: boolean }) {
   );
 }
 
-// Single method slide
 function MethodSlide({ method, selected, onSelect }: { method: Method; selected: boolean; onSelect: () => void }) {
+  const { t } = useTranslation();
   const [showDetails, setShowDetails] = useState(false);
 
   return (
@@ -45,70 +40,62 @@ function MethodSlide({ method, selected, onSelect }: { method: Method; selected:
       }}
       onClick={onSelect}
     >
-      {/* Header */}
       <div className="d-flex justify-content-between align-items-start mb-2">
         <div>
-          <span
-            className="badge mb-1"
-            style={{ backgroundColor: '#4f46e5', color: '#fff', fontSize: 12 }}
-          >
+          <span className="badge mb-1" style={{ backgroundColor: '#4f46e5', color: '#fff', fontSize: 12 }}>
             {method.name}
           </span>
           <h5 className="fw-bold mb-0" style={{ fontSize: 16 }}>{method.label}</h5>
         </div>
         {selected && (
           <span className="badge" style={{ backgroundColor: '#4f46e5', color: '#fff', fontSize: 11 }}>
-            Selected
+            {t('method.selected_badge')}
           </span>
         )}
       </div>
 
-      {/* Description */}
       <p className="text-muted mb-3" style={{ fontSize: 13 }}>{method.description}</p>
 
-      {/* Properties */}
       <div className="mb-3">
-        <PropBadge label="Symmetric"           value={method.properties.symmetry} />
-        <PropBadge label="Normalized"          value={method.properties.normalized} />
-        <PropBadge label="Metric"              value={method.properties.metric} />
-        <PropBadge label="Needs ontology"      value={method.properties.requires_ontology} />
-        <PropBadge label="Variable lengths"    value={method.properties.supports_different_lengths} />
+        <PropBadge label={t('method.symmetry')}              value={method.properties.symmetry} />
+        <PropBadge label={t('method.normalized')}            value={method.properties.normalized} />
+        <PropBadge label={t('method.metric')}                value={method.properties.metric} />
+        <PropBadge label={t('method.requires_ontology')}     value={method.properties.requires_ontology} />
+        <PropBadge label={t('method.supports_diff_lengths')} value={method.properties.supports_different_lengths} />
       </div>
 
-      {/* Wu-Palmer badge */}
       {method.semantic_measure && (
         <div className="mb-3">
           <span className="badge" style={{ backgroundColor: '#e0e7ff', color: '#4f46e5', fontSize: 11 }}>
-            Semantic: {method.semantic_measure.name}
+            {t('method.semantic_label')}: {method.semantic_measure.name}
           </span>
         </div>
       )}
 
-      {/* Show details toggle */}
       <button
         className="btn btn-sm btn-outline-secondary"
         style={{ fontSize: 12 }}
         onClick={e => { e.stopPropagation(); setShowDetails(v => !v); }}
       >
-        {showDetails ? 'Hide details' : 'Show details'}
+        {showDetails ? t('method.hide_details_btn') : t('method.show_details_btn')}
       </button>
 
       {showDetails && (
         <div className="mt-3 pt-2" style={{ borderTop: '1px solid #e2e8f0', fontSize: 13 }}
           onClick={e => e.stopPropagation()}>
           <div className="mb-2">
-            <strong>Principle:</strong>
+            <strong>{t('method.principle_label')} :</strong>
             <p className="text-muted mb-1" style={{ fontSize: 12 }}>{method.principle}</p>
           </div>
           <div className="row g-2">
             <div className="col-6">
-              <strong style={{ fontSize: 12 }}>Advantages</strong>
+              <strong style={{ fontSize: 12 }}>{t('method.advantages')}</strong>
               <ul className="mb-0" style={{ fontSize: 12, paddingLeft: 16 }}>
                 {method.advantages.map((a, i) => <li key={i}>{a}</li>)}
               </ul>
             </div>
             <div className="col-6">
-              <strong style={{ fontSize: 12 }}>Limitations</strong>
+              <strong style={{ fontSize: 12 }}>{t('method.limitations')}</strong>
               <ul className="mb-0" style={{ fontSize: 12, paddingLeft: 16 }}>
                 {method.limitations.map((l, i) => <li key={i}>{l}</li>)}
               </ul>
@@ -116,18 +103,18 @@ function MethodSlide({ method, selected, onSelect }: { method: Method; selected:
           </div>
           {method.semantic_measure && (
             <div className="mt-2 p-2 rounded" style={{ backgroundColor: '#eff6ff', fontSize: 12 }}>
-              <strong>Formula: </strong>
+              <strong>{t('method.formula_label')} : </strong>
               <code>{method.semantic_measure.formula}</code>
-              <span className="ms-2 text-muted">range [{method.semantic_measure.range[0]}, {method.semantic_measure.range[1]}]</span>
+              <span className="ms-2 text-muted">
+                {t('method.range_label')} [{method.semantic_measure.range[0]}, {method.semantic_measure.range[1]}]
+              </span>
             </div>
           )}
           <div className="mt-2">
-            <strong style={{ fontSize: 12 }}>Parameters: </strong>
+            <strong style={{ fontSize: 12 }}>{t('method.parameters')} : </strong>
             {method.params.length > 0
-              ? method.params.map((p, i) => (
-                  <code key={i} className="me-1" style={{ fontSize: 11 }}>{p}</code>
-                ))
-              : <span className="text-muted" style={{ fontSize: 12 }}>none</span>
+              ? method.params.map((p, i) => <code key={i} className="me-1" style={{ fontSize: 11 }}>{p}</code>)
+              : <span className="text-muted" style={{ fontSize: 12 }}>{t('method.params_none')}</span>
             }
           </div>
         </div>
@@ -137,6 +124,7 @@ function MethodSlide({ method, selected, onSelect }: { method: Method; selected:
 }
 
 function MethodPage({ onNext, onBack, onMethodSelect }: MethodPageProps) {
+  const { t } = useTranslation();
   const [methods, setMethods]       = useState<Method[]>([]);
   const [loading, setLoading]       = useState(true);
   const [error, setError]           = useState<string | null>(null);
@@ -152,7 +140,7 @@ function MethodPage({ onNext, onBack, onMethodSelect }: MethodPageProps) {
           onMethodSelect(data[0]);
         }
       })
-      .catch(() => setError('Failed to load methods.'))
+      .catch(() => setError(t('method.failed')))
       .finally(() => setLoading(false));
   }, []);
 
@@ -163,14 +151,14 @@ function MethodPage({ onNext, onBack, onMethodSelect }: MethodPageProps) {
     <div className="card border-0 shadow-sm" style={{ borderRadius: 12 }}>
       <div className="card-body p-5">
         <div className="text-center mb-4">
-          <h2 className="fw-bold mb-1">Similarity Method</h2>
-          <p className="text-muted mb-0">Choose the algorithm to measure sequence similarity</p>
+          <h2 className="fw-bold mb-1">{t('method.title')}</h2>
+          <p className="text-muted mb-0">{t('method.subtitle')}</p>
         </div>
 
         {loading && (
           <div className="text-center py-4">
             <div className="spinner-border text-primary" role="status" />
-            <p className="mt-2 text-muted">Loading methods...</p>
+            <p className="mt-2 text-muted">{t('method.loading')}</p>
           </div>
         )}
 
@@ -178,13 +166,8 @@ function MethodPage({ onNext, onBack, onMethodSelect }: MethodPageProps) {
 
         {!loading && !error && methods.length > 0 && (
           <>
-            {/* Carousel */}
             <div className="d-flex align-items-center gap-3 mb-3">
-              <button
-                className="btn btn-outline-secondary"
-                onClick={prev}
-                style={{ minWidth: 40, minHeight: 40 }}
-              >
+              <button className="btn btn-outline-secondary" onClick={prev} style={{ minWidth: 40, minHeight: 40 }}>
                 &#8592;
               </button>
 
@@ -200,16 +183,11 @@ function MethodPage({ onNext, onBack, onMethodSelect }: MethodPageProps) {
                 />
               </div>
 
-              <button
-                className="btn btn-outline-secondary"
-                onClick={next}
-                style={{ minWidth: 40, minHeight: 40 }}
-              >
+              <button className="btn btn-outline-secondary" onClick={next} style={{ minWidth: 40, minHeight: 40 }}>
                 &#8594;
               </button>
             </div>
 
-            {/* Dot indicators */}
             <div className="d-flex justify-content-center gap-2 mb-4">
               {methods.map((m, i) => (
                 <button
@@ -224,11 +202,10 @@ function MethodPage({ onNext, onBack, onMethodSelect }: MethodPageProps) {
               ))}
             </div>
 
-            {/* Selected method summary */}
             {selectedMethod && (
               <div className="border rounded p-3 mb-4" style={{ backgroundColor: '#f8faff', borderColor: '#c7d2fe' }}>
                 <span className="text-muted" style={{ fontSize: 13 }}>
-                  Selected method: <strong style={{ color: '#4f46e5' }}>{selectedMethod}</strong>
+                  {t('method.selected_label')} <strong style={{ color: '#4f46e5' }}>{selectedMethod}</strong>
                 </span>
               </div>
             )}
@@ -241,7 +218,7 @@ function MethodPage({ onNext, onBack, onMethodSelect }: MethodPageProps) {
             onClick={onBack}
             style={{ backgroundColor: '#858494', borderColor: '#858494', cursor: 'pointer' }}
           >
-            Back
+            {t('method.back')}
           </button>
           <button
             className="btn-next px-5 py-2 text-white"
@@ -253,7 +230,7 @@ function MethodPage({ onNext, onBack, onMethodSelect }: MethodPageProps) {
               cursor: !selectedMethod ? 'not-allowed' : 'pointer',
             }}
           >
-            Configure Parameters
+            {t('method.next')}
           </button>
         </div>
       </div>

@@ -71,7 +71,7 @@ export interface Method {
 export interface SimilarityRequest {
   dataset_id: string;
   pattern: { individuals: string[]; durations: number[] };
-  method: "RFTH" | "FTH" | "CED";
+  method: "RFTH" | "FTHT" | "TCED";
   params: Record<string, number | string>;
   top_k?: number;
   threshold?: number;

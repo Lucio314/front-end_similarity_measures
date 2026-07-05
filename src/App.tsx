@@ -22,7 +22,7 @@ function App() {
   const back = () => setCurrentStep(s => s - 1);
   const goTo = (step: number) => setCurrentStep(step);
 
-  // Step 3 (Ontology) passes hasGaps so App can skip step 4 if no gaps
+  // Step 2 (Stats) passes hasGaps so App can skip step 4 if no gaps
   const [hasGaps, setHasGaps] = useState<boolean>(true);
 
   // Méthode sélectionnée à MethodPage, transmise à ParameterPage et ResultsPage

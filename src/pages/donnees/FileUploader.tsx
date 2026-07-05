@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import { uploadDataset } from "../../api";
 
 interface FileUploaderProps {
@@ -7,148 +8,78 @@ interface FileUploaderProps {
   onDatasetReady: (id: string) => void;
 }
 
-
 function FileUploader({ files, onFilesChange, onDatasetReady }: FileUploaderProps) {
-  const [isDragging, setIsDragging] = useState<boolean>(false);
-  const [uploading, setUploading] = useState<boolean>(false);
+  const { t } = useTranslation();
+  const [isDragging, setIsDragging] = useState(false);
+  const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const addFiles = (incoming: FileList | null) => {
     if (!incoming) return;
-    const valid = Array.from(incoming).filter(
-      (f) => f.name.endsWith(".json") || f.name.endsWith(".csv"),
-    );
-    const merged = [...files, ...valid].filter(
-      (f, i, arr) => arr.findIndex((x) => x.name === f.name) === i,
-    );
+    const valid = Array.from(incoming).filter(f => f.name.endsWith(".json") || f.name.endsWith(".csv"));
+    const merged = [...files, ...valid].filter((f, i, arr) => arr.findIndex(x => x.name === f.name) === i);
     onFilesChange(merged);
   };
 
-  const removeFile = (fileName: string) => {
-    onFilesChange(files.filter((f) => f.name !== fileName));
-  };
+  const removeFile = (name: string) => onFilesChange(files.filter(f => f.name !== name));
 
   const handleUpload = async () => {
     if (files.length === 0) return;
-    setUploading(true);
-    setError(null);
+    setUploading(true); setError(null);
     try {
-      // On envoie le premier fichier ; le backend crée un dataset par fichier
       const res = await uploadDataset(files[0]);
       onDatasetReady(res.dataset_id);
-    } catch {
-      setError("Upload échoué. Vérifiez le format du fichier et que le backend est démarré.");
-    } finally {
-      setUploading(false);
-    }
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : t('data.uploader.error_unknown');
+      setError(msg);
+    } finally { setUploading(false); }
   };
-
-  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    setIsDragging(false);
-    addFiles(e.dataTransfer.files);
-  };
-
-  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    setIsDragging(true);
-  };
-
-  // TODO: brancher quand l'API FastAPI est prête
-  // const uploadFiles = async () => {
-  //   const formData = new FormData();
-  //   files.forEach((file) => formData.append('files', file));
-  //   const res = await fetch('/api/upload', { method: 'POST', body: formData });
-  //   if (!res.ok) throw new Error('Upload échoué');
-  // };
 
   return (
     <div
-      onDrop={handleDrop}
-      onDragOver={handleDragOver}
+      onDrop={e => { e.preventDefault(); setIsDragging(false); addFiles(e.dataTransfer.files); }}
+      onDragOver={e => { e.preventDefault(); setIsDragging(true); }}
       onDragLeave={() => setIsDragging(false)}
       className="border rounded p-4 text-center d-flex flex-column align-items-center"
-      style={{
-        borderStyle: "dashed",
-        borderColor: isDragging ? "#4f46e5" : "#dee2e6",
-        backgroundColor: isDragging ? "#eef2ff" : "#fafafa",
-        transition: "all 0.15s",
-        minHeight: 260,
-      }}
+      style={{ borderStyle: "dashed", borderColor: isDragging ? "#4f46e5" : "#dee2e6",
+        backgroundColor: isDragging ? "#eef2ff" : "#fafafa", transition: "all 0.15s", minHeight: 260 }}
     >
-      <svg
-        width="48"
-        height="48"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="#4f46e5"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className="mb-3"
-      >
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#4f46e5"
+        strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="mb-3">
         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-        <polyline points="17 8 12 3 7 8" />
-        <line x1="12" y1="3" x2="12" y2="15" />
+        <polyline points="17 8 12 3 7 8" /><line x1="12" y1="3" x2="12" y2="15" />
       </svg>
-
-      <h5 className="fw-semibold mb-1">Charger des fichiers</h5>
-      <p className="text-muted mb-3" style={{ fontSize: 14 }}>
-        Importez un ou plusieurs fichiers JSON/CSV
-      </p>
+      <h5 className="fw-semibold mb-1">{t('data.uploader.title')}</h5>
+      <p className="text-muted mb-3" style={{ fontSize: 14 }}>{t('data.uploader.subtitle')}</p>
       <label className="form-label">
-        <input
-          ref={inputRef}
-          type="file"
-          multiple
-          accept=".json,.csv"
-          style={{ display: "none" }}
-          onChange={(e) => addFiles(e.target.files)}
-        />
+        <input ref={inputRef} type="file" multiple accept=".json,.csv"
+          style={{ display: "none" }} onChange={e => addFiles(e.target.files)} />
       </label>
-      <button
-        className="btn text-white px-4"
+      <button className="btn text-white px-4"
         style={{ backgroundColor: "#4f46e5", borderColor: "#4f46e5" }}
-        onClick={() => inputRef.current?.click()}
-      >
-        + Sélectionner des fichiers
+        onClick={() => inputRef.current?.click()}>
+        {t('data.uploader.select')}
       </button>
-
       {files.length > 0 && (
         <>
           <ul className="list-unstyled mt-3 mb-0 w-100 text-start">
-            {files.map((file) => (
-              <li
-                key={file.name}
-                className="d-flex justify-content-between align-items-center border rounded px-2 py-1 mb-1"
-                style={{ fontSize: 13 }}
-              >
+            {files.map(file => (
+              <li key={file.name} className="d-flex justify-content-between align-items-center border rounded px-2 py-1 mb-1" style={{ fontSize: 13 }}>
                 <span className="text-truncate me-2">{file.name}</span>
-                <button
-                  className="btn btn-sm btn-link text-danger p-0"
-                  onClick={() => removeFile(file.name)}
-                >
-                  ✕
-                </button>
+                <button className="btn btn-sm btn-link text-danger p-0" onClick={() => removeFile(file.name)}>✕</button>
               </li>
             ))}
           </ul>
-          <button
-            className="btn text-white mt-3 px-4"
+          <button className="btn text-white mt-3 px-4"
             style={{ backgroundColor: "#4f46e5", borderColor: "#4f46e5" }}
-            onClick={handleUpload}
-            disabled={uploading}
-          >
+            onClick={handleUpload} disabled={uploading}>
             {uploading && <span className="spinner-border spinner-border-sm me-2" role="status" />}
-            {uploading ? "Envoi en cours…" : "Envoyer au backend"}
+            {uploading ? t('data.uploader.sending') : t('data.uploader.send')}
           </button>
         </>
       )}
-
-      {error && (
-        <p className="text-danger mt-2 mb-0" style={{ fontSize: 12 }}>{error}</p>
-      )}
+      {error && <p className="text-danger mt-2 mb-0" style={{ fontSize: 12 }}>{error}</p>}
     </div>
   );
 }

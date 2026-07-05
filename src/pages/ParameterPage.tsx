@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import RFTHParameter from './parametre/RFTHParameter';
 import { useState } from 'react';
 import SlidersParameter from './parametre/SlidersParameter';
@@ -16,6 +17,7 @@ interface ParameterPageProps {
 
 function ParameterPage({ onNext, onBack, selectedMethod, onParamsChange }: ParameterPageProps) {
     const nomMethode = selectedMethod?.name ?? '';
+    const { t } = useTranslation();
 
     // Paramètres requête
     const [valueSliderK, setValueSliderK] = useState<number>(5);
@@ -77,10 +79,9 @@ function ParameterPage({ onNext, onBack, selectedMethod, onParamsChange }: Param
         <div className="card border-0 shadow-sm" style={{ borderRadius: 12 }}>
             <div className="card-body p-5">
                 <div className="text-center mb-4">
-                    <h2 className="fw-bold mb-1">Configuration des Paramètres</h2>
+                    <h2 className="fw-bold mb-1">{t('parameters.title')}</h2>
                     <p className="text-muted mb-0">
-                        Ajustez finement les paramètres de la méthode
-                        <strong>{selectedMethod ? ` ${selectedMethod.label}` : ''}</strong>
+                        {t('parameters.subtitle', { method: selectedMethod?.label ?? '' })}
                     </p>
                 </div>
 
@@ -89,7 +90,7 @@ function ParameterPage({ onNext, onBack, selectedMethod, onParamsChange }: Param
                 <div className="border rounded mt-4 p-3">
                     <h3 className="fw-bold mb-1">
                         <SlidersIcon />
-                        Paramètres réglables
+                        {t('parameters.adjustable')}
                     </h3>
                     <SlidersParameter
                         listeParametres={listeParametres}
@@ -98,8 +99,8 @@ function ParameterPage({ onNext, onBack, selectedMethod, onParamsChange }: Param
                 </div>
 
                 <div className="param-multidim" hidden>
-                    <h3 className="fw-bold mb-1">Pondération Multidimensionnelle</h3>
-                    <p className="text-muted mb-0">Ajustez l'importance relative de chaque dimension dans le calcul de similarité</p>
+                    <h3 className="fw-bold mb-1">{t('parameters.multidim_title')}</h3>
+                    <p className="text-muted mb-0">{t('parameters.multidim_subtitle')}</p>
                     <MultidimParameter
                         valueSliderMobilite={valueSliderMobilite}
                         valueSliderMeteo={valueSliderMeteo}
@@ -121,14 +122,14 @@ function ParameterPage({ onNext, onBack, selectedMethod, onParamsChange }: Param
                         onClick={onBack}
                         style={{ backgroundColor: "#858494", cursor: "pointer" }}
                     >
-                        Retour
+                        {t('parameters.back')}
                     </button>
                     <button
                         className="btn-next px-5 py-2 text-white"
                         onClick={handleNext}
                         style={{ backgroundColor: "#4f46e5", cursor: "pointer" }}
                     >
-                        Construire le motif →
+                        {t('parameters.next')}
                     </button>
                 </div>
             </div>

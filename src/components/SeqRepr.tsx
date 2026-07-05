@@ -1,7 +1,4 @@
-// SeqRepr: compact activity chip used in sequence previews.
-// Color comes from ontology color map (replaces hardcoded EMOJIS).
-
-import { ACTIVITY_EMOJI_MAP } from '../types';
+// SeqRepr: compact activity chip in sequence previews — no emoji.
 
 interface SeqReprProps {
   name: string;
@@ -9,15 +6,18 @@ interface SeqReprProps {
   color?: string;
 }
 
-function SeqRepr({ name, duration, color }: SeqReprProps) {
-  const emoji = ACTIVITY_EMOJI_MAP[name] ?? name.charAt(0).toUpperCase();
+function SeqRepr({ name, duration, color = '#e0e7ff' }: SeqReprProps) {
   return (
     <div
-      className="border rounded px-2 py-1 text-center"
-      style={{ backgroundColor: color, fontSize: 12, minWidth: 48 }}
+      className="rounded text-center px-2 py-1"
+      style={{
+        border: `1.5px solid ${color}`,
+        backgroundColor: color + '33',
+        minWidth: 56,
+      }}
     >
-      <span>{emoji}</span>
-      <span className="ms-1">{duration}m</span>
+      <div className="text-capitalize fw-semibold" style={{ fontSize: 11, color: '#272727' }}>{name}</div>
+      <div style={{ fontSize: 10, color: '#666' }}>{duration} min</div>
     </div>
   );
 }

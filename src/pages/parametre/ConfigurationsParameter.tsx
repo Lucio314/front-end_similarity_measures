@@ -4,11 +4,11 @@ import ConfigurationParameter from './ConfigurationParameter';
 
 const PARAMETRES = [
     {
-        nomMethode: "CED",
+        nomMethode: "TCED",
         parametres: ["beta"]
     },
     {
-        nomMethode: "FTH",
+        nomMethode: "FTHT",
         parametres: ["time_window", "agg"]
     },
     {
